@@ -1,0 +1,129 @@
+@import "color.scss";
+
+.registerWrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    padding-top: 200px;
+}
+.register {
+    width: 640px;
+    height: 1000px;
+    margin: 20px;
+    
+    h2 {
+        text-align: center;
+        font-size: 40px;
+        margin-bottom: 40px;
+    }
+}
+.registerMain {
+    padding-top: 20px;
+    // border-top: 4px solid #222;
+}
+.regSmallBox {
+    // display: inline-flex;
+    // width: 100%;
+    padding: 20px 20px 0 20px;
+    display: grid;
+    grid-template-columns: 1fr 2.2fr 0.8fr;
+    // gap: 10px;
+}
+.regSmallTitle {
+    // width: 138px;
+    
+    padding-top: 12px;
+}
+.regInputOut {
+    // flex: 1 1 0%;
+   
+    input {
+        width: 100%;
+        height: 46px;
+        border-radius: 10px;
+        border: 1px solid rgb(221, 221, 221);
+        padding: 0 10px;
+    }
+}
+.regIdOverlap, .regFakeBox {
+    margin-left: 10px;
+    // width: 120px;
+    
+}
+.regIdOverlap > button {
+    width: 100%;
+    height: 46px;
+    border-radius: 10px;
+    color: #8679D9;;
+    background-color: rgb(255, 255, 255);
+    border: 1px solid #8679D9;
+    cursor: pointer;
+       
+}
+.regBirthOut {
+    // display: inline-flex;
+    // flex: 1 1; 
+    display: grid;
+    grid-template-columns: 1.4fr 1.05fr 0.95fr; 
+
+    select {
+        width: 100%;
+        height: 46px;
+        border: 1px solid rgb(221, 221, 221);
+        // color: rgb(112, 112, 112);
+        padding: 0 10px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+}
+
+.regBirthYear {
+    // width: 140px;
+    margin: 0 10px 0 0;
+}
+.regBirthMonth {
+    // width: 86px;
+    margin: 0 10px 0 0;
+}
+.regBirthDay {
+    // width: 86px;
+    
+}
+.regErrMsg {
+    text-align: right;
+    font-size: 0.7em;
+    color: rgb(156, 156, 156);
+    padding-right: 23%;
+    margin-top: 6px;
+}
+.regComplete {
+    display: flex;
+    justify-content: center;
+    padding: 100px 0;
+
+    button {
+        width: 60%;
+        height: 56px;
+        border-radius: 10px;
+        color: rgb(255, 255, 255);
+        // background-color: #222;
+        background-color: #8679D9;
+        border: none;
+        font-weight: 600;
+
+    }
+}
+
+@media screen and (max-width:550px) {
+    .registerWrapper{
+        // font-size: .8rem;
+        .regSmallBox{
+            .regSmallTitle{
+                display: none;
+            } 
+            display: grid;
+            grid-template-columns: 2.2fr 0.8fr;
+        }
+    }
+}

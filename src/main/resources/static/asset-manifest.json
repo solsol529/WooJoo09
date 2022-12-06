@@ -1,0 +1,36 @@
+{
+  "files": {
+    "main.css": "/static/css/main.14e2b9fd.css",
+    "main.js": "/static/js/main.c87f15c6.js",
+    "static/media/chatMoving.gif": "/static/media/chatMoving.30958733a50ad66a43d8.gif",
+    "static/media/chatMoving_black.gif": "/static/media/chatMoving_black.128078e265e156eccca6.gif",
+    "static/media/grade_icon4_nebula.png": "/static/media/grade_icon4_nebula.d1bbcff95a85c99b7167.png",
+    "static/media/chatMoving_white2.gif": "/static/media/chatMoving_white2.633b706ab6e1c2be62a1.gif",
+    "static/media/grade_icon5_galaxy.png": "/static/media/grade_icon5_galaxy.6d8fa12a984ec33278ca.png",
+    "static/media/grade_icon6_space.png": "/static/media/grade_icon6_space.23e310c382bd3eb2f979.png",
+    "static/media/grade_icon1_wreck.png": "/static/media/grade_icon1_wreck.2db8034a800ff3802961.png",
+    "static/media/logo.png": "/static/media/logo.f00681817d3868ee6013.png",
+    "static/media/grade_icon3_planet.png": "/static/media/grade_icon3_planet.e5e020ce885fec4b4d0b.png",
+    "static/media/profile_black.png": "/static/media/profile_black.ff857c71b017ca2062aa.png",
+    "static/media/profile.png": "/static/media/profile.d6904c37446328dbdde0.png",
+    "static/media/profile_white2.png": "/static/media/profile_white2.bb7567612bcf7f3d564c.png",
+    "static/media/grade_icon2_comet.png": "/static/media/grade_icon2_comet.6050971d9732a787f671.png",
+    "static/media/logoWhite.png": "/static/media/logoWhite.db7e2affe9ee58b86c65.png",
+    "static/media/profile_sample.png": "/static/media/profile_sample.162814d216d710ffb361.png",
+    "static/media/chat_white2.png": "/static/media/chat_white2.9465a220adac79c3a5eb.png",
+    "static/media/regcel.png": "/static/media/regcel.1d8d9a9460383c46bd14.png",
+    "static/media/chat_black.png": "/static/media/chat_black.9c93594313ec58c983de.png",
+    "static/media/chat.png": "/static/media/chat.4fa403dac9444d99f00b.png",
+    "static/media/fashion_sample.png": "/static/media/fashion_sample.c844d8feaf3235e10186.png",
+    "static/media/representImg_icon.png": "/static/media/representImg_icon.17f6eeb138515818406b.png",
+    "static/media/rocket.png": "/static/media/rocket.05a66241732bb34e2aa8.png",
+    "static/media/images_icon.png": "/static/media/images_icon.a951e698adbd3ddcd20e.png",
+    "index.html": "/index.html",
+    "main.14e2b9fd.css.map": "/static/css/main.14e2b9fd.css.map",
+    "main.c87f15c6.js.map": "/static/js/main.c87f15c6.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.14e2b9fd.css",
+    "static/js/main.c87f15c6.js"
+  ]
+}

@@ -1,0 +1,235 @@
+@import "color.scss";
+
+input[type="file"] {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip:rect(0,0,0,0);
+  border: 0;
+  }
+
+.write{
+  padding-top: 130px;
+  background-color: $lightGray2;
+  width: 100vw;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding-bottom: 50px;
+  
+  input{
+    border: none;
+    border-bottom: 1px solid $purple1;
+  }
+  textarea, select{
+    border: solid 1px #e3e9ed;
+    &:focus{
+      outline: none;
+    }
+  }
+  .priceInput{
+    input[type='number']::-webkit-outer-spin-button,
+    input[type='number']::-webkit-inner-spin-button {
+	    -webkit-appearance: none;
+	    margin: 0;
+    }
+    span:nth-child(3){
+      font-size: 1rem;
+      font-weight: 500;
+    }
+  }
+
+}
+
+.writeInput{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  // align-items: center;
+  width: 80vw;
+  background-color: #FFF;
+  border-radius: 12px;
+  box-shadow: 1px 1px 10px 0 rgb(72 75 108 / 8%);
+  border: solid 1px #e3e9ed;
+  padding: 30px 20px 30px 20px;
+  margin-bottom: 20px;
+  // background-color: blue;
+
+  >div{
+    margin-bottom: 20px;
+  }
+
+  label{
+    display: flex;
+    flex-direction: row;
+    img{
+      width: 20vw;
+      margin-right: 20px;
+    }
+    >span{
+      font-size: 1.2rem;
+      font-weight: bold;
+      display: flex;
+      // justify-content: center;
+      width: 20vw;
+      min-width: 120px;
+    }
+  }
+
+  textarea{
+    padding: 5px;
+    width: 70%;
+    height: 20vh;
+    line-height: 150%;
+  }
+}
+
+.representInput, .imgInput{
+  // background-color: red;
+  display: flex;
+  flex-direction: row;
+  label{
+    display: flex;
+    flex-direction: column;
+  }
+  .imgPreview{
+    margin: 0px auto;
+    >div{
+      display: grid;
+      grid-auto-rows: 15vw;
+      gap: 3vw;
+      grid-template-columns: repeat(3, 15vw);
+      img{
+        border-radius: 3px;
+        background-color: $yellow3Alpha4;
+        // padding: 10px;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+}
+
+
+.writeSubmitBtn{
+  width: 50%;
+  font-weight: bold;
+  font-size: 1.5rem;
+  border-radius: 10px;
+  background-color: $purple2Alpha6;
+  color: #FFF;
+  border: none;
+  padding: 10px 10px 10px 10px;
+  box-shadow: 1px 1px 10px 0 rgb(72 75 108 / 8%);
+  border: solid 1px #e3e9ed;
+  &:hover{
+    background-color: $purple2;
+  }
+}
+
+.nobutton{
+  background-color: #e3e9ed;
+  &:hover{
+    background-color: #e3e9ed;
+  }
+}
+
+.writeTitle{
+  font-size: 2rem;
+  font-weight: 900;
+  margin: 40px 0px 20px 0px;
+  padding: 10px;
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+}
+
+.tradeMethodInput{
+  div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    label:nth-child(1){
+      min-width: 75px;
+    }
+    label:nth-child(2), label:nth-child(3){
+      min-width: 90px;
+    }
+  }
+}
+
+.placeInput{
+  div{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+  }
+}
+
+.dueDateInput{
+  div{
+    span{
+      color: $purple1;
+    }
+  }
+}
+
+
+@media screen and (max-width:767px) {
+  .write{
+    padding-top: 150px;
+
+    .priceInput{
+      span:nth-child(3){
+        font-size: 1rem !important;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .writeInput{
+    width: 96vw;
+  }
+
+  label{
+    >span{
+      font-size: 1.1rem !important;
+    }
+  }
+
+  .representInput, .imgInput{
+    .imgPreview{
+      >div{
+        display: grid;
+        grid-auto-rows: 20vw;
+        grid-template-columns: repeat(3, 20vw);
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-width:500px) {
+  
+  .representInput, .imgInput{
+    .imgPreview{
+      >div{
+        display: grid;
+        grid-auto-rows: 22vw;
+        gap: 3vw;
+        grid-template-columns: repeat(2, 22vw);
+        img{
+          width: 100%;
+        }
+      }
+    }
+  }
+
+}
