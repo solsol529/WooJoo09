@@ -11,7 +11,9 @@ import ChangeMemberInfo from "./ChangeMemberInfo";
 import MyWrite from "./MyWrite";
 import api from "../api/api";
 
+
 const MemberInfo = () =>{
+
     const [memberInfo, setMemberInfo] = useState('');
     const getNickname = window.localStorage.getItem("userNickname");
     const [isChange, setIsChange] = useState('');

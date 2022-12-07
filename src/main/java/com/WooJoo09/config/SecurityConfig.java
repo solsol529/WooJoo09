@@ -11,9 +11,10 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
+
     @Bean // 비밀번호를 DB에 그대로 저장하는 회원 정보가 노출 될 수 있으므로 암호화가 필수적으로 필요
     public PasswordEncoder passwordEncoder() {
-        return  new BCryptPasswordEncoder();
+        return new BCryptPasswordEncoder();
     }
 
     @Bean
