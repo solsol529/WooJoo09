@@ -9,12 +9,12 @@ export const UserInfoContextStore = createContext();
  *
  * **/
 const UserInfoContext = (props) => {
-  const [ token, setToken ] = useState(); // 유저 토큰
+  const [ tokenMsg, setTokenMsg ] = useState(); // 유저 토큰
   
   //유저 정보를 하나의 객체로 만들어준다.
   const UserInfo = {
-    token,
-    setToken
+    tokenMsg,
+    setTokenMsg
   }
 
   /**

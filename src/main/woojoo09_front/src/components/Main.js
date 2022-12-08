@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import {categories, getCategory, citys, towns} from "../util/util";
 import Card from "./Card";
 import { Link } from "react-router-dom";
+import api from "../api/api"
+import { getCookie, setCookie } from "../util/cookie";
 
 const Main = ({categoryName})=>{
   const [lineUp, setLineUp] = useState('recommand');

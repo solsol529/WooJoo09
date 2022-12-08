@@ -1,9 +1,11 @@
 import { useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 const LoginPage = () =>{
+  const { state } = useLocation();
+
   const [inputLoginId, setInputLoginId] = useState('');
   const [inputLoginPwd, setInputLogimPwd] = useState('');
 
@@ -26,6 +28,7 @@ const LoginPage = () =>{
       <div className="loginWrapper">     
         <div className="login">
           <h2>로그인</h2>
+          <p style={{color: "red", whiteSpace: "pre-line", textAlign: "center"}}>{state}</p>
           <div className="loginMain">
             <div className="loginSmallBox">
               <input type="text" className="loginInput" placeholder="아이디"></input>

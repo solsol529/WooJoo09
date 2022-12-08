@@ -7,11 +7,15 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestControllerAdvice
@@ -19,51 +23,55 @@ public class ExceptionController {
 
     @ExceptionHandler(Exception.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public Response ServerException2(Exception e) {
+    public ResponseEntity<?> ServerException2(Exception e) {
         e.printStackTrace();
-        return new Response("500", "서버 에러");
+        Map<String, String> result = new HashMap<>();
+        result.put("result", "ServerError");
+        return new ResponseEntity(result, HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @ExceptionHandler(MissingRequestHeaderException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response MissingRequestHeaderException(Exception e) {
+    public ResponseEntity<?> MissingRequestHeaderException(Exception e) {
         e.printStackTrace();
-        return new Response("400", "MissingRequestHeaderException");
+        Map<String, String> result = new HashMap<>();
+        result.put("result", "MissingRequestHeaderException");
+        return new ResponseEntity(result, HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(UnsupportedJwtException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response UnsupportedJwtException(Exception e) {
+    public ResponseEntity<?> UnsupportedJwtException(Exception e) {
         e.printStackTrace();
-        return new Response("401", "UnsupportedJwtException");
+        Map<String, String> result = new HashMap<>();
+        result.put("result", "UnsupportedJwtException");
+        return new ResponseEntity(result, HttpStatus.UNAUTHORIZED);
     }
 
     @ExceptionHandler(MalformedJwtException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response MalformedJwtException(Exception e) {
+    public ResponseEntity<?> MalformedJwtException(Exception e) {
         e.printStackTrace();
-        return new Response("402", "MalformedJwtException");
+        Map<String, String> result = new HashMap<>();
+        result.put("result", "MalformedJwtException");
+        return new ResponseEntity(result, HttpStatus.PAYMENT_REQUIRED);
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response ExpiredJwtException(Exception e) {
+    public ResponseEntity<?> ExpiredJwtException(Exception e) {
         e.printStackTrace();
-        return new Response("403", "ExpiredJwtException");
+        Map<String, String> result = new HashMap<>();
+        result.put("result", "ExpiredJwtException");
+        return new ResponseEntity(result, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler(SignatureException.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
-    public Response SignatureException(Exception e) {
+    public ResponseEntity<?> SignatureException(Exception e) {
         e.printStackTrace();
-        return new Response("404", "SignatureException");
-    }
-
-    //Response DTO
-    @Data
-    @AllArgsConstructor
-    static class Response {
-        private String code;
-        private String msg;
+        Map<String, String> result = new HashMap<>();
+        result.put("result", "SignatureException");
+        return new ResponseEntity(result, HttpStatus.OK);
     }
 }

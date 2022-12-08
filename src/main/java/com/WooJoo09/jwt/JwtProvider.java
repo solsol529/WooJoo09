@@ -32,17 +32,17 @@ public class JwtProvider {
                 .compact();
     }
 
-    //==Jwt 토큰의 유효성 체크 메소드==//
-    public Claims parseJwtToken(String token) {
-        token = BearerRemove(token); // Bearer 제거
-        return Jwts.parser()
-                .setSigningKey(Base64.getEncoder().encodeToString(secretKey.getBytes()))
-                .parseClaimsJws(token)
-                .getBody();
-    }
+//    //==Jwt 토큰의 유효성 체크 메소드==//
+//    public Claims parseJwtToken(String token) {
+//        token = BearerRemove(token); // Bearer 제거
+//        return Jwts.parser()
+//                .setSigningKey(Base64.getEncoder().encodeToString(secretKey.getBytes()))
+//                .parseClaimsJws(token)
+//                .getBody();
+//    }
 
-    //==Jwt 토큰의 유효성 체크 메소드==//
-    public Claims parseJwtToken2(String token) {
+    //==Jwt 토큰의 유효성 체크 메소드==  Bearer 제거 없는 함수//
+    public Claims parseJwtToken(String token) {
         return Jwts.parser()
                 .setSigningKey(Base64.getEncoder().encodeToString(secretKey.getBytes()))
                 .parseClaimsJws(token)
