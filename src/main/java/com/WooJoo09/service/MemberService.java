@@ -20,6 +20,10 @@ import java.util.Optional;
 public class MemberService {
     private final MemberRepository memberRepository;
 
+    public Member saveMember(Member member) {
+        return memberRepository.save(member);
+    }
+
     public List<Member> findMember() {
         return memberRepository.findAll();
     }
