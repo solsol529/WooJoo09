@@ -7,5 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class WooJoo09Application {
 	public static void main(String[] args) {
 		SpringApplication.run(WooJoo09Application.class, args);
+
 	}
 }
