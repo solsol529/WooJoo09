@@ -70,4 +70,5 @@ public class Trade {
 
     @Enumerated(EnumType.STRING)
     private DoneTrade doneTrade;
+
 }

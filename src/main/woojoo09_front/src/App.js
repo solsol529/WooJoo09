@@ -15,6 +15,7 @@ import WritePage from "./pages/WritePage";
 import TermPage from "./pages/TermPage";
 import LoginPage from "./pages/LoginPage"
 import FindIdCompletePage from "./pages/FindIdCompletePage"
+import SearchPage from "./pages/SearchPage";
 
 import "./style/common.scss";
 import "./style/detail.scss";
@@ -47,6 +48,7 @@ function App() {
           <Route path='/register' element={<RegisterPage/>}/>
           <Route path='/celebrate' element={<CelebratePage/>}/>
           <Route path='/detail/:tradeNum' element={<DetailPage/>}/>
+          <Route path='/search/:target' element={<SearchPage/>}/>
           <Route path='/chatlist' element={<ChatListPage/>}/>
           <Route path='/chat' element={<ChatPage/>}/>
           <Route path='/member' element={<MemberPage/>}/>

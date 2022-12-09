@@ -16,7 +16,7 @@ public class MemberController {
 
     // Service 로직 연결
     private MemberService memberService;
-    public  MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
     public ResponseEntity<List<Member>> findMember() {
