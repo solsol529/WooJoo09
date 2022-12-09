@@ -19,12 +19,11 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class MemberService {
     private final MemberRepository memberRepository;
-
+    public List<Member> findMember() {
+        return memberRepository.findAll();
+    }
     public Member saveMember(Member member) {
         return memberRepository.save(member);
     }
 
-    public List<Member> findMember() {
-        return memberRepository.findAll();
-    }
 }

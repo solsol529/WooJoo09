@@ -39,6 +39,14 @@ const ChatPage = () =>{
         <div className="chatContent">
           <div className="chatDate">2022년 12월 1일</div>
           <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
+          <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
+          <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
+          <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
+          <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
+          <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
+          <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
+          <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
+          <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
           <div className="chatTalkTime">19:00</div>
           <div className="chatTalkTime-My">19:12</div>
           <div className="chatMessage-My">내가 보낸 메시지!!!!!!</div>

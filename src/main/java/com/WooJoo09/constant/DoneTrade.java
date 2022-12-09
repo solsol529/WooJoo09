@@ -1,5 +1,5 @@
 package com.WooJoo09.constant;
 
 public enum DoneTrade {
-    ONGOING, DONE, DELETE
+    ONGOING, DONE, DELETE, FULL
 }

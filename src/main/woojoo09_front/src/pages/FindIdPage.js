@@ -10,7 +10,7 @@ const FindIdPage = () =>{
   const [isFindIdName, setIsFindIdName] = useState(false);
   const [isFindIdEmail, setIsFindIdEmail] = useState(false);
 
-  //���� �޽���
+  //에러 메시지
   const [findIdNameOkMsg, setFindIdNameOkMsg] = useState('');
   const [findIdNameMsg, setFindIdNameMsg] = useState('');
 
@@ -23,6 +23,8 @@ const FindIdPage = () =>{
     if(inputFindIdName.length === 0) {
       setIsFindIdName(false);
       setFindIdNameMsg("가입 시 등록한 이름을 입력해주세요.")
+    } else {
+      setIsFindIdName(true);
     }
   }
 
@@ -32,11 +34,12 @@ const FindIdPage = () =>{
     if(inputFindIdEmail.length === 0) {
       setIsFindIdEmail(false);
       setFindIdEmailMsg("가입 시 등록한 이메일을 입력해주세요.")
-
+    } else {
+      setIsFindIdEmail(true);
     }
   }
 
-  const onClickIcSearch = () => {
+  const onClickIdSearch = () => {
     window.location.replace("/findidcomplete");
   }
 
@@ -62,10 +65,13 @@ const FindIdPage = () =>{
             <div className="findIdErrMsg">
               {!isFindIdEmail && <span className="findIdEmailErr">{findIdEmailMsg}</span>}
               {isFindIdEmail && <span className="findIdEmailOk">{findIdEmailOkMsg}</span>}
-            </div>
-            </div>
-              <button className="idSearchButton" onClick={onClickIcSearch}>확인</button>           
-            <div>
+            </div>              
+            <div className="findIdComplete">
+              {!(isFindIdName && isFindIdEmail)
+              && <button className="findIdNotCompleteBut">확인</button>}  
+              {(isFindIdName && isFindIdEmail)
+              && <button className="findIdCompleteBut" onClick={onClickIdSearch}>확인</button>}    
+            </div>                           
           </div>
         </div>
       </div>

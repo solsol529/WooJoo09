@@ -56,6 +56,10 @@ const ResetPwdPage = () =>{
     }
   }
 
+  const onClickResetPwd = () => {
+
+  }
+
   return(
     <div className="wrapper">
       <Header/>
@@ -79,8 +83,13 @@ const ResetPwdPage = () =>{
               {!isResetPwdCk && <span className="resetPwdCkErr">{resetPwdCkMsg}</span>}
               {isResetPwdCk && <span className="resetPwdCkOk">{resetPwdCkOkMsg}</span>}
             </div>
+            </div>          
+            <div className="resetPwdComplete">
+              {!(isResetPwd && isResetPwdCk)
+              && <button className="resetPwdNotCompleteBut">변경하기</button>}  
+              {(isResetPwd && isResetPwdCk)
+              && <button className="resetPwdCompleteBut" onClick={onClickResetPwd}>변경하기</button>}    
             </div>
-              <button className="resetPwdButton">변경하기</button>           
         </div>
       </div>
       <Footer/>

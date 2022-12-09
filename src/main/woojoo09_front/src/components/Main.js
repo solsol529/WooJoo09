@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import api from "../api/api"
 import { getCookie, setCookie } from "../util/cookie";
 
-const Main = ({categoryName})=>{
+const Main = ({categoryName, target})=>{
   const [lineUp, setLineUp] = useState('recommand');
   const [city, setCity] = useState('none');
   const [town, setTown] = useState('all');
@@ -24,9 +24,10 @@ const Main = ({categoryName})=>{
   };
 
   return(
-    <div className={categoryName ? (scrollPosition < 150 ? "category" : "category  changed")
+    <div className={(categoryName || target) ? (scrollPosition < 150 ? "category" : "category  changed")
     : (scrollPosition < 150 ? "main" : "main changed")}>
-      <p className="mainTitle">{categoryName? getCategory(categoryName) : "오늘의 공구"}</p>
+      {!target && <p className="mainTitle">{categoryName? getCategory(categoryName) : "오늘의 공구"}</p>}
+      {target && <p>'{target}'에 대한 검색 결과</p>}
       <div className="maindiv">
         <div className="mainSelectBar">
           <div>

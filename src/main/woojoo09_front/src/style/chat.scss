@@ -1,4 +1,5 @@
 @import "color.scss";
+@import "common.scss";
 
 @font-face {
     font-family: 'S-CoreDream-3Light';
@@ -12,22 +13,30 @@
     padding: 0;
     margin:0;
     box-sizing: border-box;
+ 
   }
    .chatLeft{
         width: 30%;
         height: 100vh;
         float: left;
         background-color: $lightGray2;
+        overflow-y: scroll;
+        -ms-overflow-style: none;
+        scrollbar-width: none; /* Firefox */
    }
+   .chatLeft::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}   
+
 
 .chatButton{
     width: 100%;
-    height: 8vh;
+    height: 10vh;
     border-radius: 5px;
     // background-color: $lightGray1Alpha6;
     div{
         position: relative;
-        left: -78px; 
+        // left: -16%; 
         top : 4.5vh;
     }
   }
@@ -48,21 +57,29 @@
     align-items: center;
     font-size: 1.5rem;
     font-weight: 500;
+    // flex-wrap: wrap;
 }
 .chatDetail{
-    height: 7.5vh;
-    padding-top: 3%;
+    height: 13vh;
+    // padding-top: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     img{
-        width: 3.5vw;
-        height: 5vh;
-        margin: 15px;
+        width: 4vw;
+        height: 8vh;
+        margin: 3%;
     }
     p{
+        // padding-top: 1%;
         display: flex;
+    }
+    .chatDetailNick{
+        padding-top: 2%;
     }
 }
 .chatTime{
-    height: 2vh;
+    // height: 10vh;
     position: relative;
     left: 50%;
     top: 2vh;
@@ -82,7 +99,7 @@
 }
 .chatting, .chattingProduct{
     img{
-        width: 300px;
+        width: 6vw;
       }
 }
 
@@ -96,6 +113,8 @@
 
 }
 .chatRight{
+
+    overflow-y: auto;
     width: 70%;
     float: right;
 }
@@ -112,6 +131,10 @@
     display: flex;
     border-top-left-radius : 5px;
     border-top-right-radius : 5px;
+    height:40px;
+    width:70%;
+    position:fixed;
+    top:0;
     span{
         margin-left: 35px;
         margin-top: 15px;
@@ -125,25 +148,30 @@
   
 }
 .chattingProduct{
-    border-bottom: 1px solid $darkGray1;
+    border-bottom: 1px solid $darkGray2Alpha3;
+    height:90px;
+    width:70%;
+    position:fixed;
+    top:5vh;
+
     img{
-        width: 55px;
-        height: 55px;
-        margin: 20px;
-        margin-left: 30px;
+        width: 4vw;
+        height: 8vh;
+        margin: 25px 20px 10px 20px ;
+        // margin-left: 35%;
     }
     div{
        button{
         margin: 5px;
         border: 0;
         outline: 0;
-        background-color: $purple2;
-        border-radius: 10%;
+        background-color: $purple2Alpha3;
+        border-radius: 5px;
         font-size: 0.9rem;
         font-weight: 530;
-        width: 4vw;
-        height: 3vh;
-        left: 45vw;
+        width: 6vw;
+        height: 4.5vh;
+        left: 40vw;
         top : 2vh;
         position: relative;
        }
@@ -154,40 +182,61 @@
     position: relative;
     left: 0.5vw;
     top : 2.5vh;
+
 }
 .chatPrice{
     position: relative;
     left: -2.7vw;
-    top : 5vh;
+    top : 6vh;
 }
 .chatContent{
-     height: 71vh;
+    // display: flex;
+    // justify-content: center;
+    // align-items: center;
+    overflow-y: scroll;
+    -ms-overflow-style: none;
+    scrollbar-width: none; /* Firefox */
+    width:70%;
+    height: 82vh;
+    // padding-top: 3%;
+    // overflow: hidden;
 }
+.chatContent::-webkit-scrollbar {
+    display: none; /* Chrome, Safari, Opera*/
+}   
+
 .chatSend{
     position:fixed;
     right:50;
     bottom:0;
     z-index:10000;
-    width: 65%;
-    height: 38px;
+    width: 64%;
+    height: 5vh;
     margin: 20px;
     border-radius: 15px;
     border: 0;
     outline: none;
     background-color: $lightGray1Alpha8;
-    padding-left: 20px;
+    padding-left: 2%;
    
 }
 .sendPrivacy{
+    // display: flex;
+    // justify-content: center;
     position :fixed;
     // right:40;
-    bottom:16vh;
-
+    bottom:20vh;
 }
 .chatSell{
-    border-top: 1px solid $darkGray1;
+    border-top: 1px solid $darkGray2Alpha3;
     display: flex;
     justify-content: center;
+    height:15vh;
+    width:70%;
+    position:fixed;
+    bottom:20px;
+    // position :fixed;
+    // bottom:10vh;
   
     button{
         border: 0;
@@ -195,18 +244,20 @@
         background-color: $bluePurple3Alpha35;
         border-radius: 5px;
         margin: 10px;
-        width: 6.5vw;
-        height: 3vh;
+        width: 7vw;
+        height: 4vh;
      
     }
     button:active{
         background-color: $yellow1;
     }
-   
-
 }
 .chatBottom {
-    border-top: 1px solid $darkGray1;
+    border-top: 1px solid $darkGray2Alpha3;
+    height:10vh;
+    width:70%;
+    position:fixed;
+    bottom:0;
     // position: relative;
     // bottom: 50;
     button{
@@ -243,7 +294,7 @@
         height: 3vh;
         border: 0;
         outline: 0; 
-        background-color: $purple2;
+        background-color: $purple2Alpha3;
         border-radius: 5px;
         margin: 5px;
     }
@@ -254,7 +305,7 @@
         margin-left: 5px;
         margin-right: 5px;
         border-radius: 5px;
-        background-color: $purple2;
+        background-color: $purple2Alpha3;
         padding: 2px 5px 2px 5px;
         border: 0;
         outline: none;
@@ -263,7 +314,7 @@
     margin-left: 5px;
     margin-right: 5px;
     border-radius: 5px;
-    background-color: $purple2;
+    background-color: $purple2Alpha3;
     padding: 2px 5px 2px 5px;
     border: 0;
     outline: none;
@@ -277,7 +328,7 @@
     display: flex;
     justify-content: center;
     left: 60%;
-    margin-top: 2vh;
+    margin-top: 19vh;
     // background-color:$darkGray1;
 }
 
@@ -288,10 +339,10 @@
     align-items: center;
     display: flex;
     border-radius: 5px;
-    margin-left: 180px;
-    margin-top: 2.7%;
+    margin-left: 7%;
+    margin-top: 4%;
     background-color: $lightGray1Alpha5;
-    border: 1px solid $lightPurple4 ;
+    border: 1px solid $lightPurple4Alpha5 ;
 }
 
 
@@ -303,19 +354,23 @@
     display: flex;
     border-radius: 5px;
     margin-left: 75%;
-    margin-top:  2.7%;
-    background-color: $lightPurple4;
+    // margin-top:  2.7%;
+    background-color: $lightPurple4Alpha5;
 }
 .chatTalkTime{
     position:relative ;
-    left: 22vw;
+    left: 17.5vw;
     top: -2vh;
 
 }
 .chatTalkTime-My{
     position:relative ;
-    left: 49vw;
-    top: 8vh;
+    left: 33vw;
+    top: 4.5vh;
+}
+
+.chatContainer{
+    display: flex;
 }
 
 .memberinfomain{
@@ -324,3 +379,130 @@
 
 
 
+@media screen and (min-width: 1024px) and (max-width: 1500px) {
+    // .chatContainer{
+    //     flex-direction: column;
+    // }
+    .chatList{
+        font-size: 1.3rem;
+    }
+    .chatLeft{
+        width: 30%;
+        height: 100vh;
+   }
+   .chatDetail{
+    margin:2%;
+    height: 12vh;
+    padding: 1%;
+    font-size: 1rem;
+    img{
+    
+        img{
+            width: 4vw;
+            height: 8vh;
+            margin: 25px 20px 10px 20px ;
+            // margin-left: 35%;
+        }
+    }
+    p{
+        // display: flex;
+    }
+}
+    .chatButton{
+        width: 100%;
+        height: 10vh;
+        border-radius: 5px;
+        .chatDetailNick{
+            padding-top: 3%;
+        }
+    }
+    .chatContent{
+        .chatDate{
+                margin-top: 20vh;
+            }
+    }
+    .chattingProduct{
+        div{
+           button{
+            width: 7vw;
+            height: 4.7vh;
+            left: 32vw;
+            top : 3vh;
+            position: relative;
+           }
+            }
+    }
+    .chatSend{
+        width: 63%;
+    }
+}
+
+@media screen and (min-width: 768px) and (max-width: 1023px) {
+   .chatDetail{
+    margin:2%;
+    height: 10vh;
+    padding: 1%;
+    font-size: 0.8rem;
+    }
+    .chatAlert{
+        width: 1.8vw;
+        height: 1.5vh;
+        border-radius: 50%;
+        background-color: $yellow3;
+        margin-top: 30px;
+    
+    }
+    .chatContent{
+        .chatDate{
+                margin-top: 21vh;
+            }
+    }
+    .chattingProduct{
+        div{
+           button{
+            border-radius: 5px;
+            font-size: 0.9rem;
+            font-weight: 530;
+            width: 7.8vw;
+            height: 4.5vh;
+            left: 27vw;
+            top : 3vh;
+            position: relative;
+           }
+        }
+    }
+    .chatSend{
+        width: 61%;
+    }
+
+
+    .chatSell{
+        height:15vh;
+        width:70%;
+        position:fixed;
+        bottom:20px;
+        // position :fixed;
+        // bottom:10vh;
+      
+        button{
+            margin: 10px;
+            width: 9.5vw;
+            height: 4.5vh;
+         
+        }
+    }
+    .chattingProduct{
+        img{
+            width: 4vw;
+            height: 7vh;
+
+        }
+    }
+
+}
+// @media screen and (max-width:767px) {
+
+// }
+
+
+   
