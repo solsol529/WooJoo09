@@ -1,6 +1,7 @@
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import MemberInfo from "../components/MemberInfo"
+import "../style/member.scss"
 import { useEffect } from 'react';
 const MemberPage = () =>{
 

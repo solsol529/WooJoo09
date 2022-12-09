@@ -15,7 +15,7 @@ import WritePage from "./pages/WritePage";
 import TermPage from "./pages/TermPage";
 import LoginPage from "./pages/LoginPage"
 import FindIdCompletePage from "./pages/FindIdCompletePage"
-import SearchPage from "./pages/SearchPage";
+import MyTradePage from "./pages/MyTradePage"
 
 import "./style/common.scss";
 import "./style/detail.scss";
@@ -52,6 +52,7 @@ function App() {
           <Route path='/chatlist' element={<ChatListPage/>}/>
           <Route path='/chat' element={<ChatPage/>}/>
           <Route path='/member' element={<MemberPage/>}/>
+          <Route path='/MyTrade' element={<MyTradePage/>}/>
           <Route path='/write' element={<WritePage/>}/>
           <Route path='/term' element={<TermPage/>}/>
           <Route path="/findidcomplete" element={<FindIdCompletePage/>}/>

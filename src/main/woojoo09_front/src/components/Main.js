@@ -94,6 +94,7 @@ const Main = ({categoryName, target})=>{
         <div className="mainbuttons">
         <button>더보기</button>
         <button onClick={goToTop}>맨위로</button>
+        
         </div>
       </div>
     </div>
