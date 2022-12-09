@@ -22,7 +22,7 @@ const RegisterPage = () =>{
   const [isRegName, setIsRegName] = useState(false);
   const [isRegEmail, setIsRegEmail] = useState(false);
   const [isRegPhone, setIsRegPhone] = useState(false);
-  const [isRegPhoneVer, setIsRegPhoneVer] = useState(false);
+  const [isRegPhoneVer, setIsRegPhoneVer] = useState(true); //false로 바꾸기
   
   const [regIdOkMsg, setRegIdOkMsg] = useState('');
   const [regIdMsg, setRegIdMsg] = useState('');
@@ -49,7 +49,7 @@ const RegisterPage = () =>{
   const [phoneVerOkMsg, setPhoneVerOkMsg] = useState('');
   
     //정규식
-    const idRegEx = /^[A-za-z0-9]{5,15}$/g;
+    const idRegEx = /^[A-za-z0-9]{3,15}$/g;
     const pwdRegEx = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
     const nickRegEx = /^[가-힣|a-z|A-Z|0-9|]+$/;
     const nameRegEx = /^[가-힣|a-z|A-Z|]+$/;
@@ -60,17 +60,20 @@ const RegisterPage = () =>{
     window.location.replace("/celebrate");
   }
 
+  //아이디
+  //수정중
   const onChangeRegId = (e) => {
     const inputId = e.target.value;
     setRegId(inputId);
-    if(inputId.length > 15 && inputId.length < 5) {
+    if(inputId.length > 15 || inputId.length < 5) {
       setIsRegId(false);
-      setRegIdMsg("5~15자리 영문자 또는 숫자를 입력해주세요.");
-      setIsRegId(false);
+      setRegIdMsg("3~15자리 영문자 또는 숫자를 입력해주세요.");
+      setIsRegId(true); //false로 바꾸기
       setRegIdMsg("아이디 중복 확인이 필요합니다.")
     }
   }
 
+  //비밀번호
   const onChangeRegPwd = (e) => {
     const inputPwd = e.target.value;
     setRegPwd(inputPwd);
@@ -86,7 +89,7 @@ const RegisterPage = () =>{
     }
   };
 
-  //�� ��й�ȣ 
+  //새 비밀번호 
   const onChangeRegPwdCk = (e) => {
     const inputPwdCk = e.target.value;
     setRegPwdCk(inputPwdCk); 
@@ -105,7 +108,7 @@ const RegisterPage = () =>{
     }
   }
 
-  //�г���
+  //닉네임
   const onChangeRegNick = (e) => {
     const inputNick = e.target.value;
     setRegNick(inputNick);
@@ -113,12 +116,12 @@ const RegisterPage = () =>{
       setIsRegNick(false);
       setRegNickMsg("2~15자리 한글,영문자,숫자를 입력해주세요.");
     } else if (!regNickCk) {
-      setIsRegNick(false);
+      setIsRegNick(true); //false로 바꾸기
       setRegNickMsg("닉네임 중복 확인이 필요합니다.")
     }
   }
   
-  //�̸�
+  //이름
   const onChangeRegName = (e) => {
     const inputName = e.target.value;
     setRegName(inputName);
@@ -134,7 +137,7 @@ const RegisterPage = () =>{
     }
   }
 
-  //�̸���
+  //이메일
   const onChangeRegEmail = (e) => {
     const inputEmail = e.target.value;
     setRegEmail(inputEmail);
@@ -400,7 +403,9 @@ const RegisterPage = () =>{
             </div>  
             <div className="regComplete">
               {!(isRegId && isRegPwd && isRegPwdCk && isRegNick && isRegName && isRegEmail && isRegPhone && isRegPhoneVer)
-              && <button className="regCompleteBut" onClick={onClickRegComplete}>가입하기</button>}            
+              && <button className="regNotCompleteBut">가입하기</button>}  
+              {(isRegId && isRegPwd && isRegPwdCk && isRegNick && isRegName && isRegEmail && isRegPhone && isRegPhoneVer)
+              && <button className="regCompleteBut" onClick={onClickRegComplete}>가입하기</button>}    
             </div> 
           </div>
         </div>

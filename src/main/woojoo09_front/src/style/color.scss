@@ -8,6 +8,7 @@ $lightGray1Alpha8: rgba(233, 236, 242, .8);
 
 $darkGray1 : #434573;
 $darkGray2 : #585473;
+$darkGray2Alpha3 : rgb(67, 69, 115, 0.3);
 
 $black1 : #030526;
 $black2 : #01020D;
@@ -16,12 +17,15 @@ $lightPurple1 : #A3A5D9;
 $lightPurple2 : #D5D7F2;
 $lightPurple3 : #BDBCFA;
 $lightPurple4 : #A9ABD9;
+//--
 $lightPurple4Alpha5 : rgba(169, 171, 217, 0.5);
 
 $purple1 : #8679d9;
-$purple1Alpha4 : rgba(134, 121, 217, .4);
+$purple1Alpha4 : rgba(134, 121, 217, 0.4);
 $purple2 : #A37EF2;
 $purple2Alpha6 : rgba(163, 126, 242, .6);
+//--
+$purple2Alpha3 : #a37ef24d;
 
 $bluePurple1 : #828FD9;
 $bluePurple1Alpha6 : rgba(130, 143, 217, .4);
@@ -34,4 +38,4 @@ $bluePurple4 : hsla(236, 61%, 62%, 0.45);
 $yellow1 : #F7E5B0;
 $yellow2 : #F2DFA7;
 $yellow3 : #FAEF91;
-$yellow3Alpha4 : rgba(250, 239, 145, .4);
+$yellow3Alpha4 : rgba(250, 239, 145, 0.4);

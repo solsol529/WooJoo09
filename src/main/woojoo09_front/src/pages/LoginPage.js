@@ -6,12 +6,67 @@ import { Link, useLocation } from "react-router-dom";
 const LoginPage = () =>{
   const { state } = useLocation();
 
-  const [inputLoginId, setInputLoginId] = useState('');
-  const [inputLoginPwd, setInputLogimPwd] = useState('');
+  const [loginId, setLoginId] = useState('');
+  const [loginPwd, setLoginPwd] = useState('');
 
-  //�����޽���
+  //에러메시지
+  const [loginIdOkMsg, setLoginIdOkMsg] = useState('');
   const [loginIdMsg, setLoginIdMsg] = useState('');
+
+  const [loginPwdOkMsg, setLoginPwdOkMsg] = useState('');
   const [loginPwdMsg, setLoginPwdMsg] = useState('');
+
+  //유효성 검사
+  const [isLoginId, setIsLoginId] = useState(false);
+  const [isLoginPwd, setIsLoginPwd] = useState(false);
+
+  //정규식
+  const idRegEx = /^[A-za-z0-9]{3,15}$/g;
+  const pwdRegEx = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
+
+  const onChangeLoginId = (e) => {
+    const loginInputId = e.target.value;
+    setLoginId(loginInputId);
+    // if(loginInputId.length > 15 || loginInputId.length < 3) {
+    //   setIsLoginId(false);
+    //   setLoginIdMsg("3~15자리 영문자 또는 숫자를 입력해주세요.");
+    // }
+    // else{
+    //   setIsLoginId(false);
+    //   setLoginIdMsg("아이디 중복 확인이 필요합니다.")
+    // }
+    
+    if(!idRegEx.test(loginInputId)) {
+      setIsLoginId(false);
+      setLoginIdMsg("3~15자리 영문자 또는 숫자를 입력해주세요.");
+    } else {
+      setIsLoginId(true);
+      setLoginIdOkMsg("");
+    }
+  }
+
+  const onChangeLoginPwd = (e) => {
+    const loginInputPwd = e.target.value;
+    setLoginPwd(loginInputPwd);
+    // if(pwdRegEx.test(loginInputPwd)) {
+    //   setIsLoginPwd(true);
+    //   setLoginPwdOkMsg("사용 가능한 비밀번호 입니다.");
+    // } else if (loginInputPwd.length === 0) {
+    //   setIsLoginPwd(false);
+    //   setLoginPwdMsg("비밀번호는 필수 항목 입니다.")
+    // } else {
+    //   setIsLoginPwd(false);
+    //   setLoginPwdMsg("8~20자리 소문자, 숫자, 특수문자를 입력해주세요.")
+    // }
+
+    if(!pwdRegEx.test(loginInputPwd)) {
+      setIsLoginPwd(false);
+      setLoginPwdMsg("8~20자리 소문자, 숫자, 특수문자를 입력해주세요.");
+    } else {
+      setIsLoginPwd(true);
+      setLoginPwdOkMsg("");
+    }
+  }
 
   const onClickGoToTermAgree = () => {
     window.location.replace("/termagree")
@@ -31,10 +86,20 @@ const LoginPage = () =>{
           <p style={{color: "red", whiteSpace: "pre-line", textAlign: "center"}}>{state}</p>
           <div className="loginMain">
             <div className="loginSmallBox">
-              <input type="text" className="loginInput" placeholder="아이디"></input>
+              <input type="text" value={loginId} className="loginInput" placeholder="아이디"
+              onChange={onChangeLoginId}></input>
+            </div>
+            <div className="loginErrMsg">
+              {!isLoginId && <span className="loginIdErr">{loginIdMsg}</span>}
+              {isLoginId && <span className="loginIdOk">{loginIdOkMsg}</span>}
             </div>
             <div className="loginSmallBox">
-              <input type="password" className="pwdInput" placeholder="비밀번호"></input>
+              <input type="password" value={loginPwd} className="pwdInput" placeholder="비밀번호"
+              onChange={onChangeLoginPwd}></input>
+            </div>
+            <div className="loginErrMsg">
+              {!isLoginPwd && <span className="loginIdErr">{loginPwdMsg}</span>}
+              {isLoginPwd && <span className="loginIdOk">{loginPwdOkMsg}</span>}
             </div>   
             <div className="IdPwdSearchButtonBox"> 
             <Link to="/findid" className="IdPwdSearchButton">아이디 찾기</Link>
@@ -44,8 +109,9 @@ const LoginPage = () =>{
             <div>
               <button className="RegButton" onClick={onClickGoToTermAgree}>회원가입</button>
             </div>
-            <div>         
-              <button className="kakaoLogin">카톡로그인</button>
+            <div className="kakaoLogin">         
+              {/* <button className="kakaoLogin"><img src="../resources/kakao_login_medium_wide.png" /></button> */}
+              <input type="button" className="kakaoLoginBut"></input>
             </div> 
           </div>
         </div>

@@ -23,9 +23,9 @@ const ChatList = () =>{
                   <NavLink to="/chat" onChange={onChangeSeller} >
                     <p>
                       <img src={fashion} alt="패션"/>
-                      <p className="chatDetail">닉네임</p>
+                      <p className="chatDetailNick">닉네임</p>
                       <p className="chatTime">시간</p>
-                      <div>최근 글</div>
+                      <div className="chatRecent">최근 글</div>
                       <p className="chatAlert"/>
                     </p>
                   </NavLink> 
@@ -37,7 +37,7 @@ const ChatList = () =>{
                   <NavLink to="/chatbuy">
                     <p className="chatlistDetail">
                       <img src={fashion} alt="패션"/>
-                      <p className="chatDetail">닉네임</p>
+                      <p  className="chatDetailNick">닉네임</p>
                       <p className="chatTime">시간</p>
                       <div>최근 글</div>
                       <p className="chatAlert"/>
@@ -45,6 +45,125 @@ const ChatList = () =>{
                   </NavLink> 
                 </div>
             </div>
+                
+            <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>
+
+            <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>
+            <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>
+            <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>
+            <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>
+            <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>    <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>
+            <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>
+            <div className="chatDetail">
+              <div className="chatButton">
+                  <NavLink to="/chatbuy">
+                    <p className="chatlistDetail">
+                      <img src={fashion} alt="패션"/>
+                      <p  className="chatDetailNick">닉네임</p>
+                      <p className="chatTime">시간</p>
+                      <div>최근 글</div>
+                      <p className="chatAlert"/>
+                    </p>
+                  </NavLink> 
+                </div>
+            </div>
+
     </div>
   );
 }
