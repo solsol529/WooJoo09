@@ -4,6 +4,8 @@ import com.WooJoo09.repository.TradeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -15,8 +17,12 @@ import java.util.List;
 public class TradeService {
     private final TradeRepository tradeRepository;
 
-    public List<?> tradeSearchSelect(String target) {
-        return tradeRepository.findTradeByProduct("%" + target + "%");
+    public Page<?> tradeSearchSelect(String target, int page, int size) {
+        return tradeRepository.findTradeByProduct("%" + target + "%", PageRequest.of(page, size));
+    }
+
+    public Page<?> tradeSearchSelectLogin(String target, int memberNum, int page, int size) {
+        return tradeRepository.findTradeByProductLogin("%" + target + "%", memberNum, PageRequest.of(page, size));
     }
 
 }

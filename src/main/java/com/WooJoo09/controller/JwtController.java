@@ -58,7 +58,7 @@ public class JwtController {
         // db에 있으면 db에 있는 암호화된 비번이랑 Data.get("pwd")를 matches 함수로비교(test에 있음 함수 찾아서 쓰면 됨....) ->
         // matches가 true면 로그인 성공 된 거니까 토큰가을 발급하는데, 앞에서 찾았던 memberNum으로 토큰 발급
 
-        Long memberNum = Long.valueOf(123); // 이부분이 db에서 id로 가지고 온 memberNum
+        long memberNum = Long.valueOf(10); // 이부분이 db에서 id로 가지고 온 memberNum
         String memberNumStr = Long.toString(memberNum);
         String jwtToken = tokenCreate(memberNumStr); // 회원번호를 가지고 토큰 만들기
         // 쿠키 만들기
@@ -110,7 +110,9 @@ public class JwtController {
     // 토큰 인증 함수
     public String tokenCheck(String token) throws Exception {
         Claims claims = jwtProvider.parseJwtToken(token); // Bearer 제거안하는 함수
-        return claims.getSubject(); // 토큰 만들때 사용한 memberNum 리턴
+        String memberNum = claims.getSubject();
+        log.info("tokencheck 함수 토큰에 담긴 회원정보 memberNum " + memberNum);
+        return memberNum; // 토큰 만들때 사용한 memberNum 리턴
     }
 //
 //    @PostMapping(value = "/checkTokenCookie")
@@ -138,6 +140,7 @@ public class JwtController {
         Map<String, String> result = new HashMap<>();
         if(token != null){
             String memberNum = tokenCheck(token);
+            log.info("/tokencheck 토큰에 담긴 회원정보 memberNum" + memberNum);
             result.put("result", "OK");
         }else{
             result.put("result", "NOK");
