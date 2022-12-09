@@ -21,7 +21,13 @@ const ChangeMemberInfo = (props) =>{
   const getNickname = window.localStorage.getItem("userNickname");
   const getPwd =  window.localStorage.getItem("userPwd");
 
+  const [mail,setMail] = useState('');
   const [inputEmail, setInputEmail] = useState('');
+  const [disabled, setDisabled] = useState(true);
+
+  const [changeHost,setChangeHost] = useState(false);
+
+
 
   //오류메시지
   const [pwMessage, setPwMessage] = useState("");
@@ -34,10 +40,10 @@ const ChangeMemberInfo = (props) =>{
 
     
     //유효성 검사
-    const [isEmail, setIsEmail] = useState(false)
+  const [isEmail, setIsEmail] = useState(false)
 
     //오류메시지
-    const [emailMessage, setEmailMessage] = useState("");
+  const [emailMessage, setEmailMessage] = useState("");
 
   const handleImage = (event) => {
     const image = event.target.files[0];
@@ -227,12 +233,17 @@ const ChangeMemberInfo = (props) =>{
       }        
   }
 
-
+  const handleClickRadioButton = (e) => {
+    console.log("선택한 값 : " + e.target.value);
+    setMail(e.target.value);
+    setDisabled(false);
+  }
+  //test
   return(
     <div className="changememberinfo">
       <p>회원정보 수정</p>
 
-      {!changeProfileImg && !changeEmail && !changePwd  && <p onClick={()=>{setChangeNickname(true)}}
+      {!changeProfileImg && !changeEmail && !changePwd  && !changeReceiveAd && !changeHost && <p onClick={()=>{setChangeNickname(true)}}
       onDoubleClick={()=>{setChangeNickname(false)}}>닉네임 변경</p>}
       {changeNickname && 
         <div className="pfImgChange">
@@ -248,16 +259,16 @@ const ChangeMemberInfo = (props) =>{
             <input type="text" value={inputPwd2} className="pwd_change_input" onChange={onChangepwd2}></input>
             </p>
             <div className="pwd_hint">
-                {inputPwd2.length > 0 && (
-                <span className={`message ${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)}
+                {/* {inputPwd2.length > 0 && (
+                <span className={`message ${isPw ? 'success' : 'error'}`}>{pwMessage}</span>)} */}
             </div>
             <span className="pwd_change_yes" onClick={onClickPwdUpdate1}>변경</span>
-            <Link to='/memberinfo' className="pwd_cancle">취소</Link>
+            {/* <Link to='/member' className="pwd_cancle">취소</Link> */}
          </div>
         </div>
       }
 
-      {!changeProfileImg && !changeEmail && !changeNickname && <p onClick={()=>{setChangePwd(true)}}
+      {!changeProfileImg && !changeEmail && !changeNickname && !changeReceiveAd && !changeHost && <p onClick={()=>{setChangePwd(true)}}
       onDoubleClick={()=>{setChangePwd(false)}}>비밀번호 변경</p>}
       {changePwd && 
         <div className="pfImgChange">
@@ -285,56 +296,53 @@ const ChangeMemberInfo = (props) =>{
                 <span className={`message ${isConPw ? 'success' : 'error'}`}>{conPwMessage2}</span>)}
             </div>
             <span className="pwd_change_yes" onClick={onClickPwdUpdate1}>변경</span>
-            <Link to='/memberinfo' className="pwd_cancle">취소</Link>
          </div>
         </div>
       }
       
 
-      {!changeProfileImg && !changePwd && !changeNickname &&  <p onClick={()=>{setChangeEmail(true)}}
+      {!changeProfileImg && !changePwd && !changeNickname && !changeReceiveAd && !changeHost && <p onClick={()=>{setChangeEmail(true)}}
       onDoubleClick={()=>{setChangeEmail(false)}}>이메일 변경</p>}
           {changeEmail &&
-            <div>
-              <p className="email_current">현재 이메일 주소</p>
-              {memberInfo && memberInfo.map(member => (
+            <div className="pfImgChange">
+              <p className="email_current">현재 이메일 주소 : pompom1234@naver.com</p>
+              {/* {memberInfo && memberInfo.map(member => (
                   <div key={member.nickname}>
                       <p className="email_current2">{member.email}</p>
                   </div>
-              ))}
-              {/* <div >
-                      <p className="email_current2">rabbit@gmail.com</p>
-              </div> */}
+              ))} */}
               <p className="email_new">
-                  <p>새 이메일 주소</p>
-                  <input type="email" value={inputEmail} className="email_change_input" onChange={onChangemail}></input>
+                  <p>새 이메일 주소
+                  <input type="email" value={inputEmail} className="pwd_change_input" onChange={onChangemail}></input>
+                  </p>
               </p>
               <div className="email_hint">
                   {inputEmail.length > 0 && (
                   <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
               </div>
               <span className="email_change_yes" onClick={onClickEmailUpdate}>변경</span>
-              <Link to='/memberinfo' className="email_cancle">취소</Link>
         </div>
         }
 
-      {/* {!changeProfileImg && !changePwd && !changeEmail && !changeNickname && <p onClick={()=>{setChangeReceiveAd(true)}}
+      {!changeProfileImg && !changePwd && !changeEmail && !changeNickname && !changeHost &&<p onClick={()=>{setChangeReceiveAd(true)}}
             onDoubleClick={()=>{setChangeReceiveAd(false)}}>광고 수신 여부 변경</p>}
             {changeReceiveAd && 
               <div className="pfImgChange">
                 <div className="pwdchange_container">
-                  <p className="pwd_current">현재 광고 수신 여부는 허용입니다.
-                  </p>
-                    <input type="radio">허용</input>
-                    <input type="radio">거부</input>
-                  <span className="pwd_change_yes" onClick={onClickPwdUpdate1}>변경</span>
-                  <Link to='/memberinfo' className="pwd_cancle">취소</Link>
+                  <p className="pwd_current">현재 광고 수신 여부는 허용입니다.</p>
+                    <div>
+                    <label><input type="radio" name="Ad"/>허용</label>
+                    <label><input type="radio" name="Ad"/>거부</label>
+                    </div>
+                    
+                  <span className="pwd_change_yes" onClick={onClickPwdUpdate1} disabled ={disabled}>변경</span>
               </div>
               </div>
-            } */}
+            }
 
 
 
-      {!changeEmail && !changePwd && !changeNickname && <p onClick={()=>{setChangeProfileImg(true) }}
+      {!changeEmail && !changePwd && !changeNickname && !changeReceiveAd && !changeHost && <p onClick={()=>{setChangeProfileImg(true) }}
       onDoubleClick={()=>{setChangeProfileImg(false)}}>프로필 사진 변경</p>}
       {changeProfileImg && 
         <div className="pfImgChange">
@@ -354,6 +362,36 @@ const ChangeMemberInfo = (props) =>{
           <button type="button" >업로드한 이미지로 프로필 변경</button>
         </div>
       }
+
+      
+    {!changeEmail && !changeProfileImg && !changePwd && !changeNickname && !changeReceiveAd && <p onClick={()=>{setChangeHost(true)}}
+      onDoubleClick={()=>{setChangeHost(false)}}>주최자 소개 변경</p>}
+          {changeHost &&
+            <div className="pfImgChange">
+              <p className="email_current">현재 주최자 소개는 '안녕하세요 000의 상점입니다' 입니다.</p>
+              {memberInfo && memberInfo.map(member => (
+                  <div key={member.nickname}>
+                      <p className="email_current2">{member.email}</p>
+                  </div>
+              ))}
+              {/* <div >
+                      <p className="email_current2">rabbit@gmail.com</p>
+              </div> */}
+              <p className="email_new">
+                  <p>새 주최자 소개
+                  <input type="email" value={inputEmail} className="pwd_change_input" onChange={onChangemail}></input>
+                  </p>
+              </p>
+              <div className="email_hint">
+                  {inputEmail.length > 0 && (
+                  <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
+              </div>
+              <span className="email_change_yes" onClick={onClickEmailUpdate}>변경</span>
+              {/* <Link to='/member' className="email_cancle">취소</Link> */}
+        </div>
+        }
+
+
     </div>
   );
 };

@@ -65,7 +65,12 @@ const FindPwdPage = () =>{
 
 
   const onClickFindPwdCode = () => {
-
+    const findPwdCodeInput = document.getElementById('findPwdCodeInput');
+    if(findPwdCodeInput.style.display !== 'none') {
+      findPwdCodeInput.style.display = 'none';
+    } else {
+      findPwdCodeInput.style.display = 'block';
+    }
   }
 
   const onClickFindPwd = () => {
@@ -103,7 +108,7 @@ const FindPwdPage = () =>{
               && <button className="findPwdCodeBtn" onClick={onClickFindPwdCode}>인증번호 받기</button>}    
             </div>
             <div className="findPwdSmallBox">
-            <input type="text" className="findPwdCodeInput" placeholder="인증번호를 입력 해주세요."></input>
+            <input type="text" id="findPwdCodeInput" className="findPwdCodeInput" placeholder="인증번호 입력"></input>
             </div>
             </div>
               <button className="pwdSearchButton" onClick={onClickFindPwd}>확인</button>           

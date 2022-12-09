@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import api from "../api/api";
 const RegisterPage = () =>{
   const [regId, setRegId] = useState('');
   const [regPwd, setRegPwd] = useState('');
@@ -16,6 +17,7 @@ const RegisterPage = () =>{
   const [regNickCk, setRegNickCk] = useState(false);
   
   const [isRegId, setIsRegId] = useState(false);
+  const [isRegIdCk, setIsRegIdCk] = useState(false);
   const [isRegPwd, setIsRegPwd] = useState(false);
   const [isRegPwdCk, setIsRegPwdCk] = useState(false);
   const [isRegNick, setIsRegNick] = useState(false);
@@ -23,6 +25,8 @@ const RegisterPage = () =>{
   const [isRegEmail, setIsRegEmail] = useState(false);
   const [isRegPhone, setIsRegPhone] = useState(false);
   const [isRegPhoneVer, setIsRegPhoneVer] = useState(true); //false로 바꾸기
+  const [isRegOnPhone, setIsRegOnPhone] = useState(false);
+  const [isRegVerifyCode, setIsRegVerifyCode] = useState(false);
   
   const [regIdOkMsg, setRegIdOkMsg] = useState('');
   const [regIdMsg, setRegIdMsg] = useState('');
@@ -48,16 +52,32 @@ const RegisterPage = () =>{
   const [phoneVerMsg, setPhoneVerMsg] = useState('');
   const [phoneVerOkMsg, setPhoneVerOkMsg] = useState('');
   
-    //정규식
-    const idRegEx = /^[A-za-z0-9]{3,15}$/g;
-    const pwdRegEx = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
-    const nickRegEx = /^[가-힣|a-z|A-Z|0-9|]+$/;
-    const nameRegEx = /^[가-힣|a-z|A-Z|]+$/;
-    const emailRegEx = /^([a-z]+\d*)+(\.?\w+)+@\w+(\.\w{2,3})+$/; //정규식 다시 찾아보기
-    const phoneRegEx = /^\d{2,3}-\d{3,4}-\d{4}$/;  
+  //정규식
+  const idRegEx = /^[A-za-z0-9]{3,15}$/g;
+  const pwdRegEx = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
+  const nickRegEx = /^[가-힣|a-z|A-Z|0-9|]+$/;
+  const nameRegEx = /^[가-힣|a-z|A-Z|]+$/;
+  const emailRegEx = /^([a-z]+\d*)+(\.?\w+)+@\w+(\.\w{2,3})+$/; //정규식 다시 찾아보기
+  const phoneRegEx = /^\d{2,3}-\d{3,4}-\d{4}$/;  
+  const phoneCodeRegEx = /^[0-9]+$/;
 
+
+  //가입완료 버튼
   const onClickRegComplete = () => {
-    window.location.replace("/celebrate");
+    const fetchData = async () => {
+      try {
+        var birthDate = new Date(form.year+"-"+form.month+"-"+form.day);
+        console.log(date);
+        const response = await api.memberReg(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone);
+        if(response.data === true) {
+        localStorage.removeItem("adOk")
+        window.location.replace("/celebrate");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
   }
 
   //아이디
@@ -72,6 +92,35 @@ const RegisterPage = () =>{
       setRegIdMsg("아이디 중복 확인이 필요합니다.")
     }
   }
+
+  //아이디 중복확인
+  const onClickRegIdDup = () => {
+    console.log("아이디 중복체크 할 때 들어온 값" + regId);
+    if((regId.length !== 0) && (regId.length < 16)) {
+      const fetchSearchData = async () => {
+        try {
+          const response = await api.memberIdDup(regId);
+          if(response.data.result === "OK") {
+            setIsRegIdCk(true);
+            setIsRegId(true);
+            setRegIdMsg("사용 가능한 아이디 입니다.");
+            setIsRegOnPhone(true);
+          } else if (response.data.result === "NOK") {
+            setIsRegIdCk(false);
+            setIsRegId(true);
+            setRegIdMsg("이미 존재하는 아이디 입니다.");
+          }
+        } catch (e) {
+          console.log(e);
+        }
+      };
+      fetchSearchData();
+    } else {
+      setIsRegIdCk(false);
+      setIsRegId(false);
+      setRegIdMsg("아이디 형식을 확인 후 중복 체크를 해주세요.")
+    }
+  };
 
   //비밀번호
   const onChangeRegPwd = (e) => {
@@ -190,6 +239,7 @@ const RegisterPage = () =>{
     }
   }
 
+  //전화번호 입력
   const onChangeRegPhone = (e) => {
     const inputPhone = e.target.value;
     setRegPhone(e.target.value);
@@ -227,7 +277,28 @@ const RegisterPage = () =>{
     }
   }, [regPhone]);
 
+  //인증번호 받기 버튼
+  const onClickGetRegPhoneCode = () => {
+    const regPhoneCodeInput = document.getElementById('regPhoneCodeInput');
+    const regPhoneCodeOk = document.getElementById('regPhoneCodeOk');
 
+    if((regPhoneCodeInput.style.display !== 'none') && (regPhoneCodeOk.style.display !== 'none')) {
+      regPhoneCodeInput.style.display = 'none';
+      regPhoneCodeOk.style.display = 'none';
+    } else {
+      regPhoneCodeInput.style.display = 'block';
+      regPhoneCodeOk.style.display = 'block';
+    };
+  }
+
+  //인증번호 입력 
+  const onChangeRegPhoneCodeInput = (e) => {
+    const regVerifyCode = e.target.value
+    setRegVerifyCode(regVerifyCode);
+    if(phoneCodeRegEx.test(regVerifyCode)) {
+    setIsRegVerifyCode(true);
+    }
+  }
 
   return(
     <div className="registerwrapper">
@@ -245,7 +316,7 @@ const RegisterPage = () =>{
                 onChange={onChangeRegId}></input>              
               </div>
               <div className="regIdOverlap">
-                <button>중복확인</button>
+                <button className="regIdDupBut" onClick={onClickRegIdDup}>중복확인</button>
               </div>
             </div>
             <div className="regErrMsg">
@@ -289,7 +360,7 @@ const RegisterPage = () =>{
                 onChange={onChangeRegNick}></input>              
               </div>
               <div className="regIdOverlap">
-                <button>중복확인</button>
+                <button className="regNickDupBut">중복확인</button>
               </div>
             </div>
             <div className="regErrMsg">
@@ -383,7 +454,11 @@ const RegisterPage = () =>{
                 onChange={onChangeRegPhone}></input>              
               </div>
               <div className="regIdOverlap">
-                <button>인증번호 받기</button>
+
+                {!isRegPhone && <button className="notRegGetPhoneCodeBut">인증번호 받기</button>}
+                {isRegPhone && <button className="regGetPhoneCodeBut" onClick={onClickGetRegPhoneCode}>인증번호 받기</button>}
+
+                
               </div>            
             </div>
             <div className="regErrMsg">
@@ -395,10 +470,14 @@ const RegisterPage = () =>{
                 <label></label>
               </div>
               <div className="regInputOut">
-                <input type="tel" className="regPhoneCodeInput" placeholder="인증번호"></input>              
+                <input type="tel" value={regVerifyCode} id="regPhoneCodeInput" className="regPhoneCodeInput" placeholder="인증번호"
+                onChange={onChangeRegPhoneCodeInput}></input>              
               </div>
               <div className="regIdOverlap">
-                <button>인증번호 확인</button>
+
+                {!isRegVerifyCode && <button id="regPhoneCodeOk" className="notRegVerifyCodeOkBut">인증번호 확인</button>}
+                {isRegVerifyCode && <button id="regPhoneCodeOk" className="regVerifyCodeOkBut">인증번호 확인</button>}
+
               </div>            
             </div>  
             <div className="regComplete">

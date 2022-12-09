@@ -51,15 +51,31 @@
     // width: 120px;
     
 }
-.regIdOverlap > button {
+// .regIdOverlap > button {
+//     width: 100%;
+//     height: 46px;
+//     border-radius: 10px;
+//     color: #8679D9;;
+//     background-color: rgb(255, 255, 255);
+//     border: 1px solid #8679D9;
+//     cursor: pointer;       
+// }
+.regIdDupBut, .regNickDupBut, .regGetPhoneCodeBut, .regVerifyCodeOkBut {
     width: 100%;
     height: 46px;
     border-radius: 10px;
     color: #8679D9;;
     background-color: rgb(255, 255, 255);
     border: 1px solid #8679D9;
-    cursor: pointer;
-       
+    cursor: pointer; 
+}
+.notRegGetPhoneCodeBut, .notRegVerifyCodeOkBut {
+    width: 100%;
+    height: 46px;
+    border-radius: 10px;
+    color: rgb(184, 184, 184);
+    background-color: rgb(255, 255, 255);
+    border: 1px solid rgb(184, 184, 184);
 }
 .regBirthOut {
     // display: inline-flex;
@@ -89,6 +105,9 @@
 .regBirthDay {
     // width: 86px;
     
+}
+#regPhoneCodeInput, #regPhoneCodeOk {
+    display: none;
 }
 .regErrMsg {
     text-align: right;

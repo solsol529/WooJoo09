@@ -144,7 +144,30 @@ const api = {
       target: target
     }
     return await axios.post(BASE_URL+ "dislikeinsert", dislikeInsertCmd, HEADER);
+  },  
+  //회원가입
+  memberReg: async function(regId, regPwd, regNick, regName, regEmail, form, regPhone) {
+    const regCheck = {
+      regId : regId,
+      regPwd : regPwd,
+      regNick : regNick,
+      regName : regName,
+      regEmail : regEmail,
+      form : form,
+      regPhone : regPhone,
+      adOk : localStorage.getItem("adOk")
+    }
+    return await axios.post(BASE_URL + "MemberReg", regCheck, HEADER);
   },
+
+  //아이디 중복체크
+  memberIdDup: async function(regId) {
+    const regIdDup = {
+      regId : regId
+    }
+    return await axios.post(BASE_URL + "MemberIdDup", regIdDup, HEADER);
+  }
+
 }
 
 export default api;

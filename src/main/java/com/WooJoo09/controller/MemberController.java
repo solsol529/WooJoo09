@@ -8,6 +8,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -19,15 +21,16 @@ public class MemberController {
 
     // Service 로직 연결
     private MemberService memberService;
-    public MemberController(MemberService memberService) {
+    public  MemberController(MemberService memberService) {
         this.memberService = memberService;
     }
     public ResponseEntity<List<Member>> findMember() {
         return ResponseEntity.ok().body(memberService.findMember());
     }
+
     //회원가입
     @PostMapping("/memberinsert")
-    public ResponseEntity<?> registerMember(@RequestBody Map<String, String> regData) throws ParseException {
+    public ResponseEntity<Boolean> registerMember(@RequestBody Map<String, String> regData) throws ParseException {
         String id = regData.get("regId");
         String pwd = regData.get("regPwd");
         String nickname = regData.get("regNick");
@@ -44,6 +47,4 @@ public class MemberController {
             return new ResponseEntity(false, HttpStatus.BAD_REQUEST);
         }
     }
-
-
 }
