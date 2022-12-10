@@ -13,8 +13,36 @@ import chatBlack from "../resources/chat_black.png";
 import chatMovingBlack from "../resources/chatMoving_black.gif";
 import profileBlack from "../resources/profile_black.png";
 import { categories } from "../util/util";
+import api from "../api/api"
 
-const Header = () =>{
+const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
+
+  const [NewChat, setNewChat] = useState(0);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.chatReadCheck();
+        if(response.data.state === 'login'){
+          changeIsLogin(true);
+          setNewChat(response.data.countUnreadChat);
+          // console.log(response.data.countUnreadChat);
+        } else if(response.data.state === 'admin'){
+          changeIsLogin(true);
+          changeIsAdmin(true);
+        }
+        else{
+          changeIsLogin(false);
+        }
+      } catch(e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+    // setTimeout(() => { 
+    //   fetchData();
+    // }, 30000); // 30초마다 한번
+  });
 
 
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -49,9 +77,18 @@ const Header = () =>{
           <img src={search} alt="검색"/>
         </div>
         <div className="headerLogin">
-          {/* <button>로그인</button> */}
-          <Link to="/member"><img src={scrollPosition < 150 ? profileBlack : profileWhite} alt="내정보"/></Link>
-          <Link to="/chatlist"><img src={scrollPosition < 150 ? chatMovingBlack : chatMovingWhite} alt="채팅"/></Link>
+          { isLogin ?
+          <>
+          <Link to="/member">
+            <img src={scrollPosition < 150 ? profileBlack : profileWhite} alt="내정보"/>
+          </Link>
+          <Link to="/chatlist">
+            {NewChat === 0 ?
+              <img src={scrollPosition < 150 ? chatBlack : chatWhite} alt="채팅"/>
+              : <img src={scrollPosition < 150 ? chatMovingBlack : chatMovingWhite} alt="채팅"/>}
+          </Link>
+          </> : (isAdmin? <button>관리자(admin)</button>: 
+          <button>로그인</button>)}
          
         </div>
       </div>

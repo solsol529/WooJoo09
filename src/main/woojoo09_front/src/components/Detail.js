@@ -5,7 +5,7 @@ import profile from "../resources/profile_sample.png"
 import grade1 from "../resources/grade_icon1_wreck.png"
 import star from "../resources/star.png";
 
-const Detail = () =>{
+const Detail = ({isLogin, isAdmin}) =>{
 
   const [displayMap, setDisplayMap] = useState(false);
   const [searchPlace, setSearchPlace] = useState("경희대학교 정문");
@@ -97,8 +97,8 @@ const Detail = () =>{
           <img className="cardStar" src={star} alt="스크랩"/>
         </div>
       </div>
-      <button>참여하기</button>
-      <p className="detailErrMsg">공동구매에 참여하려면 <Link to="/main">로그인</Link>하세요!</p>
+      {isLogin? <button>참여하기</button> : <button disabled="true">참여하기</button>}
+      {!isLogin && <p className="detailErrMsg">공동구매에 참여하려면 <Link to="/main">로그인</Link>하세요!</p>}
       <div className="detailProfile">
         <div>
           <img src={profile} alt="기본프로필"/>

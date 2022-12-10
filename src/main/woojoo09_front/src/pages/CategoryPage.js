@@ -10,16 +10,23 @@ const CategoryPage = () =>{
   let { categoryName } = useParams();
   const navigate = useNavigate();
 
-  const [isLogin, setisLogin] = useState("");
+  const [isLogin, setIsLogin] = useState("");
+  const [isAdmin, setIsAdmin] = useState(false);
+  const changeIsLogin = (value) => {
+    setIsLogin(value);
+  };
+  const changeIsAdmin = (value) => {
+    setIsAdmin(value);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.tokencheck();
         if(response.data.result === "OK"){
-          setisLogin(true);
+          setIsLogin(true);
         } else{
-          setisLogin(false);
+          setIsLogin(false);
         }
       } catch (e) {
         console.log(e);
@@ -28,20 +35,26 @@ const CategoryPage = () =>{
     fetchData();
   }, []);
 
-  if (!isLogin){
-    navigate("/login", {state : "유효하지 않은 접근입니다\n로그인 후 이용해 주세요"});
-  } else{
+  // if (!isLogin){
+  //   navigate("/login", {state : "유효하지 않은 접근입니다\n로그인 후 이용해 주세요"});
+  // } else{
     return(
       <>
       {/* <Loader/> */}
       <div className="categoryWrapper">
-        <Header/>
-        <Main categoryName = {categoryName}/>
+        <Header 
+        isLogin={isLogin} 
+        changeIsLogin={changeIsLogin}
+        isAdmin={isAdmin}
+        changeIsAdmin={changeIsAdmin}/>
+        <Main categoryName = {categoryName}
+        isLogin={isLogin}
+        isAdmin={isAdmin}/>
         <Footer/>
       </div>
       </>
     );
-  }
+  // }
   
 }
 export default CategoryPage

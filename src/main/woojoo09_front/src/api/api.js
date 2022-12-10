@@ -24,9 +24,11 @@ const api = {
     }
     return await axios.post(BASE_URL+ "test", testCmd, HEADER);
   },
-  tradeSearchSelect: async function(target) {
+  tradeSearchSelect: async function(target, page, size) {
     const searchSelectCmd = {
-      target: target
+      target: target,
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "searchselect", searchSelectCmd, HEADER);
   },
@@ -36,11 +38,13 @@ const api = {
     }
     return await axios.post(BASE_URL+ "chatreadcheck", chatReadCheckCmd, HEADER);
   },
-  tradeSelect: async function(option, city, town) {
+  tradeSelect: async function(option, city, town, page, size) {
     const tradeSelectCmd = {
       option: option,
       city: city,
-      town: town
+      town: town,
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "tradeselect", tradeSelectCmd, HEADER);
   },

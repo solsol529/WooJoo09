@@ -16,6 +16,7 @@ import TermPage from "./pages/TermPage";
 import LoginPage from "./pages/LoginPage"
 import FindIdCompletePage from "./pages/FindIdCompletePage"
 import MyTradePage from "./pages/MyTradePage"
+import SearchPage from "./pages/SearchPage"
 
 import "./style/common.scss";
 import "./style/detail.scss";

@@ -41,20 +41,38 @@ public class TradeController {
         }else return ResponseEntity.ok().body(tradeService.tradeSearchSelect(target, page, size));
     }
 
-//    @PostMapping("/tradeselect")
-//    public ResponseEntity<List<?>> tradeSelect(@RequestBody Map<String, String> Data) {
-//        String option = Data.get("option");
-//        int size = Integer.parseInt(Data.get("size"));
-//        int page = Integer.parseInt(Data.get("page"));
-//        String city = Data.get("city");
-//        String town = Data.get("town");
-//        switch (option){
-//            case "recommend":
-//                if(town != null){
-//                    //return ResponseEntity.ok().body(tradeService.findTradeRecommendTown());
-//                }
-//        }
-//        // PageRequest.of(page, size, sort)
-//        //PageRequest.of(page, size)
-//    }
+    @PostMapping("/tradeselect")
+    public ResponseEntity<Page<?>> tradeSearchOption(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        int page = Integer.parseInt(Data.get("page"));
+        int size = Integer.parseInt(Data.get("size"));
+        String option = Data.get("option");
+        String city = Data.get("city");
+        String town = Data.get("town");
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            if (memberNumStr.equals("admin")) {
+                if (town.length() != 0){
+                    return ResponseEntity.ok().body(tradeService.tradeSelectOptionTown(option, town, page, size));
+                } else if (city.length() != 0){
+                    return ResponseEntity.ok().body(tradeService.tradeSelectOptionCity(option, city, page, size));
+                } else return ResponseEntity.ok().body(tradeService.tradeSelectOption(option, page, size));
+            }
+            int memberNum = Integer.parseInt(memberNumStr);
+            if (town.length() != 0){
+                return ResponseEntity.ok().body(tradeService.tradeSelectOptionTownLogin(option, town, memberNum, page, size));
+            } else if (city.length() != 0){
+                return ResponseEntity.ok().body(tradeService.tradeSelectOptionCityLogin(option, city, memberNum, page, size));
+            } else return ResponseEntity.ok().body(tradeService.tradeSelectOptionLogin(option, memberNum, page, size));
+        }
+        else {
+            if (town.length() != 0){
+                return ResponseEntity.ok().body(tradeService.tradeSelectOptionTown(option, town, page, size));
+            } else if (city.length() != 0){
+                return ResponseEntity.ok().body(tradeService.tradeSelectOptionCity(option, city, page, size));
+            } else return ResponseEntity.ok().body(tradeService.tradeSelectOption(option, page, size));
+        }
+    }
 }

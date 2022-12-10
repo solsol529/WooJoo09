@@ -4,24 +4,87 @@ import Card from "./Card";
 import { Link } from "react-router-dom";
 import api from "../api/api"
 import { getCookie, setCookie } from "../util/cookie";
+import Loader from "./Loader";
 
-const Main = ({categoryName, target})=>{
+const Main = ({categoryName, target, isLogin, isAdmin})=>{
   const [lineUp, setLineUp] = useState('recommand');
-  const [city, setCity] = useState('none');
-  const [town, setTown] = useState('all');
+  const [city, setCity] = useState('');
+  const [town, setTown] = useState('');
+
+  const [lists, setLists] = useState([]);
+  const [size, setSize] = useState(12);
+  const [page, setPage] = useState(0);
+  const [loading, setLoading] = useState(false);
+  const [isLastPage, setIsLastPage] = useState(false);
 
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
       setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   }
+  const [bottomScroll, setBottomScroll] = useState(0);
 
   useEffect(()=>{
       window.addEventListener('scroll', updateScroll);
   });
 
+  useEffect(() => {
+    const fetchData = async () => {
+     setLoading(true);
+      try {
+        const response = await api.tradeSelect(lineUp, city, town, page, size);
+        console.log(response.data.content);
+        setLists(response.data.content);
+        setPage(page + 1);
+        if(response.data.last == 'true') setIsLastPage(true)
+      } catch (e) {
+        console.log(e);
+      }
+      setLoading(false);
+    };
+    fetchData();
+  }, []);
+
+  const appendList = () => {
+    const fetchData = async () => {
+      setBottomScroll(window.scrollY || document.documentElement.scrollTop)
+      setLoading(true);
+      try {
+        const response = await api.tradeSelect(lineUp, city, town, page, size);
+        console.log(response.data.content);
+        setLists(prev => ([...prev, ...response.data.content]));
+        setPage(page + 1);
+        if(response.data.last === true) {
+          setIsLastPage(true);
+          console.log()
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      setLoading(false);
+    };
+    fetchData();
+    console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop )
+    goToBottom(document.documentElement.scrollTop)
+  }
+
   const goToTop = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const goToBottom = (value) => {
+    console.log("이동할 스크롤 위치는 " + value);
+    window.scrollTo({top: value, behavior: "smooth"});
+  };
+
+  if(loading) {
+    return (
+      <div className={(categoryName || target) ? (scrollPosition < 150 ? "category" : "category  changed")
+        : (scrollPosition < 150 ? "main" : "main changed")}
+        style={{height:"10000000vh"}}>
+        <Loader/>
+      </div>
+    )
+  }
 
   return(
     <div className={(categoryName || target) ? (scrollPosition < 150 ? "category" : "category  changed")
@@ -29,7 +92,7 @@ const Main = ({categoryName, target})=>{
       {!target && <p className="mainTitle">{categoryName? getCategory(categoryName) : "오늘의 공구"}</p>}
       {target && <p>'{target}'에 대한 검색 결과</p>}
       <div className="maindiv">
-        <div className="mainSelectBar">
+        {!target && <div className="mainSelectBar">
           <div>
           <select
             value={lineUp}
@@ -51,7 +114,7 @@ const Main = ({categoryName, target})=>{
               // console.log(value)
             }}
           >
-            <option value="none">지역 선택</option>
+            <option value="">지역 선택</option>
             {citys.map((e) => (
               <option key={e.city} value={e.city}>
                 {e.name}
@@ -65,7 +128,7 @@ const Main = ({categoryName, target})=>{
               // console.log(value)
             }}
           >
-            <option value="all">지역 전체</option>
+            <option value="">지역 전체</option>
             {towns
             .filter((e) => e.city === city)
             .map((e) => (
@@ -75,26 +138,17 @@ const Main = ({categoryName, target})=>{
             ))}
           </select>
           </div>
-          <Link to="/write"><button>등록하기</button></Link>
-        </div>
+          {isLogin && !isAdmin && <Link to="/write"><button>등록하기</button></Link>}
+        </div>}
         <div className="mainCardList">
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
-          <Card lineUp={lineUp} city={city} town={town}/>
+          <Card lists={lists} isLogin={isLogin} isAdmin={isAdmin}/>
         </div>
         <div className="mainbuttons">
-        <button>더보기</button>
+        {!isLastPage && <button onClick={
+          appendList
+        }
+          >더보기</button>}
         <button onClick={goToTop}>맨위로</button>
-        
         </div>
       </div>
     </div>

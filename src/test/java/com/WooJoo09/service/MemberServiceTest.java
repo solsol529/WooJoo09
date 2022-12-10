@@ -29,7 +29,7 @@ class MemberServiceTest {
     }
 
 //    boolean matches(CharSequence rawPassword, String encodedPassword)
-<<<<<<< HEAD
+
 //    public Member createMember1() {
 //        return Member.createMember1(passwordEncoder);
 //    }
@@ -265,7 +265,7 @@ class MemberServiceTest {
 //        Member savedMember33 = memberService.saveMember(member33);
 //        log.warn(savedMember33.toString());
 //    }
-=======
+
     public Member createMember1() {
         return Member.createMember1(passwordEncoder);
     }
@@ -501,6 +501,4 @@ class MemberServiceTest {
         Member savedMember33 = memberService.saveMember(member33);
         log.warn(savedMember33.toString());
     }
->>>>>>> c44ec933110de72c7ef2dd113d22c5f602c25e0f
-
 }
