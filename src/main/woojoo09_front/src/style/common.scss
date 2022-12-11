@@ -424,7 +424,7 @@ input:focus{
       font-size: 1.1rem;
       padding: 10px 40px 10px 40px;
     }
-    button:nth-child(1){
+    .mainbutton1{
       margin-right: 60px;
     }
   }
@@ -473,11 +473,13 @@ input:focus{
         color: #01020D;
       }
       .cardImg{
-        width: 100%;
+        width: 90%;
+        padding-top: 10%;
+        margin-left: 10%;
+        border-radius: 5px;
         img{
           border-radius: 5px;
-          width: 80%;
-          margin: 10%;
+          width: 100%;
           object-fit: cover;
           background-color: paleturquoise;
         }
@@ -487,7 +489,9 @@ input:focus{
         flex-direction: column;
         justify-content: space-between;
         width: 80%;
-        margin: 10%;
+        margin-top: 10%;
+        margin-bottom: 0px;
+        padding-bottom: 0px;
         p{
           font-weight: bold;
           margin-bottom: 2px;
@@ -546,6 +550,20 @@ input:focus{
     grid-template-columns: repeat(2, 1fr) !important;
     grid-template-rows: 1fr;
 
+    .card{
+      max-height: 20vw;
+      >a{
+        height: 100%;
+        >div{
+          height: 15vw;
+        }
+        >div:nth-child(1){
+          height: 90%;
+          overflow: hidden;
+        }
+      }
+    }
+
     .cardDesc{
       p{
         span{
@@ -565,6 +583,24 @@ input:focus{
     grid-template-columns: repeat(1, 1fr) !important;
     grid-template-rows: 1fr;
   }
+
+  .card{
+    max-height: 40vw;
+    >a{
+      height: 100%;
+      // >div{
+      //   height: 35vw;
+      // }
+      >div:nth-child(2){
+        height: 80%;
+      }
+      >div:nth-child(1){
+        height: 90%;
+        overflow: hidden;
+      }
+    }
+  }
+  
   .cardDesc{
     .cardName{
       font-size: 1.5rem !important;
@@ -589,7 +625,7 @@ input:focus{
       // font-size: 1.1rem;
       padding: 10px 30px 10px 30px;
     }
-    button:nth-child(1){
+    .mainbutton1{
       margin-right: 40px;
     }
   }
@@ -690,6 +726,23 @@ input:focus{
     display: grid;
     grid-template-columns: repeat(1, 1fr) !important;;
     grid-template-rows: 1fr;
+
+    .card{
+      max-height: 50vw;
+      >a{
+        height: 100%;
+        // >div{
+        //   height: 35vw;
+        // }
+        >div:nth-child(2){
+          height: 80%;
+        }
+        >div:nth-child(1){
+          height: 90%;
+          overflow: hidden;
+        }
+      }
+    }
   }
 
   .cardDesc{

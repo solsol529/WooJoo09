@@ -48,6 +48,17 @@ const api = {
     }
     return await axios.post(BASE_URL+ "tradeselect", tradeSelectCmd, HEADER);
   },
+  tradeSelectCategory: async function(category, option, city, town, page, size) {
+    const tradeSelectCmd = {
+      category: category,
+      option: option,
+      city: city,
+      town: town,
+      page: page,
+      size: size
+    }
+    return await axios.post(BASE_URL+ "tradeselectcategory", tradeSelectCmd, HEADER);
+  },
   starInsert: async function(target) {
     const starInsertCmd = {
       target: target
@@ -76,6 +87,12 @@ const api = {
       target: target
     }
     return await axios.post(BASE_URL+ "tradedetailselect", tradeDetailSelectCmd, HEADER);
+  },
+  tradeDetailImgSelect: async function(target) {
+    const tradeDetailImgSelectCmd = {
+      target: target
+    }
+    return await axios.post(BASE_URL+ "tradedetailimgselect", tradeDetailImgSelectCmd, HEADER);
   },
   partnerInsert: async function(target) {
     const partnerInsertCmd = {

@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink ,Link } from "react-router-dom";
+import { NavLink ,Link, useNavigate } from "react-router-dom";
 import logo from "../resources/logo.png";
 import logoWhite from "../resources/logoWhite.png";
 import search from "../resources/search_purple.png";
@@ -18,6 +18,8 @@ import api from "../api/api"
 const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
 
   const [NewChat, setNewChat] = useState(0);
+  const [searchTarget, setSearchTarget] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -55,12 +57,23 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
   // const [current, setCurrent] = useState('main');
   
   const handleKeyPress = e => {
-    // if(e.key === 'Enter') {
-    //   console.log(e.target.value);
-    //   localStorage.setItem("write", "search");
-    //   window.location.replace(`/search/${e.target.value}`);
-    // }
+    if(e.key === 'Enter') {
+      console.log(e.target.value);
+      navigate(`/search/${e.target.value}`);
+    }
   }
+
+  const handleButton = () => {
+    if(searchTarget) {
+      console.log(searchTarget);
+      navigate(`/search/${searchTarget}`);
+    }
+  }
+
+  const onChangeTarget = (e) =>{
+    setSearchTarget(e.target.value);
+  }
+
 
   return(
     <div className={scrollPosition < 150 ? "header" : "changedHeader"}>
@@ -73,8 +86,9 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
         </div>
         <div className="headerSearch">
           <input type="text" placeholder=""
-          onKeyPress={handleKeyPress}/>
-          <img src={search} alt="검색"/>
+          onKeyPress={handleKeyPress}
+          onChange={onChangeTarget}/>
+          <img src={search} alt="검색" onClick={handleButton}/>
         </div>
         <div className="headerLogin">
           { isLogin ?

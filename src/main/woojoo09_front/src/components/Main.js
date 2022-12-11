@@ -7,6 +7,7 @@ import { getCookie, setCookie } from "../util/cookie";
 import Loader from "./Loader";
 
 const Main = ({categoryName, target, isLogin, isAdmin})=>{
+
   const [lineUp, setLineUp] = useState('recommand');
   const [city, setCity] = useState('');
   const [town, setTown] = useState('');
@@ -21,50 +22,130 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
   const updateScroll = () => {
       setScrollPosition(window.scrollY || document.documentElement.scrollTop);
   }
-  const [bottomScroll, setBottomScroll] = useState(0);
 
   useEffect(()=>{
       window.addEventListener('scroll', updateScroll);
   });
 
   useEffect(() => {
-    const fetchData = async () => {
-     setLoading(true);
-      try {
-        const response = await api.tradeSelect(lineUp, city, town, page, size);
-        console.log(response.data.content);
-        setLists(response.data.content);
-        setPage(page + 1);
-        if(response.data.last == 'true') setIsLastPage(true)
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    fetchData();
-  }, []);
+    if(categoryName){
+      console.log("카테고리 통신 시작" + categoryName)
+      const fetchData = async () => {
+        setPage(0)
+        setLoading(true);
+         try {
+          console.log("카테고리이름: " + categoryName);
+          console.log("카테고리한글이름: " + getCategory(categoryName));
+           const response = await api.tradeSelectCategory(getCategory(categoryName), lineUp, city, town, 0, size);
+           console.log(response.data.content);
+           setLists(response.data.content);
+           setPage(1);
+           if(response.data.last === true) setIsLastPage(true)
+         } catch (e) {
+           console.log(e);
+         }
+         setLoading(false);
+       };
+       fetchData();
+    }else if(target){
+      const fetchData = async () => {
+        setPage(0)
+        setLoading(true);
+         try {
+           const response = await api.tradeSearchSelect(target, 0, size);
+           console.log(response.data.content);
+           setLists(response.data.content);
+           setPage(1);
+           if(response.data.last === true) setIsLastPage(true)
+         } catch (e) {
+           console.log(e);
+         }
+         setLoading(false);
+       };
+       fetchData();
+    }
+    else{
+      const fetchData = async () => {
+        setPage(0)
+        setLoading(true);
+         try {
+           const response = await api.tradeSelect(lineUp, city, town, 0, size);
+           console.log(response.data.content);
+           setLists(response.data.content);
+           setPage(1);
+           if(response.data.last === true) setIsLastPage(true)
+         } catch (e) {
+           console.log(e);
+         }
+         setLoading(false);
+       };
+       fetchData();
+    }
+  }, [categoryName, target, lineUp, city, town]);
 
   const appendList = () => {
-    const fetchData = async () => {
-      setBottomScroll(window.scrollY || document.documentElement.scrollTop)
-      setLoading(true);
-      try {
-        const response = await api.tradeSelect(lineUp, city, town, page, size);
-        console.log(response.data.content);
-        setLists(prev => ([...prev, ...response.data.content]));
-        setPage(page + 1);
-        if(response.data.last === true) {
-          setIsLastPage(true);
-          console.log()
+    if(categoryName){
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const response = await api.tradeSelectCategory(getCategory(categoryName), lineUp, city, town, page, size);
+          console.log(response.data.content);
+          setLists(prev => ([...prev, ...response.data.content]));
+          setPage(page + 1);
+          if(response.data.last === true) {
+            setIsLastPage(true);
+            console.log()
+          }
+        } catch (e) {
+          console.log(e);
         }
-      } catch (e) {
-        console.log(e);
-      }
-      setLoading(false);
-    };
-    fetchData();
-    console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop )
-    goToBottom(document.documentElement.scrollTop)
+        setLoading(false);
+      };
+      fetchData();
+      console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop)
+      goToBottom(document.documentElement.scrollTop)
+    }else if(target){
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const response = await api.tradeSearchSelect(target, page, size);
+          console.log(response.data.content);
+          setLists(prev => ([...prev, ...response.data.content]));
+          setPage(page + 1);
+          if(response.data.last === true) {
+            setIsLastPage(true);
+            console.log()
+          }
+        } catch (e) {
+          console.log(e);
+        }
+        setLoading(false);
+      };
+      fetchData();
+      console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop )
+      goToBottom(document.documentElement.scrollTop)
+    }
+    else{
+      const fetchData = async () => {
+        setLoading(true);
+        try {
+          const response = await api.tradeSelect(lineUp, city, town, page, size);
+          console.log(response.data.content);
+          setLists(prev => ([...prev, ...response.data.content]));
+          setPage(page + 1);
+          if(response.data.last === true) {
+            setIsLastPage(true);
+            console.log()
+          }
+        } catch (e) {
+          console.log(e);
+        }
+        setLoading(false);
+      };
+      fetchData();
+      console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop )
+      goToBottom(document.documentElement.scrollTop)
+    }
   }
 
   const goToTop = () => {
@@ -102,7 +183,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
             }}
           >
             <option value="recent">최신순</option>
-            <option value="deadline">마감 임박순</option>
+            <option value="dateLimit">마감 임박순</option>
             <option value="recommand">추천순</option>
             <option value="lowPrice">낮은 가격순</option>
             <option value="highPrice">높은 가격순</option>
@@ -116,7 +197,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
           >
             <option value="">지역 선택</option>
             {citys.map((e) => (
-              <option key={e.city} value={e.city}>
+              <option key={e.city} value={e.name}>
                 {e.name}
               </option>
             ))}
@@ -132,7 +213,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
             {towns
             .filter((e) => e.city === city)
             .map((e) => (
-              <option key={e.town} value={e.town}>
+              <option key={e.town} value={e.name}>
                 {e.name}
               </option>
             ))}
@@ -146,7 +227,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         <div className="mainbuttons">
         {!isLastPage && <button onClick={
           appendList
-        }
+        } className="mainbutton1"
           >더보기</button>}
         <button onClick={goToTop}>맨위로</button>
         </div>

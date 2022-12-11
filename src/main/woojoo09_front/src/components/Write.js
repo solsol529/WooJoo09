@@ -352,7 +352,7 @@ const Write = () =>{
         >
           <option value="none">지역 선택</option>
           {citys.map((e) => (
-            <option key={e.city} value={e.city}>
+            <option key={e.city} value={e.name}>
               {e.name}
             </option>
           ))}
@@ -368,7 +368,7 @@ const Write = () =>{
           {towns
           .filter((e) => e.city === city)
           .map((e) => (
-            <option key={e.town} value={e.town}>
+            <option key={e.town} value={e.name}>
               {e.name}
             </option>
           ))}

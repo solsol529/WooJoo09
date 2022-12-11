@@ -1,36 +1,35 @@
 import Map from "../components/Map"
-import { useState, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
+import { useState, useEffect, useRef } from "react";
 import profile from "../resources/profile_sample.png"
 import grade1 from "../resources/grade_icon1_wreck.png"
 import star from "../resources/star.png";
+import api from "../api/api";
+import fashionsample from "../resources/fashion_sample.png"
+import { defaultImgs } from "../util/util"
 
-const Detail = ({isLogin, isAdmin}) =>{
+const Detail = ({isLogin, isAdmin, tradeNum}) =>{
 
   const [displayMap, setDisplayMap] = useState(false);
   const [searchPlace, setSearchPlace] = useState("경희대학교 정문");
   const [displayComplainMsg, setDisplayComplainMsg] = useState(false);
   const [displayDeleteMsg, setDisplayDeleteMsg] = useState(false);
 
-  const images = useRef([
-    {src:'https://www.nintendo.co.kr/character/kirby/assets/img/home/kirby-forgotten-land-hero.jpg',
-    url: '/category/fashion'}, 
-    {src: 'https://www.nintendo.co.kr/front_images/news/1011/3f0153b93509b883f64237bc63502f42.jpg',
-    url: '/category/beauty'}, 
-    {src: 'https://www.nintendo.co.kr/front_images/news/924/aa92775cee80f39d0f6b5e30714ae1c9.jpg',
-    url: '/category/life'}]);
-  
+  const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(new Date()));
+
+  const [images, setImages] = useState([]);
+    
     const [current, setCurrent] = useState(0);
     const [style, setStyle] = useState({
       marginLeft: `-${current}00%`
     });
-    const imgSize = useRef(images.current.length);
+    const [imgSize, setImgSize] = useState();
   
     const moveSlide = (i) => {
       let nextIndex = current + i;
       
-      if (nextIndex < 0) nextIndex = imgSize.current - 1;
-      else if (nextIndex >= imgSize.current) nextIndex = 0;
+      if (nextIndex < 0) nextIndex = imgSize - 1;
+      else if (nextIndex >= imgSize) nextIndex = 0;
   
       setCurrent(nextIndex);
     };
@@ -47,6 +46,34 @@ const Detail = ({isLogin, isAdmin}) =>{
         setStyle({ marginLeft: `-${current}00%` });
     }, [current]);
 
+    const [loading, setLoading] = useState(false);
+    const [data, setData] = useState();
+
+    useEffect(() => {
+      const fetchData = async () => {
+        setLoading(true);
+          try {
+            const response = await api.tradeDetailSelect(tradeNum);
+            console.log(response.data);
+            console.log(response.data.detail.city)
+            setData(response.data);
+          } catch (e) {
+            console.log(e);
+          }
+          try {
+            const response = await api.tradeDetailImgSelect(tradeNum);
+            console.log(response.data);
+            setImages(response.data);
+            console.log(response.data.length);
+            setImgSize(response.data.length);
+          } catch (e) {
+            console.log(e);
+          }
+          setLoading(false);
+        };
+        fetchData();
+    }, []);
+
     const writeComplain = () =>{
       setDisplayDeleteMsg(false);
       setDisplayComplainMsg(true);
@@ -59,25 +86,33 @@ const Detail = ({isLogin, isAdmin}) =>{
 
   return(
     <div className="detail">
-      <div className="detailCard">
+      { data &&
+        <>
+        <div className="detailCard">
         <div className="detailImg">
           <div className="slide">
-            <div className="btn" onClick={() => { moveSlide(-1); }}>&lt;</div>
+            {images.length > 1 && <div className="btn" onClick={() => { moveSlide(-1); }}>&lt;</div>}
             <div className="window">
               <div className="flexbox" style={style}>
-                {images.current.map((img, i) => (
+                {images && images.map((img, i) => (
                   <div
                     key={i}
                     className="img"
-                    style={{ backgroundImage: `url(${img.src})` }}
+                    style={{ backgroundImage: `url(${img.imgUrl})` }}
                   ></div>
                 ))}
+                {images.length === 0 &&
+                  <div
+                    className="img"
+                    style={{ backgroundImage: `url(${defaultImgs.패션.imgUrl})` }}
+                  ></div>
+                }
               </div>
             </div>
-            <div className="btn2" onClick={() => { moveSlide(1); }}>&gt;</div>
+            {images.length > 1 && <div className="btn2" onClick={() => { moveSlide(1); }}>&gt;</div>}
           </div>
           <div className="position">
-            {images.current.map((x, i) => (
+            {images.length > 1 && images.map((x, i) => (
               <div
                 key={i}
                 className={i === current ? 'dot current' : 'dot'}
@@ -88,12 +123,19 @@ const Detail = ({isLogin, isAdmin}) =>{
         {/* <div className="detailCardDesc">
         </div> */}
         <div className="cardDesc">
-          <p>카테고리</p>
-          <p className="detailName">상품이름은최대30자까지가능합니다최대30글자는이만큼입니다</p>
-          <p>0000원</p>
-          <p><span>수원시</span><span>영통구</span></p>
-          <p><span>1 / N</span><span>D - 5</span></p>
-          <p><span>직거래</span><span>택배</span></p>
+          <p>{data.detail.categoryName}</p>
+          <p className="detailName">{data.detail.product}</p>
+          <p>{data.detail.price}원</p>
+          {/* <p><span>1 / N</span><span>D - 5</span></p>
+          <p><span>직거래</span><span>택배</span></p> */}
+          <p>{data.detail.city && <span>{data.detail.city}</span>}{data.detail.town && <span>{data.detail.town}</span>}</p>
+          {data.detail.doneTrade === 'ONGOING' && <p><span>{data.detail.acceptPartner} / {data.detail.limitPartner}</span><span>D - {
+          Math.floor((new Date(data.detail.dueDate).getTime() - new Date(thisDate).getTime()) / (1000 * 60 * 60 * 24))
+          }</span></p>}
+          {data.detail.doneTrade === 'FULL' && <p><span>모집 완료</span></p>}
+          {data.detail.doneTrade === 'DONE' && <p><span>종료</span></p>}
+          <p>{data.detail.tradeMethod === 'BOTH' ? <><span>직거래</span><span>택배</span></> :
+          (data.detail.tradeMethod === 'DIRECT' ? <span>직거래</span> : <span>택배</span>)}</p>
           <img className="cardStar" src={star} alt="스크랩"/>
         </div>
       </div>
@@ -153,6 +195,7 @@ const Detail = ({isLogin, isAdmin}) =>{
             <span>삭제하시면 채팅내역과 거래내용이 모두 사라집니다</span></p>}
         </div>
       </div>
+      </>}
     </div>
   );
 }

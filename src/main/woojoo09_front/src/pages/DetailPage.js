@@ -43,7 +43,8 @@ const DetailPage = () =>{
       changeIsAdmin={changeIsAdmin}/>
       <Detail
        isLogin={isLogin}
-       isAdmin={isAdmin}/>
+       isAdmin={isAdmin}
+       tradeNum={tradeNum}/>
       <Footer/>
     </div>
   );
