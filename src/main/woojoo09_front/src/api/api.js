@@ -65,11 +65,17 @@ const api = {
     }
     return await axios.post(BASE_URL+ "starinsert", starInsertCmd, HEADER);
   },
-  tradeInsert: async function(
-    representUrl, imgUrl, product, price, limitPartner, dueDate, tradeMethod, city, town, tradePlace, productDetail) {
+  starDelete: async function(target) {
+    const starDeleteCmd = {
+      target: target
+    }
+    return await axios.post(BASE_URL+ "stardelete", starDeleteCmd, HEADER);
+  },
+  tradeInsert: async function( imgUrl,
+    representUrl, category, product, price, limitPartner, dueDate, tradeMethod, city, town, tradePlace, productDetail) {
     const tradeInsertCmd = {
       representUrl: representUrl,
-      imgUrl: imgUrl,
+      category : category,
       product: product,
       price: price,
       limitPartner: limitPartner,
@@ -80,7 +86,10 @@ const api = {
       tradePlace: tradePlace,
       productDetail: productDetail
     }
-    return await axios.post(BASE_URL+ "tradeinsert", tradeInsertCmd, HEADER);
+    const tradeInsertCmdList = {
+      imgUrl: imgUrl
+    }
+    return await axios.post(BASE_URL+ "tradeinsert", tradeInsertCmd, tradeInsertCmdList, HEADER);
   },
   tradeDetailSelect: async function(target) {
     const tradeDetailSelectCmd = {
@@ -167,18 +176,18 @@ const api = {
     return await axios.post(BASE_URL+ "dislikeinsert", dislikeInsertCmd, HEADER);
   },  
   //회원가입
-  memberReg: async function(regId, regPwd, regNick, regName, regEmail, form, regPhone) {
+  memberReg: async function(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone) {
     const regCheck = {
       regId : regId,
       regPwd : regPwd,
       regNick : regNick,
       regName : regName,
       regEmail : regEmail,
-      form : form,
+      birthDate : birthDate,
       regPhone : regPhone,
       adOk : localStorage.getItem("adOk")
     }
-    return await axios.post(BASE_URL + "MemberReg", regCheck, HEADER);
+    return await axios.post(BASE_URL + "memberinsert", regCheck, HEADER);
   },
 
   //아이디 중복체크
@@ -186,9 +195,26 @@ const api = {
     const regIdDup = {
       regId : regId
     }
-    return await axios.post(BASE_URL + "MemberIdDup", regIdDup, HEADER);
-  }
+    return await axios.post(BASE_URL + "iddup", regIdDup, HEADER);
+  },
 
+  //아이디 찾기
+  memberfindId: async function(findIdName, findIdEmail) {
+    const findId = {
+      findIdName: findIdName,
+      findIdEmail: findIdEmail
+    }
+    return await axios.post(BASE_URL + "findid", findId, HEADER);
+  },
+
+  //이메일로 정보 가져오기
+  memberinfoFindId: async function(findIdEmail) {
+    const finIdMember = {
+      findIdEmail: findIdEmail
+    }
+    return await axios.post(BASE_URL + "findidmember", finIdMember, HEADER);
+  }
+  
 }
 
 export default api;

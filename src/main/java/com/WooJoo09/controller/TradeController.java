@@ -9,10 +9,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.text.SimpleDateFormat;
+import java.util.*;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -147,4 +145,40 @@ public class TradeController {
         list= tradeService.tradeDetailImage(tradeNum);
         return ResponseEntity.ok().body(list);
     }
+
+    @PostMapping("/tradeinsert")
+    public ResponseEntity<Map<?, ?>> tradeInsert(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+//        String imgUrl = Data.get("imgUrl");
+//        String representUrl = Data.get("representUrl");
+//        String category = Data.get("category");
+//        String product = Data.get("product");
+//        int price = Integer.parseInt(Data.get("price"));
+//        int limitPartner = Integer.parseInt(Data.get("limitPartner"));
+//        String dueDateStr = Data.get("dueDate");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date dueDate = sdf.parse(dueDateStr);
+//        String tradeMethod = Data.get("tradeMethod");
+//        String city = Data.get("city");
+//        String town = Data.get("town");
+//        String tradePlace = Data.get("tradePlace");
+//        String productDetail = Data.get("productDetail");
+        Map<String ,String> map = new HashMap<>();
+//        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+//            log.info("로그인상태입니당");
+//            String memberNumStr = jwtController.tokenCheck(token);
+//            Long memberNum = Long.parseLong(memberNumStr);
+//            map = tradeService.tradeInsert(memberNum, imgUrl, representUrl, category, product, price, limitPartner,
+//                    dueDate, tradeMethod, city, town, tradePlace, productDetail);
+//            return ResponseEntity.ok().body(map);
+//        }else {
+//            map.put("completePartner", "loginError");
+//            return ResponseEntity.ok().body(map);
+//        }
+        return ResponseEntity.ok().body(map);
+    }
+
+
+
 }

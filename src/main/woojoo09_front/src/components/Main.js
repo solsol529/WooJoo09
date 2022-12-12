@@ -18,6 +18,10 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
   const [loading, setLoading] = useState(false);
   const [isLastPage, setIsLastPage] = useState(false);
 
+  const changeLists = (value) => {
+    setLists(value);
+  };
+
   const [scrollPosition, setScrollPosition] = useState(0);
   const updateScroll = () => {
       setScrollPosition(window.scrollY || document.documentElement.scrollTop);
@@ -222,7 +226,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
           {isLogin && !isAdmin && <Link to="/write"><button>등록하기</button></Link>}
         </div>}
         <div className="mainCardList">
-          <Card lists={lists} isLogin={isLogin} isAdmin={isAdmin}/>
+          <Card lists={lists} isLogin={isLogin} isAdmin={isAdmin} changeLists={changeLists}/>
         </div>
         <div className="mainbuttons">
         {!isLastPage && <button onClick={

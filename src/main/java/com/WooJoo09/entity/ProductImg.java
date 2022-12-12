@@ -14,7 +14,7 @@ import javax.persistence.*;
 public class ProductImg {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long imgNum;
 
     @ManyToOne(fetch = FetchType.LAZY)

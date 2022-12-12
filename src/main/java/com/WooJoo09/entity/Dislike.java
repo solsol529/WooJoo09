@@ -11,7 +11,7 @@ import javax.persistence.*;
 @ToString
 public class Dislike {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dislikeNum;
 
     @ManyToOne(fetch = FetchType.LAZY)

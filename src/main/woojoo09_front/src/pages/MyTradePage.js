@@ -16,6 +16,17 @@ import {useLocation} from 'react-router-dom';
 
 
 const MyTradePage =() =>{
+
+    const [isLogin, setIsLogin] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
+    const changeIsLogin = (value) => {
+        setIsLogin(value);
+    };
+    const changeIsAdmin = (value) => {
+        setIsAdmin(value);
+    };
+
+
     const location = useLocation();
     const name = location.state.name;
     const value = location.state.value;
@@ -25,7 +36,11 @@ const MyTradePage =() =>{
 
         return(
         <div>
-            <Header/>  
+            <Header
+            isLogin={isLogin} 
+            changeIsLogin={changeIsLogin}
+            isAdmin={isAdmin}
+            changeIsAdmin={changeIsAdmin}/>  
             <div className="memberinfomain">
             <MemberInfoList/>
                 <div className="memberinfocenter">

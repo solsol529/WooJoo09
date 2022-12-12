@@ -2,9 +2,66 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from 'react'
 import fashionImg from "../resources/fashion_sample.png";
 import star from "../resources/star.png";
+import api from "../api/api";
+import yellowStar from "../resources/starFill.png"
 
-const Card = ({lists, isLogin, isAdmin}) =>{
+const Card = ({lists, isLogin, isAdmin, changeLists}) =>{
   const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(new Date()));
+  const [starError, setStarError] = useState();
+
+  const starInsert = (tradeNum) =>{
+    const fetchData = async () => {
+      // setLoading(true); 로딩있으면 깜빡거리는거같아서 뺏음, 데이터 뭐 많이 가져오는것도없고
+      try {
+        const response = await api.starInsert(tradeNum);
+        console.log(response.data);
+        if(response.data.myStar === "loginError") {
+          setStarError("로그인 상태를 확인해주세요");
+        } else if (response.data.myStar === "duplicate"){
+          setStarError("이미 스크랩을 한 공동구매입니다");
+        } 
+        else {
+          let arr = lists.map(val => {
+            if(val.tradeNum === tradeNum){
+              val.myStar = 1;
+            }
+            return val
+          })
+          changeLists(arr);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      // setLoading(false);
+    };
+    fetchData();
+  }
+
+  const starDelete = (tradeNum) =>{
+    const fetchData = async () => {
+      // setLoading(true); 로딩있으면 깜빡거리는거같아서 뺏음, 데이터 뭐 많이 가져오는것도없고
+      try {
+        const response = await api.starDelete(tradeNum);
+        console.log(response.data);
+        if(response.data.myStar === "loginError") {
+          setStarError("로그인 상태를 확인해주세요");
+        } 
+        else {
+          let arr = lists.map(val => {
+            if(val.tradeNum === tradeNum){
+              val.myStar = 0;
+            }
+            return val
+          })
+          changeLists(arr);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      // setLoading(false);
+    };
+    fetchData();
+  }
 
   return(
     <>
@@ -28,8 +85,10 @@ const Card = ({lists, isLogin, isAdmin}) =>{
         (list.tradeMethod === 'DIRECT' ? <span>직거래</span> : <span>택배</span>)}</p>
       </div>
       </Link>
-      {(!isLogin || isAdmin) && <img className="cardStar" src={star} alt="스크랩"/>}
-      {isLogin && <img className="cardStar" src={star} alt="스크랩"/>}
+      {(!isLogin || isAdmin) ? <img className="cardStar" src={star} alt="스크랩"/> :
+          list.myStar === 0 ?  <img className="cardStar" onClick={
+            () => {starInsert(list.tradeNum);}} src={star} alt={`스크랩`}/> :
+          <img className="cardStar" onClick={()=>{starDelete(list.tradeNum)}} src={yellowStar} alt="스크랩취소"/>}
     </div>
     ))}
     </>

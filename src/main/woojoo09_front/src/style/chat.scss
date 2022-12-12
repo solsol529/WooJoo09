@@ -66,8 +66,8 @@
     justify-content: center;
     align-items: center;
     img{
-        width: 4vw;
-        height: 8vh;
+        width: 100px;
+        height: 70px;
         margin: 3%;
     }
     p{
@@ -99,7 +99,7 @@
 }
 .chatting, .chattingProduct{
     img{
-        width: 6vw;
+        width: 100px;
       }
 }
 
@@ -155,8 +155,8 @@
     top:5vh;
 
     img{
-        width: 4vw;
-        height: 8vh;
+        width: 70px;
+        height: 60px;
         margin: 25px 20px 10px 20px ;
         // margin-left: 35%;
     }
@@ -196,8 +196,11 @@
     overflow-y: scroll;
     -ms-overflow-style: none;
     scrollbar-width: none; /* Firefox */
-    width:70%;
-    height: 82vh;
+    // width:70%;
+    height: 800px;
+    // display:flex;
+    // flex-direction: column-reverse;
+
     // padding-top: 3%;
     // overflow: hidden;
 }
@@ -254,7 +257,7 @@
 }
 .chatBottom {
     border-top: 1px solid $darkGray2Alpha3;
-    height:10vh;
+    height:100px;
     width:70%;
     position:fixed;
     bottom:0;
@@ -493,8 +496,8 @@
     }
     .chattingProduct{
         img{
-            width: 4vw;
-            height: 7vh;
+            width: 70px;
+            height: 60px;
 
         }
     }

@@ -4,10 +4,12 @@ import com.WooJoo09.entity.Trade;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 public interface TradeRepository  extends JpaRepository<Trade, Long> {
     @Query(
@@ -317,7 +319,7 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
     Map<?,?> tradeDetailSelectLogin(@Param("tradeNum") int tradeNum, @Param("memberNum") int memberNum);
 
     @Query(
-            value = "select member_num memberNum, grade, introduce, pf_img pfImg, " +
+            value = "select member_num memberNum, grade, introduce, pf_img pfImg, nickname, " +
                     "(select count(*) from trade t where host = member_num and done_trade = 'DONE') countDoneTrade, " +
                     "(select count(*) from partner p where part_mem_num = member_num and accept_trade = 'ACCEPT') countPartTrade " +
                     "from mem_grade mg, member m " +
@@ -334,4 +336,7 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
             nativeQuery = true
     )
     List<Map<?,?>> tradeDetailImgSelect(@Param("tradeNum") int tradeNum);
+
+    Trade findByTradeNum(Long tradeNum);
+
 }

@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import FindIdComplete from "../components/FindIdComplete";
+import api from "../api/api";
 
 const FindIdPage = () =>{
   const [changeFindIdComplete, setChangeFindIdComplete] = useState(false);
@@ -19,6 +20,10 @@ const FindIdPage = () =>{
 
   const [findIdEmailOkMsg, setFindIdEmailOkMsg] = useState('');
   const [findIdEmailMsg, setFindIdEmailMsg] = useState('');
+
+  // const changeFindIdEmail = (value) => {
+  //   setFindIdEmail(value);
+  // };
 
   const onChangeFindIdName = (e) => {
     const inputFindIdName = e.target.value;
@@ -42,9 +47,23 @@ const FindIdPage = () =>{
     }
   }
 
-  const onClickIdSearch = () => {
-    // window.location.replace("/findidcomplete");
+  const onClickFindIdComplete = () => {
+
+    const fetchData = async () => {
+      try {
+        const response = await api.memberfindId(findIdName, findIdEmail);
+        if(response.data === true) {
+          setChangeFindIdComplete(true);
+        } else {
+          setChangeFindIdComplete(false);
+        }
+      } catch (e) {
+        console.log(e);
+      }    
+    }
+    fetchData();    
   }
+
 
   return(
     <div className="wrapper">
@@ -54,7 +73,9 @@ const FindIdPage = () =>{
           <h2>아이디 찾기</h2>
           <div className="findIdMain">
             {changeFindIdComplete &&
-              <FindIdComplete />
+              <FindIdComplete 
+              findIdEmail={findIdEmail}
+              />
             }
               
             {!changeFindIdComplete &&
@@ -78,9 +99,14 @@ const FindIdPage = () =>{
             <div className="findIdComplete">
               {!(isFindIdName && isFindIdEmail)
               && <button className="findIdNotCompleteBut">확인</button>}  
+
+              {/* {(isFindIdName && isFindIdEmail)
+              && <button className="findIdCompleteBut" 
+              onClick={()=>{setChangeFindIdComplete(true)}}>확인</button>}    */}
+
               {(isFindIdName && isFindIdEmail)
               && <button className="findIdCompleteBut" 
-              onClick={()=>{setChangeFindIdComplete(true)}}>확인</button>}    
+              onClick={onClickFindIdComplete}>확인</button>}  
             </div>
             </>
             }

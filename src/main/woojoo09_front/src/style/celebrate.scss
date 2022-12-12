@@ -48,7 +48,9 @@
         background-color:#8679D9;
         border: none;
         color: white;
-        border-radius: 10px;        
+        border-radius: 10px; 
+        font-weight: 600;  
+        cursor: pointer;     
     }
 }
 .celMainBox {
@@ -61,6 +63,8 @@
         background-color: white;
         border: 1px solid #8679D9;
         color: #8679D9;  
-        border-radius: 10px;       
+        border-radius: 10px;  
+        font-weight: 600;   
+        cursor: pointer;   
     }
 }
