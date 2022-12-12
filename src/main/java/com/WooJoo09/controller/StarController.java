@@ -15,8 +15,8 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping(value="/developerkirby")
 public class StarController {
-    private final JwtController jwtController;
     private final StarService starService;
+    private final JwtController jwtController;
 
     @PostMapping("/starinsert")
     public ResponseEntity<Map<?, ?>> starInsert(

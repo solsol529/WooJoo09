@@ -16,7 +16,7 @@ import java.util.List;
 @ToString
 public class Category {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Long categoryNum;
 

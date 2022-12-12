@@ -200,7 +200,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
           <img className="cardStar" onClick={starDelete} src={yellowStar} alt="스크랩취소"/>}
         </div>
       </div>
-      {isLogin? <button>참여하기</button> : <button disabled="true">참여하기</button>}
+      {! isAdmin&& <>{isLogin? <button>참여하기</button> : <button disabled="true">참여하기</button>}</>}
       {!isLogin && <p className="detailErrMsg">공동구매에 참여하려면 <Link to="/main" style={{textDecoration: "underline"}}>로그인</Link>하세요!</p>}
       <div className="detailProfile">
         <div>

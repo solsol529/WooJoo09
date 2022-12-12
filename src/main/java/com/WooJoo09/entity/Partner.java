@@ -16,7 +16,7 @@ import javax.persistence.*;
 @ToString
 public class Partner {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @OnDelete(action = OnDeleteAction.CASCADE)
 //    @OneToMany(mappedBy = "partnerNum", cascade = CascadeType.REMOVE, orphanRemoval = true)
     private Long partnerNum;

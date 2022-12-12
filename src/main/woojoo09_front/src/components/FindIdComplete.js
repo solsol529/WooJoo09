@@ -2,7 +2,7 @@ import "../style/findidcomplete.scss";
 import { useNavigate } from "react-router-dom";
 
 
-const FindIdComplete = () => {
+const FindIdComplete = ({findIdEmail}) => {
     const navigate = useNavigate();
 
     const onClickFindIdComLogin = () => {

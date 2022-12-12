@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 @ToString
 public class Chat {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long chatNum;
 
     @ManyToOne(fetch = FetchType.LAZY)

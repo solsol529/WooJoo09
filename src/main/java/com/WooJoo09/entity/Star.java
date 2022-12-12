@@ -12,7 +12,7 @@ import javax.persistence.*;
 @ToString
 public class Star {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long StarNum;
 
     @ManyToOne(fetch = FetchType.LAZY)

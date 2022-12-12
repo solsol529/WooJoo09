@@ -11,7 +11,7 @@ import javax.persistence.*;
 @ToString
 public class Good {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long goodNum;
 
     @ManyToOne(fetch = FetchType.LAZY)

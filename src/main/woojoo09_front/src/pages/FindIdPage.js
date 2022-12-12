@@ -54,7 +54,7 @@ const FindIdPage = () =>{
           <h2>아이디 찾기</h2>
           <div className="findIdMain">
             {changeFindIdComplete &&
-              <FindIdComplete />
+              <FindIdComplete findIdEmail={findIdEmail}/>
             }
               
             {!changeFindIdComplete &&

@@ -22,7 +22,7 @@ import java.util.Date;
 public class Member {
     //fetch의 디폴트 값은 @xxToOne에서는 EAGER, @xxToMany에서는 LAZY
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @OnDelete(action = OnDeleteAction.CASCADE)
 //    @OneToMany(mappedBy = "host", cascade = CascadeType.REMOVE, orphanRemoval = true)
 //    @OneToMany(mappedBy = "partMemNum", cascade = CascadeType.REMOVE, orphanRemoval = true)

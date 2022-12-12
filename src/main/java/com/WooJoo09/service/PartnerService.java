@@ -1,10 +1,20 @@
 package com.WooJoo09.service;
 
-import com.WooJoo09.repository.PartnerRepository;
+import com.WooJoo09.constant.IsRead;
+import com.WooJoo09.constant.MsgType;
+import com.WooJoo09.entity.Chat;
+import com.WooJoo09.entity.Member;
+import com.WooJoo09.entity.Partner;
+import com.WooJoo09.entity.Trade;
+import com.WooJoo09.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @ToString
@@ -12,4 +22,50 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class PartnerService {
     private final PartnerRepository partnerRepository;
+    private final TradeRepository tradeRepository;
+    private final MemberRepository memberRepository;
+    private final ChatRepository chatRepository;
+
+    public Map<String,String> partnerInsert(Long tradeNum, Long memberNum){
+        Map<String, String> map = new HashMap<>();
+        Trade trade = tradeRepository.findByTradeNum(tradeNum);
+        Member member = memberRepository.findByMemberNum(memberNum);
+        if(partnerRepository.findByTradeNumAndPartMemNum(trade, member).isEmpty()){
+            Partner partner = new Partner();
+            partner.setPartMemNum(member);
+            partner.setTradeNum(trade);
+            Partner savedPartner = partnerRepository.save(partner);
+            log.info(savedPartner.toString());
+            if(chatRepository.findByPartnerNum(partner).isEmpty()){
+                Chat chat = new Chat();
+                chat.setSender(member);
+                chat.setPartnerNum(partner);
+                chat.setChatContent("채팅방이 개설되었습니다");
+                chat.setMsgType(MsgType.ENTER);
+                chat.setIsRead(IsRead.UNREAD);
+                Chat savedChat = chatRepository.save(chat);
+                log.info(savedChat.toString());
+                map.put("completePartner", "OK");
+            } else map.put("completePartner", "duplicateChat");
+        } else map.put("completePartner", "duplicate");
+        return map;
+    }
+
+    public Map<String,String> partnerDelete(Long tradeNum, Long memberNum){
+        Map<String, String> map = new HashMap<>();
+        Trade trade = tradeRepository.findByTradeNum(tradeNum);
+        Member member = memberRepository.findByMemberNum(memberNum);
+        List<Partner> partner = partnerRepository.findByTradeNumAndPartMemNum(trade, member);
+        if(partner.isEmpty()){
+            map.put("deletePartner", "notData");
+        } else{
+            for(Partner e : partner){
+                List<Chat> chats = chatRepository.findByPartnerNum(e);
+                chatRepository.deleteAll(chats);
+                partnerRepository.delete(e);
+            }
+            map.put("deletePartner", "OK");
+        }
+        return map;
+    }
 }

@@ -71,11 +71,11 @@ const api = {
     }
     return await axios.post(BASE_URL+ "stardelete", starDeleteCmd, HEADER);
   },
-  tradeInsert: async function(
-    representUrl, imgUrl, product, price, limitPartner, dueDate, tradeMethod, city, town, tradePlace, productDetail) {
+  tradeInsert: async function( imgUrl,
+    representUrl, category, product, price, limitPartner, dueDate, tradeMethod, city, town, tradePlace, productDetail) {
     const tradeInsertCmd = {
       representUrl: representUrl,
-      imgUrl: imgUrl,
+      category : category,
       product: product,
       price: price,
       limitPartner: limitPartner,
@@ -86,7 +86,10 @@ const api = {
       tradePlace: tradePlace,
       productDetail: productDetail
     }
-    return await axios.post(BASE_URL+ "tradeinsert", tradeInsertCmd, HEADER);
+    const tradeInsertCmdList = {
+      imgUrl: imgUrl
+    }
+    return await axios.post(BASE_URL+ "tradeinsert", tradeInsertCmd, tradeInsertCmdList, HEADER);
   },
   tradeDetailSelect: async function(target) {
     const tradeDetailSelectCmd = {

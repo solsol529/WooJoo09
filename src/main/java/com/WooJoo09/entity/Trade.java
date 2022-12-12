@@ -21,7 +21,7 @@ import java.util.Date;
 public class Trade {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @OnDelete(action = OnDeleteAction.CASCADE)
 //    @OneToMany(mappedBy = "tradeNum", cascade = CascadeType.REMOVE, orphanRemoval = true)
 //    @OneToMany(mappedBy = "complainTrade", cascade = CascadeType.REMOVE, orphanRemoval = true)
