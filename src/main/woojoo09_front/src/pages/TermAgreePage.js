@@ -300,13 +300,16 @@ const TermAgreePage = () =>{
             <div>
               {!(checkItems.includes("chk1") && checkItems.includes("chk2"))
               && <button className="termAgreeFail">다음</button>}
+
               {(checkItems.includes("chk1") && checkItems.includes("chk2"))
               && <button className="termAgreeOk" onClick={()=>{
                 if(checkItems.includes("chk3")) {
-                  window.localStorage.setItem("adOk", "Y");
+                  window.localStorage.setItem("adOk", "POSITIVE");
                 } else {
-                  window.localStorage.setItem("adOk", "N");
+                  window.localStorage.setItem("adOk", "NEGATIVE");
                 }
+                // window.localStorage.setItem("chk1", "Y")
+                // window.localStorage.setItem("chk2", "Y")
                 window.location.replace("/register");
               }}>다음</button>}             
             </div>

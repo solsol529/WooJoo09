@@ -66,3 +66,24 @@
     margin: 20px 0;
     cursor: pointer;
 }
+
+//resetPwdComplete component
+.resetPwdCompleteDt {
+    text-align: center;
+    font-size: 1.4em;
+}
+.resetPwdLoginBtn {
+    text-align: center;
+    padding: 100px;
+
+    button {
+        width: 70%;
+        height: 46px;
+        border: none;
+        background-color: #8679D9;
+        color: #fff;
+        border-radius: 10px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+}

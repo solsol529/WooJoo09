@@ -16,7 +16,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -60,4 +62,15 @@ public class ChatService {
 //        } else map.put("completePartner", "duplicate");
 //        return map;
 //    }
+//    public List<?> chatList(int memberNum){
+//        List<Map<?,?>> result = new ArrayList<>();
+//        Map<String, Map<?,?>> map = new HashMap<>();
+//        map.put("chatContent", chatRepository.chatList(memberNum));
+//        for(int i = 0; i < map.size(); i++){
+//            result.add(map.get(i));
+//        }
+//        map.put("memberNicknameimg", chatRepository.chatListnickname(memberNum));
+//        return result;
+//    }
+
 }

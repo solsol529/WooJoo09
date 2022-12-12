@@ -176,18 +176,18 @@ const api = {
     return await axios.post(BASE_URL+ "dislikeinsert", dislikeInsertCmd, HEADER);
   },  
   //회원가입
-  memberReg: async function(regId, regPwd, regNick, regName, regEmail, form, regPhone) {
+  memberReg: async function(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone) {
     const regCheck = {
       regId : regId,
       regPwd : regPwd,
       regNick : regNick,
       regName : regName,
       regEmail : regEmail,
-      form : form,
+      birthDate : birthDate,
       regPhone : regPhone,
       adOk : localStorage.getItem("adOk")
     }
-    return await axios.post(BASE_URL + "MemberReg", regCheck, HEADER);
+    return await axios.post(BASE_URL + "memberinsert", regCheck, HEADER);
   },
 
   //아이디 중복체크
@@ -195,9 +195,26 @@ const api = {
     const regIdDup = {
       regId : regId
     }
-    return await axios.post(BASE_URL + "MemberIdDup", regIdDup, HEADER);
-  }
+    return await axios.post(BASE_URL + "iddup", regIdDup, HEADER);
+  },
 
+  //아이디 찾기
+  memberfindId: async function(findIdName, findIdEmail) {
+    const findId = {
+      findIdName: findIdName,
+      findIdEmail: findIdEmail
+    }
+    return await axios.post(BASE_URL + "findid", findId, HEADER);
+  },
+
+  //이메일로 정보 가져오기
+  memberinfoFindId: async function(findIdEmail) {
+    const finIdMember = {
+      findIdEmail: findIdEmail
+    }
+    return await axios.post(BASE_URL + "findidmember", finIdMember, HEADER);
+  }
+  
 }
 
 export default api;

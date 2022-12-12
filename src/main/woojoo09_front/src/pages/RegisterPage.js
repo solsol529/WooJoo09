@@ -6,10 +6,6 @@ import api from "../api/api";
 
 const RegisterPage = () =>{
   const navigate = useNavigate();
-
-  if(!localStorage.getItem("adOk")) {
-    navigate('/term');
-  }
   
   const [regId, setRegId] = useState('');
   const [regPwd, setRegPwd] = useState('');
@@ -74,12 +70,15 @@ const RegisterPage = () =>{
   const onClickRegComplete = () => {
     const fetchData = async () => {
       try {
-        var birthDate = new Date(form.year+"-"+form.month+"-"+form.day);
+        // var birthDate = new Date(form.year+"-"+form.month+"-"+form.day);
+        const birthDate = form.year+"-"+form.month+"-"+form.day
+        console.log(birthDate);
+
         console.log(date);
         const response = await api.memberReg(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone);
         if(response.data === true) {
         localStorage.removeItem("adOk")
-        window.location.replace("/celebrate");
+        navigate("/celebrate");
         }
       } catch (e) {
         console.log(e);
@@ -93,42 +92,72 @@ const RegisterPage = () =>{
   const onChangeRegId = (e) => {
     const inputId = e.target.value;
     setRegId(inputId);
-    if(inputId.length > 15 || inputId.length < 5) {
+    if(!idRegEx.test(inputId)) {
       setIsRegId(false);
       setRegIdMsg("3~15자리 영문자 또는 숫자를 입력해주세요.");
-      setIsRegId(true); //false로 바꾸기
-      setRegIdMsg("아이디 중복 확인이 필요합니다.")
+      // setIsRegId(false); //false로 바꾸기
+      // setRegIdMsg("아이디 중복 확인이 필요합니다.")
+    } else if(!isRegIdCk){
+      setIsRegIdCk(false)
+      setRegIdMsg("아이디 중복 확인이 필요합니다.");
     }
   }
 
   //아이디 중복확인
+  // const onClickRegIdDup = () => {
+  //   console.log("아이디 중복체크 할 때 들어온 값" + regId);
+  //   if((regId.length !== 0) && (regId.length < 16)) {
+  //     const fetchSearchData = async () => {
+  //       try {
+  //         const response = await api.memberIdDup(regId);
+  //         if(response.data === true) {
+  //           setIsRegIdCk(true);
+  //           setIsRegId(true);
+  //           setRegIdMsg("사용 가능한 아이디 입니다.");
+  //           // setIsRegOnPhone(true);
+  //         } else if (response.data === false) {
+  //           setIsRegIdCk(false);
+  //           setIsRegId(true);
+  //           setRegIdMsg("이미 존재하는 아이디 입니다.");
+  //         }
+  //       } catch (e) {
+  //         console.log(e);
+  //       }
+  //     };
+  //     fetchSearchData();
+  //   } else {
+  //     setIsRegIdCk(false);
+  //     setIsRegId(false);
+  //     setRegIdMsg("아이디 형식을 확인 후 중복 체크를 해주세요.")
+  //   }
+  // };
+
   const onClickRegIdDup = () => {
     console.log("아이디 중복체크 할 때 들어온 값" + regId);
-    if((regId.length !== 0) && (regId.length < 16)) {
-      const fetchSearchData = async () => {
-        try {
-          const response = await api.memberIdDup(regId);
-          if(response.data.result === "OK") {
-            setIsRegIdCk(true);
-            setIsRegId(true);
-            setRegIdMsg("사용 가능한 아이디 입니다.");
-            setIsRegOnPhone(true);
-          } else if (response.data.result === "NOK") {
-            setIsRegIdCk(false);
-            setIsRegId(true);
-            setRegIdMsg("이미 존재하는 아이디 입니다.");
-          }
-        } catch (e) {
-          console.log(e);
-        }
-      };
-      fetchSearchData();
-    } else {
-      setIsRegIdCk(false);
-      setIsRegId(false);
-      setRegIdMsg("아이디 형식을 확인 후 중복 체크를 해주세요.")
-    }
-  };
+    if((regId.length > 2) && (regId.length < 16)) {
+    const fetchData = async () => {
+      try {
+        const response = await api.memberIdDup(regId);
+        if(response.data === true) {
+          setIsRegIdCk(true);
+          setIsRegId(true);
+          setRegIdOkMsg("사용 가능한 아이디 입니다.");
+        } else if (response.data === false) {
+          setIsRegId(true);
+          setIsRegIdCk(false);
+          setRegIdMsg("이미 존재하는 아이디 입니다.");
+        } 
+      } catch (e) {
+        console.log(e);
+      }      
+    };
+    fetchData();
+  } else {
+    setIsRegId(false);
+    setIsRegIdCk(false);
+    setRegIdMsg("아이디 형식을 확인 후 중복 체크를 해주세요.")
+  }
+}
 
   //비밀번호
   const onChangeRegPwd = (e) => {
@@ -223,7 +252,7 @@ const RegisterPage = () =>{
 
   let years = [];
   for(let y = now.getFullYear(); y >= 1930; y -= 1) {
-    years.push(y);
+    years.push(y.toString());
   }
   
   let month = [];

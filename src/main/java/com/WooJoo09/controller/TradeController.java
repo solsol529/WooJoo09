@@ -149,21 +149,21 @@ public class TradeController {
     @PostMapping("/tradeinsert")
     public ResponseEntity<Map<?, ?>> tradeInsert(
             @CookieValue(value = "token", required = false) String token,
-            @RequestBody Map<String, String> Data, Map<String, String> ImgData) throws Exception {
-        String imgUrl = ImgData.get("imgUrl");
-        String representUrl = Data.get("representUrl");
-        String category = Data.get("category");
-        String product = Data.get("product");
-        int price = Integer.parseInt(Data.get("price"));
-        int limitPartner = Integer.parseInt(Data.get("limitPartner"));
-        String dueDateStr = Data.get("dueDate");
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-        Date dueDate = sdf.parse(dueDateStr);
-        String tradeMethod = Data.get("tradeMethod");
-        String city = Data.get("city");
-        String town = Data.get("town");
-        String tradePlace = Data.get("tradePlace");
-        String productDetail = Data.get("productDetail");
+            @RequestBody Map<String, Object> Data) throws Exception {
+//        String imgUrl = Data.get("imgUrl");
+//        String representUrl = Data.get("representUrl");
+//        String category = Data.get("category");
+//        String product = Data.get("product");
+//        int price = Integer.parseInt(Data.get("price"));
+//        int limitPartner = Integer.parseInt(Data.get("limitPartner"));
+//        String dueDateStr = Data.get("dueDate");
+//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+//        Date dueDate = sdf.parse(dueDateStr);
+//        String tradeMethod = Data.get("tradeMethod");
+//        String city = Data.get("city");
+//        String town = Data.get("town");
+//        String tradePlace = Data.get("tradePlace");
+//        String productDetail = Data.get("productDetail");
         Map<String ,String> map = new HashMap<>();
 //        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
 //            log.info("로그인상태입니당");

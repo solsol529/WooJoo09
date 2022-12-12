@@ -1,8 +1,19 @@
 import Footer from '../components/Footer';
 import Header from "../components/Header";
 import Celebrate from "../components/Celebrate";
+import { useNavigate  } from "react-router-dom";
 
 const CelebratePage = () =>{
+  const navigate = useNavigate();
+
+  const onClickCelLoginBtn = () => {
+    navigate('/login');
+  }
+
+  const onClickCelMainBtn = () => {
+    navigate('/');
+  }
+
   return(
     <div className="wrapper">
       <Header/>
@@ -15,15 +26,17 @@ const CelebratePage = () =>{
             <div className="celDetailWrite">
               <h3>
               모든 회원가입절차가 완료되었습니다.<br/>
+              등록하신 이메일로 우주공구의 소개 메일을 보내드렸으니,<br/>
+              받지 못하셨다면 회원정보를 확인해주세요.<br/>
               로그인 후 우주공구의 모든 서비스를 이용할 수 있습니다.
               </h3>
             </div>
             <div className="celLowBox">
               <div className="celLoginBox">
-                <button>로그인</button>
+                <button onClick={onClickCelLoginBtn}>로그인</button>
               </div>
               <div className="celMainBox">
-                <button>메인으로</button>
+                <button onClick={onClickCelMainBtn}>메인으로</button>
               </div>
             </div>
           </div>
