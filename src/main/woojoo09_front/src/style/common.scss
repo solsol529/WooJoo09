@@ -523,9 +523,15 @@ input:focus{
       .cardStar{
         position: absolute;
         right: 3%;
-        bottom: 5%;
+        bottom: 7%;
         width: 5%;
         z-index: 20;
+
+        &:hover{
+          width: 5.2%;
+          right: 2.9%;
+          bottom: 6.9%;
+        }
       }
     }
   }

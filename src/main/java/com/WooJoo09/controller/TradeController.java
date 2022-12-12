@@ -147,4 +147,6 @@ public class TradeController {
         list= tradeService.tradeDetailImage(tradeNum);
         return ResponseEntity.ok().body(list);
     }
+
+
 }

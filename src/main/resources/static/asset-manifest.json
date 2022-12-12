@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.dd33a95a.css",
-    "main.js": "/static/js/main.d419ae57.js",
+    "main.css": "/static/css/main.e71d4b19.css",
+    "main.js": "/static/js/main.4107c8ac.js",
     "static/media/chatMoving.gif": "/static/media/chatMoving.30958733a50ad66a43d8.gif",
     "static/media/chatMoving_black.gif": "/static/media/chatMoving_black.128078e265e156eccca6.gif",
     "static/media/grade_icon4_nebula.png": "/static/media/grade_icon4_nebula.d1bbcff95a85c99b7167.png",
@@ -26,17 +26,18 @@
     "static/media/chat_white2.png": "/static/media/chat_white2.9465a220adac79c3a5eb.png",
     "static/media/regcel.png": "/static/media/regcel.1d8d9a9460383c46bd14.png",
     "static/media/chat_black.png": "/static/media/chat_black.9c93594313ec58c983de.png",
+    "static/media/starFill.png": "/static/media/starFill.01619380ebee465215bf.png",
     "static/media/chat.png": "/static/media/chat.4fa403dac9444d99f00b.png",
     "static/media/fashion_sample.png": "/static/media/fashion_sample.c844d8feaf3235e10186.png",
     "static/media/representImg_icon.png": "/static/media/representImg_icon.17f6eeb138515818406b.png",
     "static/media/rocket.png": "/static/media/rocket.05a66241732bb34e2aa8.png",
     "static/media/images_icon.png": "/static/media/images_icon.a951e698adbd3ddcd20e.png",
     "index.html": "/index.html",
-    "main.dd33a95a.css.map": "/static/css/main.dd33a95a.css.map",
-    "main.d419ae57.js.map": "/static/js/main.d419ae57.js.map"
+    "main.e71d4b19.css.map": "/static/css/main.e71d4b19.css.map",
+    "main.4107c8ac.js.map": "/static/js/main.4107c8ac.js.map"
   },
   "entrypoints": [
-    "static/css/main.dd33a95a.css",
-    "static/js/main.d419ae57.js"
+    "static/css/main.e71d4b19.css",
+    "static/js/main.4107c8ac.js"
   ]
 }
