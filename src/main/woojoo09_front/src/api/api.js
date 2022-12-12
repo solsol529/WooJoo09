@@ -24,9 +24,11 @@ const api = {
     }
     return await axios.post(BASE_URL+ "test", testCmd, HEADER);
   },
-  tradeSearchSelect: async function(target) {
+  tradeSearchSelect: async function(target, page, size) {
     const searchSelectCmd = {
-      target: target
+      target: target,
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "searchselect", searchSelectCmd, HEADER);
   },
@@ -36,13 +38,26 @@ const api = {
     }
     return await axios.post(BASE_URL+ "chatreadcheck", chatReadCheckCmd, HEADER);
   },
-  tradeSelect: async function(option, city, town) {
+  tradeSelect: async function(option, city, town, page, size) {
     const tradeSelectCmd = {
       option: option,
       city: city,
-      town: town
+      town: town,
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "tradeselect", tradeSelectCmd, HEADER);
+  },
+  tradeSelectCategory: async function(category, option, city, town, page, size) {
+    const tradeSelectCmd = {
+      category: category,
+      option: option,
+      city: city,
+      town: town,
+      page: page,
+      size: size
+    }
+    return await axios.post(BASE_URL+ "tradeselectcategory", tradeSelectCmd, HEADER);
   },
   starInsert: async function(target) {
     const starInsertCmd = {
@@ -72,6 +87,12 @@ const api = {
       target: target
     }
     return await axios.post(BASE_URL+ "tradedetailselect", tradeDetailSelectCmd, HEADER);
+  },
+  tradeDetailImgSelect: async function(target) {
+    const tradeDetailImgSelectCmd = {
+      target: target
+    }
+    return await axios.post(BASE_URL+ "tradedetailimgselect", tradeDetailImgSelectCmd, HEADER);
   },
   partnerInsert: async function(target) {
     const partnerInsertCmd = {

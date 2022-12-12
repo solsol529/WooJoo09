@@ -1,24 +1,34 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import ResetPwd from "../components/ResetPwd";
 
 const FindPwdPage = () =>{
+  const navigate = useNavigate();
+
+  const [changeResetPwd, setChangeResetPwd] = useState(false);
+
   const [findPwdName, setFindPwdName] = useState('');
-  const [findPwdPhone, setFindPwdPhone] = useState('');
+  const [findPwdEmail, setFindPwdEmail] = useState('');
 
   const [isFindPwdName, setIsFindPwdName] = useState(false);
-  const [isFindPwdPhone, setIsFindPwdPhone] = useState(false);
+  const [isFindPwdEmail, setIsFindPwdEmail] = useState(false);
+
+  const [findePwdCodeInput, setFindePwdCodeInput] = useState('');
+  const [isFindPwdVerifyCode, setIsFindPwdVerifyCode] = useState(false);
 
   //에러 메시지
   const [findPwdNameOkMsg, setFindPwdNameOkMsg] = useState('');
   const [findPwdNameMsg, setFindPwdNameMsg] = useState('');
 
-  const [findPwdPhoneOkMsg, setFindPwdPhoneOkMsg] = useState('');
-  const [findPwdPhoneMsg, setFindPwdPhoneMsg] = useState('');
+  const [findPwdEmailOkMsg, setFindPwdEmailOkMsg] = useState('');
+  const [findPwdEmailMsg, setFindPwdEmailMsg] = useState('');
 
   //정규식
   const nameRegEx = /^[가-힣|a-z|A-Z|]+$/;
-  const phoneRegEx = /^\d{2,3}-\d{3,4}-\d{4}$/; 
+  const emailRegEx = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+  const CodeRegEx = /^[0-9]+$/;
 
   const onChangeFindPwdName = (e) => {
     const inputFindPwdName = e.target.value;
@@ -35,46 +45,38 @@ const FindPwdPage = () =>{
     };
   }
 
-  const onChangeFindPwdPhone = (e) => {
-    const inputFindPwdPhone = e.target.value;
-    setFindPwdPhone(inputFindPwdPhone);
-    if(inputFindPwdPhone.length === 0) {
-      setIsFindPwdPhone(false);
-      setFindPwdPhoneMsg("가입 시 등록한 전화번호를 입력해주세요.")
-    } else if(!phoneRegEx.test(inputFindPwdPhone)) {
-      setIsFindPwdPhone(false);
-      setFindPwdPhoneMsg("전화번호 형식에 맞지 않습니다.");
+  const onChangeFindPwdEmail = (e) => {
+    const inputFindPwdEmail = e.target.value;
+    setFindPwdEmail(inputFindPwdEmail);
+    if(inputFindPwdEmail.length === 0) {
+      setIsFindPwdEmail(false);
+      setFindPwdEmailMsg("가입 시 등록한 이메일주소를 입력해주세요.")
+    } else if(!emailRegEx.test(inputFindPwdEmail)) {
+      setIsFindPwdEmail(false);
+      setFindPwdEmailMsg("이메일 형식에 맞지 않습니다.");
     } else {
-      setIsFindPwdPhone(true);
-      setFindPwdPhoneOkMsg("");
+      setIsFindPwdEmail(true);
+      setFindPwdEmailOkMsg("");
     };
   }
 
-  useEffect(() => {
-    if(findPwdPhone.length === 10) {
-      setFindPwdPhone(findPwdPhone.replace(/(\d{3})(\d{3})(\d{4})/, '$1-$2-$3'));
-    }
-    if(findPwdPhone.length === 13) {
-      setFindPwdPhone(findPwdPhone.replace(/-/g, '').replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3'));
-    }
-    if(phoneRegEx.test(findPwdPhone)) {
-      setIsFindPwdPhone(true);
-      // setFindPwdPhoneOkMsg("사용 가능한 전화번호 입니다.");
-    }
-  }, [findPwdPhone]);
-
-
   const onClickFindPwdCode = () => {
     const findPwdCodeInput = document.getElementById('findPwdCodeInput');
-    if(findPwdCodeInput.style.display !== 'none') {
-      findPwdCodeInput.style.display = 'none';
-    } else {
+    if(isFindPwdName && isFindPwdEmail) {
       findPwdCodeInput.style.display = 'block';
     }
   }
 
-  const onClickFindPwd = () => {
-    window.location.replace("/resetpwd");
+  const onChangeFindPwdCodeInput = (e) => {
+    const findPwdCodeInput = e.target.value;
+    setFindePwdCodeInput(findPwdCodeInput);
+    if(CodeRegEx.test(findPwdCodeInput)) {
+      setIsFindPwdVerifyCode(true);
+    }
+  }
+
+  const onClickFindPwd = () => {   
+    // if(isFindPwdVerifyCode) navigate('/resetpwd');
   }
 
   
@@ -83,6 +85,11 @@ const FindPwdPage = () =>{
       <Header/>
       <div className="findPwdWrapper">
         <div className="findPwd">
+          {changeResetPwd && 
+          <ResetPwd />}
+
+          {!changeResetPwd &&
+          <>
           <h2>비밀번호 찾기</h2>
           <div className="findPwdMain">
             <div className="findPwdSmallBox">           
@@ -94,26 +101,28 @@ const FindPwdPage = () =>{
               {isFindPwdName && <span className="findIdNameOk">{findPwdNameOkMsg}</span>}
             </div>
             <div className="findPwdSmallBox">
-              <input type="text" value={findPwdPhone} className="findPwdPhone" placeholder="핸드폰번호"
-              onChange={onChangeFindPwdPhone}></input>
+              <input type="text" value={findPwdEmail} className="findPwdEmail" placeholder="이메일주소"
+              onChange={onChangeFindPwdEmail}></input>
             </div>
             <div className="findPwdErrMsg">
-              {!isFindPwdPhone && <span className="findIdPhoneErr">{findPwdPhoneMsg}</span>}
-              {isFindPwdPhone && <span className="findIdPhoneOk">{findPwdPhoneOkMsg}</span>}
+              {!isFindPwdEmail && <span className="findIdEmailErr">{findPwdEmailMsg}</span>}
+              {isFindPwdEmail && <span className="findIdEmailOk">{findPwdEmailOkMsg}</span>}
             </div>
             <div className="findPwdCode">
-              {!(isFindPwdName && isFindPwdPhone)
-              && <button className="notFindPwdCodeBtn">인증번호 받기</button>}  
-              {(isFindPwdName && isFindPwdPhone)
-              && <button className="findPwdCodeBtn" onClick={onClickFindPwdCode}>인증번호 받기</button>}    
+              <button id="findPwdCodeBtn" className={(isFindPwdName && isFindPwdEmail) ? 'findPwdCodeBtn' : 'notFindPwdCodeBtn'}
+              onClick={onClickFindPwdCode}>인증번호 받기</button>
             </div>
             <div className="findPwdSmallBox">
-            <input type="text" id="findPwdCodeInput" className="findPwdCodeInput" placeholder="인증번호 입력"></input>
+              <input type="text" value={findePwdCodeInput} id="findPwdCodeInput" className="findPwdCodeInput" placeholder="인증번호 입력"
+              style={{display: "none"}} onChange={onChangeFindPwdCodeInput}></input>
             </div>
-            </div>
-              <button className="pwdSearchButton" onClick={onClickFindPwd}>확인</button>           
-            <div>
           </div>
+          <div>
+            <button id="pwdSearchButton" className={isFindPwdVerifyCode ? 'pwdSearchOkBtn' : 'pwdSearchNotBtn'}
+            onClick={isFindPwdVerifyCode ? ()=>{setChangeResetPwd(true)} : ()=>{setChangeResetPwd(false)}}>확인</button>             
+          </div>
+          </>
+          }
         </div>
       </div>
       <Footer/>

@@ -178,6 +178,15 @@
   }
   .MyTradeGood{
     margin:10px 100px 0 0;
+      button{
+        border: 0;
+        outline: 0; 
+        background-color: $bluePurple3Alpha35;
+        border-radius: 5px;
+        margin: 10px;
+        width: 100px;
+        height: 30px;
+    }
   }
 
   .MyTradeGood,.MyTradeDislike{

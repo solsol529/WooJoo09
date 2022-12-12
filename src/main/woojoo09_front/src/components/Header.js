@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { NavLink ,Link } from "react-router-dom";
+import { NavLink ,Link, useNavigate } from "react-router-dom";
 import logo from "../resources/logo.png";
 import logoWhite from "../resources/logoWhite.png";
 import search from "../resources/search_purple.png";
@@ -13,8 +13,38 @@ import chatBlack from "../resources/chat_black.png";
 import chatMovingBlack from "../resources/chatMoving_black.gif";
 import profileBlack from "../resources/profile_black.png";
 import { categories } from "../util/util";
+import api from "../api/api"
 
-const Header = () =>{
+const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
+
+  const [NewChat, setNewChat] = useState(0);
+  const [searchTarget, setSearchTarget] = useState("");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await api.chatReadCheck();
+        if(response.data.state === 'login'){
+          changeIsLogin(true);
+          setNewChat(response.data.countUnreadChat);
+          // console.log(response.data.countUnreadChat);
+        } else if(response.data.state === 'admin'){
+          changeIsLogin(true);
+          changeIsAdmin(true);
+        }
+        else{
+          changeIsLogin(false);
+        }
+      } catch(e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+    // setTimeout(() => { 
+    //   fetchData();
+    // }, 30000); // 30초마다 한번
+  });
 
 
   const [scrollPosition, setScrollPosition] = useState(0);
@@ -27,12 +57,23 @@ const Header = () =>{
   // const [current, setCurrent] = useState('main');
   
   const handleKeyPress = e => {
-    // if(e.key === 'Enter') {
-    //   console.log(e.target.value);
-    //   localStorage.setItem("write", "search");
-    //   window.location.replace(`/search/${e.target.value}`);
-    // }
+    if(e.key === 'Enter') {
+      console.log(e.target.value);
+      navigate(`/search/${e.target.value}`);
+    }
   }
+
+  const handleButton = () => {
+    if(searchTarget) {
+      console.log(searchTarget);
+      navigate(`/search/${searchTarget}`);
+    }
+  }
+
+  const onChangeTarget = (e) =>{
+    setSearchTarget(e.target.value);
+  }
+
 
   return(
     <div className={scrollPosition < 150 ? "header" : "changedHeader"}>
@@ -45,13 +86,23 @@ const Header = () =>{
         </div>
         <div className="headerSearch">
           <input type="text" placeholder=""
-          onKeyPress={handleKeyPress}/>
-          <img src={search} alt="검색"/>
+          onKeyPress={handleKeyPress}
+          onChange={onChangeTarget}/>
+          <img src={search} alt="검색" onClick={handleButton}/>
         </div>
         <div className="headerLogin">
-          {/* <button>로그인</button> */}
-          <Link to="/member"><img src={scrollPosition < 150 ? profileBlack : profileWhite} alt="내정보"/></Link>
-          <Link to="/chatlist"><img src={scrollPosition < 150 ? chatMovingBlack : chatMovingWhite} alt="채팅"/></Link>
+          { isLogin ?
+          <>
+          <Link to="/member">
+            <img src={scrollPosition < 150 ? profileBlack : profileWhite} alt="내정보"/>
+          </Link>
+          <Link to="/chatlist">
+            {NewChat === 0 ?
+              <img src={scrollPosition < 150 ? chatBlack : chatWhite} alt="채팅"/>
+              : <img src={scrollPosition < 150 ? chatMovingBlack : chatMovingWhite} alt="채팅"/>}
+          </Link>
+          </> : (isAdmin? <button>관리자(admin)</button>: 
+          <button>로그인</button>)}
          
         </div>
       </div>
