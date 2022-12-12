@@ -1,9 +1,11 @@
-import { useState } from "react";
-import Footer from "../components/Footer";
-import Header from "../components/Header";
 import "../style/resetpwd.scss";
+import { useState } from "react";
+import ResetPwdComplete from "./ResetPwdComplete";
 
-const ResetPwdPage = () =>{
+
+const ResetPwd = () => {
+  const [changeResetPwdCom, setChangeResetCom] = useState(false);
+
   const [resetPwd, setResetPwd] = useState('');
   const [resetPwdCk, setResetPwdCk] = useState('');
 
@@ -60,38 +62,41 @@ const ResetPwdPage = () =>{
     
   }
 
-  return(
-    <div className="wrapper">
-      <Header/>
-      <div className="resetPwdWrapper">
-        <div className="resetPwd">
-          <h2>비밀번호 재설정</h2>
-          <div className="resetPwdMain">
-            <div className="resetPwdSmallBox">           
-              <input type="password" value={resetPwd} className="resetPwdInput" placeholder="새 비밀번호"
-              onChange={onChangeResetPwd}></input> 
-            </div>
-            <div className="resetPwdErrMsg">
-              {!isResetPwd && <span className="resetPwdErr">{resetPwdMsg}</span>}
-              {isResetPwd && <span className="resetPwdOk">{resetPwdOkMsg}</span>}
-            </div>
-            <div className="resetPwdSmallBox">
-              <input type="password" value={resetPwdCk} className="resetPwdInput" placeholder="새 비밀번호 확인"
-              onChange={onChangeResetPwdCk}></input>
-            </div> 
-            <div className="resetPwdErrMsg">
-              {!isResetPwdCk && <span className="resetPwdCkErr">{resetPwdCkMsg}</span>}
-              {isResetPwdCk && <span className="resetPwdCkOk">{resetPwdCkOkMsg}</span>}
-            </div>
-            </div>          
-            <div className="resetPwdComplete">
-              <button className={(isResetPwd && isResetPwdCk) ? 'resetPwdCompleteBut' : 'resetPwdNotCompleteBut'}
-              onClick={onClickResetPwd}>확인</button>     
-            </div>
+
+    return (
+      <>
+      {changeResetPwdCom &&
+      <ResetPwdComplete />}
+
+      {!changeResetPwdCom &&
+        <>
+        <h2>비밀번호 재설정</h2>
+        <div className="resetPwdMain">
+          <div className="resetPwdSmallBox">           
+            <input type="password" value={resetPwd} className="resetPwdInput" placeholder="새 비밀번호"
+            onChange={onChangeResetPwd}></input> 
+          </div>
+          <div className="resetPwdErrMsg">
+            {!isResetPwd && <span className="resetPwdErr">{resetPwdMsg}</span>}
+            {isResetPwd && <span className="resetPwdOk">{resetPwdOkMsg}</span>}
+          </div>
+          <div className="resetPwdSmallBox">
+            <input type="password" value={resetPwdCk} className="resetPwdInput" placeholder="새 비밀번호 확인"
+            onChange={onChangeResetPwdCk}></input>
+          </div> 
+          <div className="resetPwdErrMsg">
+            {!isResetPwdCk && <span className="resetPwdCkErr">{resetPwdCkMsg}</span>}
+            {isResetPwdCk && <span className="resetPwdCkOk">{resetPwdCkOkMsg}</span>}
+          </div>
+        </div>          
+        <div className="resetPwdComplete">
+          <button className={(isResetPwd && isResetPwdCk) ? 'resetPwdCompleteBut' : 'resetPwdNotCompleteBut'}
+          onClick={(isResetPwd && isResetPwdCk) ? ()=>{setChangeResetCom(true)} : ()=>{setChangeResetCom(false)}}>확인</button>     
         </div>
-      </div>
-      <Footer/>
-    </div>
-  );
+        </>
+      }
+      </>
+    )
 }
-export default ResetPwdPage
+
+export default ResetPwd;

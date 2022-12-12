@@ -2,8 +2,11 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import FindIdComplete from "../components/FindIdComplete";
 
 const FindIdPage = () =>{
+  const [changeFindIdComplete, setChangeFindIdComplete] = useState(false);
+
   const [findIdName, setFindIdName] = useState('');
   const [findIdEmail, setFindIdEmail] = useState('');
 
@@ -40,7 +43,7 @@ const FindIdPage = () =>{
   }
 
   const onClickIdSearch = () => {
-    window.location.replace("/findidcomplete");
+    // window.location.replace("/findidcomplete");
   }
 
   return(
@@ -50,6 +53,12 @@ const FindIdPage = () =>{
         <div className="findId">
           <h2>아이디 찾기</h2>
           <div className="findIdMain">
+            {changeFindIdComplete &&
+              <FindIdComplete />
+            }
+              
+            {!changeFindIdComplete &&
+            <>
             <div className="findIdSmallBox">           
               <input type="text" value={findIdName} className="findIdName" placeholder="이름"
               onChange={onChangeFindIdName}></input> 
@@ -70,8 +79,12 @@ const FindIdPage = () =>{
               {!(isFindIdName && isFindIdEmail)
               && <button className="findIdNotCompleteBut">확인</button>}  
               {(isFindIdName && isFindIdEmail)
-              && <button className="findIdCompleteBut" onClick={onClickIdSearch}>확인</button>}    
-            </div>                           
+              && <button className="findIdCompleteBut" 
+              onClick={()=>{setChangeFindIdComplete(true)}}>확인</button>}    
+            </div>
+            </>
+            }
+
           </div>
         </div>
       </div>

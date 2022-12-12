@@ -9,12 +9,10 @@ import FindPwdPage from "./pages/FindPwdPage";
 import MainPage from "./pages/MainPage";
 import MemberPage from "./pages/MemberPage";
 import RegisterPage from "./pages/RegisterPage";
-import ResetPwdPage from "./pages/ResetPwdPage";
 import TermAgreePage from "./pages/TermAgreePage";
 import WritePage from "./pages/WritePage";
 import TermPage from "./pages/TermPage";
 import LoginPage from "./pages/LoginPage"
-import FindIdCompletePage from "./pages/FindIdCompletePage"
 import MyTradePage from "./pages/MyTradePage"
 import SearchPage from "./pages/SearchPage"
 
@@ -43,8 +41,10 @@ function App() {
           <Route path='/login' element={<LoginPage/>}/>
           <Route path='/category/:categoryName' element={<CategoryPage/>}/>
           <Route path='/findid' element={<FindIdPage/>}/>
+          {/* <Route path='/findidcomplete' element={<FindIdComplete/>}/> */}
           <Route path='/findpwd' element={<FindPwdPage/>}/>
-          <Route path='/resetpwd' element={<ResetPwdPage/>}/>
+          {/* <Route path='/resetpwd' element={<ResetPwd/>}/>
+          <Route path='/resetpwdcomplete' element={<ResetPwdComplete />}/> */}
           <Route path='/termagree' element={<TermAgreePage/>}/>
           <Route path='/register' element={<RegisterPage/>}/>
           <Route path='/celebrate' element={<CelebratePage/>}/>
@@ -56,8 +56,8 @@ function App() {
           <Route path='/MyTrade' element={<MyTradePage/>}/>
           <Route path='/write' element={<WritePage/>}/>
           <Route path='/term' element={<TermPage/>}/>
-          <Route path="/findidcomplete" element={<FindIdCompletePage/>}/>
           <Route path='/privacypolicy' element={<PrivacyPolicyPage/>}/>
+          
         </Routes>
     </Router>
     </>
