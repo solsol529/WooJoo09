@@ -14,7 +14,7 @@ const ChatSellButton = () => {
         setVisible(!visible);
         setType(e.target.value)
     }
-        console.log("값이 있나요?" +type);
+        // console.log("값이 있나요?" +type);
     const visibleDelivery = (e) => {
         setVisibleDel(!visibleDel);
 
@@ -26,7 +26,7 @@ const ChatSellButton = () => {
     return(
         <>
         <div className="sendPrivacy">
-            { visible && <SendAccount /> } 
+            { visible &&<SendAccount /> }
             { visibleDel && <SendDelivery /> }
             { visiblePho && <SendPhoto />}
         </div>

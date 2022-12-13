@@ -235,6 +235,14 @@ const api = {
     return await axios.post(BASE_URL + "iddup", regIdDup, HEADER);
   },
 
+  //닉네임 중복체크
+  memberNickDup: async function(regNick) {
+    const regNickDup = {
+      regNick: regNick
+    }
+    return await axios.post(BASE_URL + "nickdup", regNickDup, HEADER);
+  },
+
   //아이디 찾기
   memberfindId: async function(findIdName, findIdEmail) {
     const findId = {
@@ -244,12 +252,28 @@ const api = {
     return await axios.post(BASE_URL + "findid", findId, HEADER);
   },
 
-  //이메일로 정보 가져오기
+  //이메일로 회원정보 가져오기
   memberinfoFindId: async function(findIdEmail) {
     const finIdMember = {
       findIdEmail: findIdEmail
     }
     return await axios.post(BASE_URL + "findidmember", finIdMember, HEADER);
+  },  
+  //휴대폰번호 인증
+  memberPhoneReg: async function(regPhone) {
+    const regPhoneCk = {
+      regPhone: regPhone
+    }
+    return await axios.post(BASE_URL + "phoneverify", regPhoneCk, HEADER);
+  },
+
+
+  // 채팅 리스트 가져오기
+  chatList: async function(chatListContent){
+    const chatList = {
+
+    }
+    return await axios.post(BASE_URL + "chatListSelect", chatList, HEADER);
   }
   
 }

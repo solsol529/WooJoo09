@@ -1,5 +1,6 @@
 package com.WooJoo09.repository;
 
+import com.WooJoo09.dto.MemberDTO;
 import com.WooJoo09.entity.Member;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -10,8 +11,9 @@ import java.util.Optional;
 public interface MemberRepository extends JpaRepository<Member, Long> {
     Member findByMemberNum(Long MemberNum);
     Optional<Member> findById(String id);
+    Optional<Member> findByNickname(String nickname);
+    Optional<Member> findByPhone(String phone);
     Optional<Member> findByIdAndPwd(String id, String pwd);
-
     List<Member> findByRealNameAndEmail(String realName, String email);
     List<Member> findByEmail(String email);
 }

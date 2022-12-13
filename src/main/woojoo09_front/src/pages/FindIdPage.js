@@ -65,6 +65,7 @@ const FindIdPage = () =>{
   }
 
 
+
   return(
     <div className="wrapper">
       <Header/>

@@ -67,4 +67,39 @@ public class ChatController {
 //        map = chatService.chatInsert(partnerNum, partMemNum);
 //        return ResponseEntity.ok().body(map);
 //    }
+
+    // 토큰 없이 채팅 리스트 조회
+//    @PostMapping("/chatListSelect")
+//    public ResponseEntity<List<?>> chatSelectList(
+//            @CookieValue(value = "token", required = false) String token,
+//            @RequestBody Map<String, String> Data) {
+//        String memberNum = Data.get("memberNum");
+//        int memberNumInt = Integer.parseInt(memberNum);
+//        //log.info("들어온값 " + memberNum + " 변환된값 " + memberNumInte);
+//        List<?> list = new ArrayList<>();
+//        list =chatService.chatList(memberNumInt);
+//        return new ResponseEntity(list, HttpStatus.OK);
+//    }
+
+
+    @PostMapping("/chatListSelect")
+    public ResponseEntity<List<?>> chatSelectList(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        //int memberNum = Integer.parseInt(Data.get("target"));
+        //int memberNumInt = Integer.parseInt(memberNum);
+        //log.info("들어온값 " + memberNum + " 변환된값 " + memberNumInte);
+        List<?> list = new ArrayList<>();
+        if (token != null) {
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            int tokenInt = Integer.parseInt(memberNumStr);
+            if (memberNumStr.equals("admin")) {
+                list = chatService.chatList(tokenInt);
+            }
+            list = chatService.chatList(tokenInt);
+
+        }
+        return new ResponseEntity(list, HttpStatus.OK);
+    }
 }
