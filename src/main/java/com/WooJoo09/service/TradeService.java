@@ -124,8 +124,6 @@ public class TradeService {
         Trade savedTrade = tradeRepository.save(trade);
         log.info(savedTrade.toString());
         if(productImgRepository.findByTradeNum(savedTrade).isEmpty()){
-            map.put("completePartner", "duplicateTrade");
-        } else {
             ProductImg productImg = new ProductImg();
             productImg.setTradeNum(savedTrade);
             productImg.setImgUrl(representUrl);
@@ -140,6 +138,9 @@ public class TradeService {
                 ProductImg savedRepresentImg2 = productImgRepository.save(productImg2);
                 log.info(savedRepresentImg2.toString());
             }
+            map.put("completeTrade", "OK");
+        } else {
+            map.put("completeTrade", "duplicateTrade");
         }
         return map;
     }

@@ -480,6 +480,7 @@ input:focus{
         img{
           border-radius: 5px;
           width: 100%;
+          height: 100%;
           object-fit: cover;
           background-color: paleturquoise;
         }
@@ -548,6 +549,26 @@ input:focus{
   height: 40vw;
 }
 
+@media screen and (min-width: 1501px) {
+  .card{
+
+    height: 15vw;
+    >a{
+      height: 100%;
+      // >div{
+      //   height: 5vw;
+      // }
+      >div:nth-child(1){
+        height: 90%;
+        overflow: hidden;
+      }
+      >div:nth-child(2){
+        height: 80%;
+      }
+    }
+  }
+}
+
 @media screen and (min-width: 1024px) and (max-width: 1500px) {
 
   .mainCardList{
@@ -557,7 +578,7 @@ input:focus{
     grid-template-rows: 1fr;
 
     .card{
-      max-height: 20vw;
+      height: 20vw;
       >a{
         height: 100%;
         >div{
@@ -591,7 +612,7 @@ input:focus{
   }
 
   .card{
-    max-height: 40vw;
+    height: 40vw;
     >a{
       height: 100%;
       // >div{
