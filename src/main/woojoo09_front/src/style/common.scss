@@ -572,6 +572,7 @@ input:focus{
 @media screen and (min-width: 1024px) and (max-width: 1500px) {
 
   .mainCardList{
+    width: 100%;
     align-self: center;
     display: grid;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -605,6 +606,7 @@ input:focus{
 @media screen and (min-width: 768px) and (max-width: 1023px) {
   
   .mainCardList{
+    width: 100%;
     align-self: center;
     display: grid;
     grid-template-columns: repeat(1, 1fr) !important;
@@ -749,6 +751,7 @@ input:focus{
   }
 
   .mainCardList{
+    width: 100%;
     align-self: center;
     display: grid;
     grid-template-columns: repeat(1, 1fr) !important;;
