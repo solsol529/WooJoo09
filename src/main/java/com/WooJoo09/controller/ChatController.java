@@ -1,13 +1,16 @@
 package com.WooJoo09.controller;
 
 import com.WooJoo09.service.ChatService;
+import com.WooJoo09.webSocket.ChatRoom;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @CrossOrigin(origins = "http://localhost:3000")
@@ -18,6 +21,17 @@ import java.util.Map;
 public class ChatController {
     private final JwtController jwtController;
     private final ChatService chatService;
+
+    @PostMapping("/chat")
+    public ResponseEntity<String> createRoom(@RequestBody String name) {
+        ChatRoom room = chatService.createRoom(name);
+        System.out.println(room.getRoomId());
+        return new ResponseEntity(room.getRoomId(), HttpStatus.OK);
+    }
+    @GetMapping
+    public List<ChatRoom> findAllRoom() {
+        return chatService.findAllRoom();
+    }
 
     @PostMapping("/chatreadcheck")
     public ResponseEntity<Map<?,?>> tradeSearchSelect(

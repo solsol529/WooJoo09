@@ -179,6 +179,58 @@ public class TradeController {
         }
     }
 
+    @PostMapping("/tradeupdate")
+    public ResponseEntity<Map<?, ?>> tradeUpdate(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        // DTO로 하는게 더 편하려나 모르겠다
+        String tradeNumStr = (String) Data.get("tradeNum");
+        Long tradeNum = Long.parseLong(tradeNumStr);
+        List<String> imgUrl = (List<String>) Data.get("imgUrl");
+        String representUrl = (String) Data.get("representUrl");
+        String category = (String) Data.get("category");
+        String product = (String) Data.get("product");
+        int price = Integer.parseInt((String)Data.get("price"));
+        int limitPartner = Integer.parseInt((String)Data.get("limitPartner"));
+        String dueDateStr = (String)Data.get("dueDate");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dueDate = sdf.parse(dueDateStr);
+        String tradeMethod = (String)Data.get("tradeMethod");
+        String city = (String)Data.get("city");
+        String town = (String)Data.get("town");
+        String tradePlace = (String)Data.get("tradePlace");
+        String productDetail = (String)Data.get("productDetail");
+        Map<String ,String> map = new HashMap<>();
+        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            map = tradeService.tradeUpdate(tradeNum, memberNum, imgUrl, representUrl, category, product, price, limitPartner,
+                    dueDate, tradeMethod, city, town, tradePlace, productDetail);
+            return ResponseEntity.ok().body(map);
+        }else {
+            map.put("completeTrade", "loginError");
+            return ResponseEntity.ok().body(map);
+        }
+    }
+
+    @PostMapping("/tradedelete")
+    public ResponseEntity<Map<?, ?>> tradeDelete(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        // DTO로 하는게 더 편하려나 모르겠다
+        String tradeNumStr = (String) Data.get("target");
+        Long tradeNum = Long.parseLong(tradeNumStr);
+        Map<String ,String> map = new HashMap<>();
+        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token); // 토큰 유효성 확인
+            map = tradeService.tradeDelete(tradeNum);
+        }else {
+            map.put("completeDeleteTrade", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 
 
 }

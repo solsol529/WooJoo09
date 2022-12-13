@@ -9,8 +9,6 @@ const Write = () =>{
 
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
-  const [isName, setIsName] = useState('');
-  const [nameMsg, setNameMsg] = useState('');
   const [price, setPrice] = useState('');
   const [city, setCity] = useState('none');
   const [town, setTown] = useState('all');
@@ -31,30 +29,48 @@ const Write = () =>{
   const [representImg, setRepresentImg] = useState("");
   const [representUrl, setRepresentUrl] = useState("");
   const [representErr, setRepresentErr] = useState("");
-
   const [error, setError] = useState("");
- 
+  const [categoryErr, setCategoryErr] = useState("카테고리를 확인해 주세요!");
+  const [nameErr, setNameErr] = useState("");
+  const [priceErr, setPriceErr] = useState("");
+  const [limitPartErr, setLimitPartErr] = useState("인원수를 확인해 주세요!");
+  const [tradeMethodErr, setTradeMethodErr] = useState("거래 방법을 확인해 주세요!");
+  const [dueDateErr, setDueDateErr] = useState("");
+  const [detailErr, setDetailErr] = useState("");
+
+  const [isName, setIsName] = useState('');
+  const [isPrice, setIsPrice] = useState('');
+  const [isTradeMethod, setIsTradeMethod] = useState('');
+  const [isDetail, setIsDetail] = useState('');
+
   const [inputTradePlace, setInputTradePlace] = useState('');
   const [tradePlace, setTradePlace] = useState('');
 
   
   const [displayMap, setDisplayMap] = useState(false);
 
-  const [allComplete, setAllComplete] = useState(false);
-
   const onChangeName = (e) => {
     setName(e.target.value);
     const name = e.target.value;
     if(name.length > 30){
       setIsName(false);
-      setNameMsg("상품명은 한글 최대 10글자까지 가능합니다!");
+      setNameErr("상품명은 최대 30글자까지 가능합니다!");
     } else{
       setIsName(true);
+      setNameErr("");
     }
   }
 
   const onChangePrice = (e) => {
     setPrice(e.target.value);
+    const price = e.target.value;
+    if(price > 9999999){
+      setIsPrice(false);
+      setPriceErr("가격은 최대 천만 원까지 가능합니다!");
+    } else{
+      setIsPrice(true);
+      setPriceErr("");
+    }
   }
 
   const onChangeTradePlace = (e) => {
@@ -63,10 +79,22 @@ const Write = () =>{
 
   const onChangeTradeMethod = (e) => {
     setTradeMethod(e.target.value);
+    setIsTradeMethod(true);
   }
 
   const onChangeProductDetail = (e) =>{
-    setProductDetail(e.target.value);
+    if(e.target.value.length < 10) {
+      setDetailErr("상세 설명을 10자 이상 입력해주세요")
+      setIsDetail(false);
+    }
+    else if(e.target.value.length <= 2000) {
+      setProductDetail(e.target.value);
+      setDetailErr("");
+      setIsDetail(true);
+    }
+    else{
+      e.target.value = e.target.value.substr(0, 2001);
+    }
   }
 
   const onChangeDueYear = (e) => {
@@ -79,6 +107,9 @@ const Write = () =>{
 
   const onChangeDueDay = (e) => {
     setDueDay(e.target.value);
+  }
+
+  const dateComplete = () =>{
   }
 
   const handleAddress = () => {
@@ -243,6 +274,7 @@ const Write = () =>{
             <img src={representIcon} alt="대표이미지등록"/>
             <input type="file" accept="image/*" onChange={handleImageRepresent} />
             </label>
+            {representImg && <p>{representImg.name}</p>}
             {representImg && <button onClick={onSubmitRepresent}>선택 이미지 등록</button>}
           </form>
           {representErr && <p>{representErr}</p>}
@@ -277,13 +309,14 @@ const Write = () =>{
         )}
       </div>
       <div className="categoryInput">
-        <label><span>카테고리 선택</span>
+        <label><span>카테고리 선택<span className="essential7">*</span></span>
         <select
           value={category}
           onChange={({ target: { value } }) => {
             setCategory(value);
             console.log(value)
           }}
+          onClick={()=>{setCategoryErr("");}}
         >
           {categories.map((e) => (
             <option key={e.value} value={e.value}>
@@ -292,25 +325,28 @@ const Write = () =>{
           ))}
         </select>
         </label>
+        {categoryErr && <span className="writeErr">{categoryErr}</span>}
       </div>
       <div className="nameInput">
-        <label><span>상품명</span>
+        <label><span>상품명<span className="essential3">*</span></span>
         <input onChange={onChangeName}/></label>
-        {!isName && <span className="writeErr">{nameMsg}</span>}
+        {!isName && <span className="writeErr">{nameErr}</span>}
       </div>
       <div className="priceInput">
-        <label><span>가격</span>
+        <label><span>가격<span className="essential2">*</span></span>
         <input type="number" onChange={onChangePrice}/>
         <span>원</span></label>
+        {!isPrice && <span className="writeErr">{priceErr}</span>}
       </div>
       <div className="countPartnerInput">
       <label className="pageselect">
-        <span>모집할 인원 수</span>
+        <span>모집할 인원 수<span className="essential8">*</span></span>
             <select
               value={countPartner}
               onChange={({ target: { value } }) => {
                 setCountPartner(value);
               }}
+              onClick={()=>{setLimitPartErr("");}}
             >
               <option value="1">1</option>
               <option value="2">2</option>
@@ -320,9 +356,10 @@ const Write = () =>{
               <option value="6">6</option>
             </select>
           </label>
+          {limitPartErr && <span className="writeErr">{limitPartErr}</span>}
       </div>
       <div className="dueDateInput">
-        <label><span>모집 마감일</span>
+        <label><span>모집 마감일<span className="essential6">*</span></span>
           <div>
           <input type="number" value={dueYear} onChange={onChangeDueYear}></input>
           <span>/</span>
@@ -333,13 +370,14 @@ const Write = () =>{
         </label>
       </div>
       <div className="tradeMethodInput">
-        <label><span>거래 방법</span>
+        <label><span>거래 방법<span className="essential5">*</span></span>
         <div>
-        <label><input type="radio" name="method" onChange={onChangeTradeMethod} value="direct" />직거래</label>
-        <label><input type="radio" name="method" onChange={onChangeTradeMethod} value="delivery"/>택배거래</label>
-        <label><input type="radio" name="method" onChange={onChangeTradeMethod} value="both"/>모두 가능</label>
+        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} value="direct" />직거래</label>
+        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} value="delivery"/>택배거래</label>
+        <label><input type="radio" name="method" onChange={onChangeTradeMethod} onClick={()=>{setTradeMethodErr("")}} value="both"/>모두 가능</label>
         </div>
         </label>
+        {tradeMethodErr && <span className="tradeMethodErr">{tradeMethodErr}</span>}
       </div>
       <div className="loactionInput">
         <label><span>동네</span>
@@ -383,16 +421,18 @@ const Write = () =>{
           <button onClick={handleAddress}>지도 보기</button>}
         </div>
         </label>
+        <div>{displayMap && <Map searchPlace={tradePlace} />}</div>
       </div>
-      {displayMap && <Map searchPlace={tradePlace} />}
       <div className="productDetailInput">
-      <label><span>상세 설명</span>
+      <label><span>상세 설명<span className="essential52">*</span></span>
       <textarea name="writecontent" className="productDetailTextarea" 
         placeholder="상품의 설명을 자세하게 기재해주세요" onChange={onChangeProductDetail} cols="50" wrap="hard"></textarea>
       </label>
+      <span className="writecontentlength">{productDetail.length}/2000</span>
+      {detailErr && <span className="detailErr">{detailErr}</span>}
       </div>
       </div>
-      {allComplete? <button className="writeSubmitBtn" onClick={writeSubmit}>등록</button> :
+      {isName && isPrice && isTradeMethod && isDetail ? <button className="writeSubmitBtn" onClick={writeSubmit}>등록</button> :
       <button className="writeSubmitBtn nobutton">등록</button>}
     </div>
   );

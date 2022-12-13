@@ -41,8 +41,10 @@ input[type="file"] {
       font-size: 1rem;
       font-weight: 500;
     }
+    >label{
+      padding-bottom: 3px;
+    }
   }
-
 }
 
 .writeInput{
@@ -71,12 +73,15 @@ input[type="file"] {
       margin-right: 20px;
     }
     >span{
+      
+      position: relative;
       font-size: 1.2rem;
       font-weight: bold;
       display: flex;
       // justify-content: center;
+      align-items: center;
       width: 20vw;
-      min-width: 120px;
+      min-width: 130px;
     }
   }
 
@@ -115,6 +120,16 @@ input[type="file"] {
   }
 }
 
+.writeErr, .detailErr, .tradeMethodErr{
+  color: $darkGray2Alpha5;
+  width: 100%;
+  font-size: .9rem;
+}
+
+.detailErr{
+  position: absolute;
+  left: 0px;
+}
 
 .writeSubmitBtn{
   width: 50%;
@@ -150,7 +165,11 @@ input[type="file"] {
 }
 
 .tradeMethodInput{
+
   div{
+    label{
+      padding-bottom: 3px;
+    }
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
@@ -161,6 +180,7 @@ input[type="file"] {
       min-width: 90px;
     }
   }
+  position: relative;
 }
 
 .placeInput{
@@ -168,6 +188,14 @@ input[type="file"] {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
+  }
+  >div{
+    padding: 10px 10%;
+    max-width: 1000px;
+    // background-color: royalblue;
+    display: flex;
+    justify-content: center;
+
   }
 }
 
@@ -179,8 +207,151 @@ input[type="file"] {
   }
 }
 
+.productDetailInput{
+  position: relative;
+  .writecontentlength{
+    position: absolute;
+    right: 3.5vw;
+    bottom: 2px;
+    color: #e3e9ed;
+  }
+  >label{
+    padding-bottom: 3px;
+  }
+}
+
+.essential2, .essential3, .essential5, .essential6, .essential7, .essential8{
+  font-size: 1rem;
+  color: $purple1;
+  position: absolute;
+  top: -6px;
+}
+.essential52{
+  font-size: 1rem;
+  color: $purple1;
+  position: absolute;
+  top: 70px;
+}
+.essential2{
+  left: 40px;
+}
+.essential3{
+  left: 58.5px;
+}
+.essential5, .essential52{
+  left: 82px;
+}
+.essential6{
+  left: 101px;
+}
+.essential7{
+  left: 120px;
+}
+.essential8{
+  left: 122px;
+}
+
+.categoryInput, .loactionInput, .countPartnerInput{
+  select{
+    font-size: 1rem;
+    text-align-last: center;
+    text-align: center;
+    -ms-text-align-last: center;
+    -moz-text-align-last: center;
+    border-radius: 5px;
+  }
+  // /* check, hover 스타일 설정 IE, Chrome */
+  // select option:checked,
+  // select option:hover {
+  // background: $purple1;
+  // color: #fff;
+  // }
+  // /* check, hover 스타일 설정 FireFox */
+  // select option:checked,
+  // select option:hover {
+  // box-shadow: 0 0 10px 100px $purple1 inset;
+  // color: #fff;
+  // }
+}
+
+.dueDateInput{
+  >label{
+    display: flex;
+    >div{
+      flex-direction: row;
+      flex-wrap: wrap;
+      >input{
+        padding-left: 13%;
+        width: 32%;
+      }
+    }
+  }
+}
+.nameInput{
+  >label{
+    padding-bottom: 3px;
+  }
+}
+
+.nameInput, .priceInput{
+// 여기서부터 내일
+}
 
 @media screen and (max-width:767px) {
+  .writeErr, .detailErr, .tradeMethodErr{
+    color: $darkGray2Alpha5;
+    width: 100%;
+    font-size: .9rem;
+  }  
+ 
+  .categoryInput, .loactionInput, .countPartnerInput{
+    select{
+      font-size: .9rem;
+    }
+  }  
+  
+  .essential2, .essential3, .essential6, .essential7, .essential8, .essential52{
+    // font-size: 1rem;
+    // color: $purple1;
+    // position: absolute;
+    top: -6px;
+  }
+  .essential52{
+    font-size: 1rem;
+    color: $purple1;
+    position: absolute;
+    top: 71px;
+  }
+  .essential2{
+    left: 37px;
+  }
+  .essential3{
+    left: 54px;
+  }
+  .essential5, .essential52{
+    left: 75px;
+  }
+
+  .essential6{
+    left: 92px;
+  }
+  .essential7{
+    left: 110px;
+  }
+  .essential8{
+    left: 113px;
+  }
+  
+  .productDetailInput{
+    position: relative;
+    width: 100%;
+    .writecontentlength{
+      position: absolute;
+      right: 8%;
+      bottom: 2px;
+    }
+  }
+  
   .write{
     padding-top: 150px;
 
@@ -214,9 +385,90 @@ input[type="file"] {
       }
     }
   }
+
+  .dueDateInput{
+    >label{
+      display: flex;
+      >div{
+        flex-direction: row;
+        flex-wrap: wrap;
+        >input:nth-child(1){
+          padding-left: 16%;
+          width: 40%;
+        }
+        >input:nth-child(3){
+          padding-left: 11%;
+          width: 25%;
+        }
+        >input:nth-child(5){
+          padding-left: 11%;
+          width: 25%;
+        }
+      }
+    }
+  }
+
 }
 
 @media screen and (max-width:500px) {
+  
+  .essential5{
+    top: -0px;
+  }
+
+  .dueDateInput{
+    >label{
+      display: flex;
+      >div{
+        flex-direction: row;
+        flex-wrap: wrap;
+        >input:nth-child(1){
+          padding-left: 15%;
+          width: 40%;
+        }
+        >input:nth-child(3){
+          padding-left: 10%;
+          width: 25%;
+        }
+        >input:nth-child(5){
+          padding-left: 10%;
+          width: 25%;
+        }
+      }
+    }
+  }
+
+  .essential52{
+    font-size: 1rem;
+    color: $purple1;
+    position: absolute;
+    top: -10px;
+  }
+
+  .writeErr, .detailErr, .tradeMethodErr{
+    color: $darkGray2Alpha5;
+    width: 100%;
+    font-size: .8rem;
+  }  
+ 
+  .productDetailInput{
+    display: flex;
+    >label{
+      width: 100%;
+      flex-direction: column;
+      textarea{
+        margin-top: 10px;
+        width: 100%;
+      }
+    }
+    position: relative;
+    width: 100%;
+    .writecontentlength{
+      position: absolute;
+      right: 2%;
+      bottom: 2px;
+    }
+  }
   
   .representInput, .imgInput{
     .imgPreview{
@@ -232,4 +484,60 @@ input[type="file"] {
     }
   }
 
+  .placeInput{
+    div{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    >div{
+      padding: 10px 5%;
+      // background-color: royalblue;
+      display: flex;
+      justify-content: center;
+  
+    }
+  }
+  
+
+}
+
+@media screen and (max-width:390px) {
+
+  .dueDateInput{
+    >label{
+      display: flex;
+      >div{
+        flex-direction: row;
+        flex-wrap: wrap;
+        >input:nth-child(1){
+          padding-left: 5px;
+          width: 37%;
+        }
+        >input:nth-child(3){
+          padding-left: 5px;
+          width: 26%;
+        }
+        >input:nth-child(5){
+          padding-left: 5px;
+          width: 26%;
+        }
+      }
+    }
+  }
+
+  .placeInput{
+    div{
+      display: flex;
+      flex-direction: row;
+      flex-wrap: wrap;
+    }
+    >div{
+      padding: 10px 0%;
+      // background-color: royalblue;
+      display: flex;
+      justify-content: center;
+  
+    }
+  }
 }

@@ -67,6 +67,7 @@
 }
 
 .detail{
+  min-height: calc(100vh - 90px);
   background-color: $lightGray2;
   padding-top: 130px;
   width: 100vw;
@@ -347,6 +348,7 @@
         padding: 5px 10px;
         border-radius: 5px;
         background-color: #e3e9ed;
+        cursor: pointer;
 
         &:hover{
           color: $purple1;
@@ -406,9 +408,32 @@
     }
   }
 }
+.writeHostInfo{
+  background-color: $purple1Alpha4;
+  padding: 3px 5px;
+  margin-top: 10px;
+  color: #fff;
+  border-radius: 5px;
+  &:hover{
+    background-color: $purple2Alpha6;
+  }
+}
+
+.errorDetail{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  >p{
+    padding-bottom: 15px;
+  }
+  >p:nth-child(1){
+    color: rgb(255, 115, 115);
+    font-size: 1.8rem;
+  }
+}
 
 
-@media screen and (max-width:767px) {
+@media screen and (min-width: 371px) and (max-width: 767px) {
   
   .detailState{
     width: 96vw;
@@ -473,16 +498,99 @@
     }
   
     div:nth-child(2){
+      height: 30vw;
       margin-top: 20px;
       grid-area: div2;
       padding: 0px 1vw;
     }
 
     div:nth-child(3){
-      align-self: flex-end;
+      align-self: center;
       grid-area: div3;
       border-left: none;
       font-size: 1.1rem;
     }
   }
 }
+
+@media screen and (max-width:370px) {
+  
+  .detailState{
+    width: 96vw;
+  }
+  
+  .detailCard{
+    width: 96vw;
+    margin-top: 30px;
+    padding: 30px 0px 20px 15px;
+  }
+  .detailProfile{
+    width: 96vw;
+  }
+
+  .detailName{
+    font-size: 2rem;
+  }
+
+  .detailContent{
+    width: 96vw;
+    .detailDesc{
+      >p:nth-child(2){
+        padding: 0px 5px;
+      }
+    }
+  }
+
+  .cardDesc{
+    p:nth-child(1), p:nth-child(3){
+      font-size: 1rem;
+    }
+    .detailName{
+      font-size: 1.2rem;
+    }
+  }
+
+  .detailProfile{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+    "div1 div3"
+    "div2 div2";
+    gap: 0px;
+    border-radius: 12px;
+    box-shadow: 1px 1px 10px 0 rgb(72 75 108 / 8%);
+    border: solid 1px #e3e9ed;
+
+    div{
+      height: 40vw;
+    }
+  
+    div:nth-child(1){
+      border-right: solid 1px #e3e9ed;
+      grid-area: div1;
+      >img{
+        width: 70%;
+        background-color: $yellow3Alpha4;
+        margin-bottom: 10px;
+        border-radius: 50%;
+      }
+    }
+  
+    div:nth-child(2){
+      height: 40vw;
+      margin-top: 20px;
+      grid-area: div2;
+      padding: 0px 1vw;
+    }
+
+    div:nth-child(3){
+      align-self: center;
+      grid-area: div3;
+      border-left: none;
+      font-size: 1.1rem;
+    }
+  }
+}
+
+
