@@ -1,5 +1,6 @@
 package com.WooJoo09.service;
 
+import com.WooJoo09.constant.AcceptTrade;
 import com.WooJoo09.constant.IsRead;
 import com.WooJoo09.constant.MsgType;
 import com.WooJoo09.entity.Chat;
@@ -34,6 +35,7 @@ public class PartnerService {
             Partner partner = new Partner();
             partner.setPartMemNum(member);
             partner.setTradeNum(trade);
+            partner.setAcceptTrade(AcceptTrade.REJECT);
             Partner savedPartner = partnerRepository.save(partner);
             log.info(savedPartner.toString());
             if(chatRepository.findByPartnerNum(partner).isEmpty()){
@@ -60,12 +62,47 @@ public class PartnerService {
             map.put("deletePartner", "notData");
         } else{
             for(Partner e : partner){
-                List<Chat> chats = chatRepository.findByPartnerNum(e);
-                chatRepository.deleteAll(chats);
-                partnerRepository.delete(e);
+                e.setAcceptTrade(AcceptTrade.DELETE);
+                Partner savedPartner = partnerRepository.save(e);
             }
             map.put("deletePartner", "OK");
         }
         return map;
     }
+
+    public Map<String,String> partnerAccept(Long tradeNum, Long memberNum){
+        Map<String, String> map = new HashMap<>();
+        Trade trade = tradeRepository.findByTradeNum(tradeNum);
+        Member member = memberRepository.findByMemberNum(memberNum);
+        List<Partner> partner = partnerRepository.findByTradeNumAndPartMemNum(trade, member);
+        if(partner.isEmpty()){
+            map.put("deletePartner", "notData");
+        } else{
+            for(Partner e : partner){
+                e.setAcceptTrade(AcceptTrade.ACCEPT);
+                Partner savedPartner = partnerRepository.save(e);
+            }
+            map.put("deletePartner", "OK");
+        }
+        return map;
+    }
+
+    // 진짜로 삭제하는 로직이라서 필요없음..
+//    public Map<String,String> partnerDelete(Long tradeNum, Long memberNum){
+//        Map<String, String> map = new HashMap<>();
+//        Trade trade = tradeRepository.findByTradeNum(tradeNum);
+//        Member member = memberRepository.findByMemberNum(memberNum);
+//        List<Partner> partner = partnerRepository.findByTradeNumAndPartMemNum(trade, member);
+//        if(partner.isEmpty()){
+//            map.put("deletePartner", "notData");
+//        } else{
+//            for(Partner e : partner){
+//                List<Chat> chats = chatRepository.findByPartnerNum(e);
+//                chatRepository.deleteAll(chats);
+//                partnerRepository.delete(e);
+//            }
+//            map.put("deletePartner", "OK");
+//        }
+//        return map;
+//    }
 }

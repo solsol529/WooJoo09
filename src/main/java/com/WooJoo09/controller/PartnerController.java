@@ -56,7 +56,7 @@ public class PartnerController {
         }
     }
 
-    @PostMapping("/partnerdeletehost") // 파트너 쪽에서 거래 거절하는거(공구 나가기)
+    @PostMapping("/partnerdeletehost") // 호스트 쪽에서 거래 거절하는거
     public ResponseEntity<Map<?, ?>> partnerDeleteHost(
             @CookieValue(value = "token", required = false) String token,
             @RequestBody Map<String, String> Data) throws Exception {
@@ -69,6 +69,26 @@ public class PartnerController {
             log.info("로그인상태입니당");
             String memberNumStr = jwtController.tokenCheck(token); // 토큰 체크는 정상적으로 진행
             map = partnerService.partnerDelete(tradeNum, partMemNum);
+            return ResponseEntity.ok().body(map);
+        }else {
+            map.put("deletePartnerHost", "loginError");
+            return ResponseEntity.ok().body(map);
+        }
+    }
+
+    @PostMapping("/partneraccept") // 호스트 쪽에서 거래 승인하는거
+    public ResponseEntity<Map<?, ?>> partnerAccept(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        Map<String ,String> map = new HashMap<>();
+        String target = Data.get("target"); // 거래 번호
+        Long tradeNum = Long.parseLong(target);
+        String partner = Data.get("partner"); // 파트너 멤버 번호
+        Long partMemNum = Long.parseLong(partner);
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token); // 토큰 체크는 정상적으로 진행
+            map = partnerService.partnerAccept(tradeNum, partMemNum);
             return ResponseEntity.ok().body(map);
         }else {
             map.put("deletePartnerHost", "loginError");

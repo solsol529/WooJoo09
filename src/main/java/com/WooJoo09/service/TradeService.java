@@ -1,16 +1,11 @@
 package com.WooJoo09.service;
 
+import com.WooJoo09.constant.AcceptTrade;
 import com.WooJoo09.constant.DoneTrade;
 import com.WooJoo09.constant.IsRepresent;
 import com.WooJoo09.constant.TradeMethod;
-import com.WooJoo09.entity.Category;
-import com.WooJoo09.entity.Member;
-import com.WooJoo09.entity.ProductImg;
-import com.WooJoo09.entity.Trade;
-import com.WooJoo09.repository.CategoryRepository;
-import com.WooJoo09.repository.MemberRepository;
-import com.WooJoo09.repository.ProductImgRepository;
-import com.WooJoo09.repository.TradeRepository;
+import com.WooJoo09.entity.*;
+import com.WooJoo09.repository.*;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
@@ -30,6 +25,8 @@ public class TradeService {
     private final CategoryRepository categoryRepository;
     private final MemberRepository memberRepository;
     private final ProductImgRepository productImgRepository;
+
+    private final PartnerRepository partnerRepository;
 
     public Page<?> tradeSearchSelect(String target, int page, int size) {
         return tradeRepository.findTradeByProduct("%" + target + "%", PageRequest.of(page, size));
@@ -124,8 +121,6 @@ public class TradeService {
         Trade savedTrade = tradeRepository.save(trade);
         log.info(savedTrade.toString());
         if(productImgRepository.findByTradeNum(savedTrade).isEmpty()){
-            map.put("completePartner", "duplicateTrade");
-        } else {
             ProductImg productImg = new ProductImg();
             productImg.setTradeNum(savedTrade);
             productImg.setImgUrl(representUrl);
@@ -140,8 +135,76 @@ public class TradeService {
                 ProductImg savedRepresentImg2 = productImgRepository.save(productImg2);
                 log.info(savedRepresentImg2.toString());
             }
+            map.put("completeTrade", "OK");
+        } else {
+            map.put("completeTrade", "duplicateTrade");
         }
         return map;
     }
 
+    public Map<String, String> tradeUpdate(Long tradeNum, Long memberNum, List<String> imgUrl, String representUrl, String categoryName, String product, int price,
+                                           int limitPartner, Date dueDate, String tradeMethod, String city, String town, String tradePlace, String productDetail){
+        Map<String ,String> map = new HashMap<>();
+        Trade trade= tradeRepository.findByTradeNum(tradeNum);
+        Member member = memberRepository.findByMemberNum(memberNum);
+        trade.setHost(member);
+        Category category = categoryRepository.findByCategoryName(categoryName);
+        trade.setCategory(category);
+        trade.setLimitPartner(limitPartner);
+        trade.setProduct(product);
+        trade.setPrice(price);
+        trade.setCity(city);
+        trade.setTown(town);
+        trade.setDueDate(dueDate);
+        switch (tradeMethod){
+            case "both" : trade.setTradeMethod(TradeMethod.BOTH); break;
+            case "delivery" : trade.setTradeMethod(TradeMethod.DELIVERY); break;
+            case "direct" : trade.setTradeMethod(TradeMethod.DIRECT); break;
+        }
+        trade.setProductDetail(productDetail);
+        trade.setTradePlace(tradePlace);
+        trade.setDoneTrade(DoneTrade.ONGOING);
+        Trade savedTrade = tradeRepository.save(trade);
+        log.info(savedTrade.toString());
+        List<ProductImg> imgList = productImgRepository.findByTradeNum(savedTrade);
+        productImgRepository.deleteAll(imgList);
+
+        ProductImg productImg = new ProductImg();
+        productImg.setTradeNum(savedTrade);
+        productImg.setImgUrl(representUrl);
+        productImg.setIsRepresent(IsRepresent.REPRESENT);
+        ProductImg savedRepresentImg = productImgRepository.save(productImg);
+        log.info(savedRepresentImg.toString());
+        for (String e : imgUrl){
+            ProductImg productImg2 = new ProductImg();
+            productImg2.setTradeNum(savedTrade);
+            productImg2.setImgUrl(e);
+            productImg2.setIsRepresent(IsRepresent.NOREPRESENT);
+            ProductImg savedRepresentImg2 = productImgRepository.save(productImg2);
+            log.info(savedRepresentImg2.toString());
+            }
+        map.put("completeTrade", "OK");
+        return map;
+    }
+
+    public Map<String, String> tradeDelete(Long tradeNum){
+        Map<String ,String> map = new HashMap<>();
+        Trade trade= tradeRepository.findByTradeNum(tradeNum);
+        if (trade == null) {
+            map.put("completeDeleteTrade", "notData");
+            return map;
+        }
+        trade.setDoneTrade(DoneTrade.DELETE);
+        Trade savedTrade = tradeRepository.save(trade);
+        List<Partner> partners = partnerRepository.findByTradeNum(trade);
+        if(!partners.isEmpty()){
+            for(Partner e : partners){
+                e.setAcceptTrade(AcceptTrade.DELETE);
+                Partner savedPartner = partnerRepository.save(e);
+            }
+        }
+        log.info(savedTrade.toString());
+        map.put("completeDeleteTrade", "OK");
+        return map;
+    }
 }

@@ -37,6 +37,15 @@
 }
 .regInputOut {
     // flex: 1 1 0%;
+    input:-webkit-autofill,
+    input:-webkit-autofill:hover,
+    input:-webkit-autofill:focus,
+    input:-webkit-autofill:active {
+	-webkit-text-fill-color: #000;
+    -webkit-box-shadow: 0 0 0px 1000px #fff inset;
+    box-shadow: 0 0 0px 1000px #fff inset;
+    transition: background-color 5000s ease-in-out 0s;
+    }
    
     input {
         width: 100%;
@@ -51,15 +60,6 @@
     // width: 120px;
     
 }
-// .regIdOverlap > button {
-//     width: 100%;
-//     height: 46px;
-//     border-radius: 10px;
-//     color: #8679D9;;
-//     background-color: rgb(255, 255, 255);
-//     border: 1px solid #8679D9;
-//     cursor: pointer;       
-// }
 .regIdDupBut, .regNickDupBut, .regGetPhoneCodeBut, .regVerifyCodeOkBut {
     width: 100%;
     height: 46px;

@@ -16,15 +16,13 @@ const RegisterPage = () =>{
   const [regPhone, setRegPhone] = useState('');
   const [regphoneVer, setRegPhoneVer] = useState('');
   const [regVerifyCode, setRegVerifyCode] = useState('');
-
-  const [regIdCk, setRegIdCk] = useState(false);
-  const [regNickCk, setRegNickCk] = useState(false);
   
   const [isRegId, setIsRegId] = useState(false);
   const [isRegIdCk, setIsRegIdCk] = useState(false);
   const [isRegPwd, setIsRegPwd] = useState(false);
   const [isRegPwdCk, setIsRegPwdCk] = useState(false);
   const [isRegNick, setIsRegNick] = useState(false);
+  const [isRegNickCk, setIsRegNickCk] = useState(false);
   const [isRegName, setIsRegName] = useState(false);
   const [isRegEmail, setIsRegEmail] = useState(false);
   const [isRegPhone, setIsRegPhone] = useState(false);
@@ -53,13 +51,13 @@ const RegisterPage = () =>{
   const [regPhoneOkMsg, setRegPhoneOkMsg] = useState('');
   const [regPhoneMsg, setRegPhoneMsg] = useState('');
 
-  const [phoneVerMsg, setPhoneVerMsg] = useState('');
-  const [phoneVerOkMsg, setPhoneVerOkMsg] = useState('');
+  const [regPhoneVerMsg, setRegPhoneVerMsg] = useState('');
+  const [regPhoneVerOkMsg, setRegPhoneVerOkMsg] = useState('');
   
   //정규식
   const idRegEx = /^[A-za-z0-9]{3,15}$/g;
   const pwdRegEx = /^(?=.*[a-z])(?=.*[0-9])(?=.*[!@#$%^*+=-]).{8,20}$/;
-  const nickRegEx = /^[가-힣|a-z|A-Z|0-9|]+$/;
+  const nickRegEx = /^(?=.*[a-zA-Z0-9가-힣])[a-zA-Z0-9가-힣]{1,15}$/;
   const nameRegEx = /^[가-힣|a-z|A-Z|]+$/;
   const emailRegEx = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
   const phoneRegEx = /^\d{2,3}-\d{3,4}-\d{4}$/;  
@@ -70,71 +68,48 @@ const RegisterPage = () =>{
   const onClickRegComplete = () => {
     const fetchData = async () => {
       try {
-        // var birthDate = new Date(form.year+"-"+form.month+"-"+form.day);
         const birthDate = form.year+"-"+form.month+"-"+form.day
         console.log(birthDate);
-
         console.log(date);
         const response = await api.memberReg(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone);
         if(response.data === true) {
-        localStorage.removeItem("adOk")
-        navigate("/celebrate");
+          localStorage.removeItem("adOk")
+          navigate("/celebrate");
+          const sendEmailfetchData = async () => {
+            
+          }
+        } else {
+          alert("회원가입에 실패했습니다.");
         }
       } catch (e) {
         console.log(e);
       }
     };
     fetchData();
+
+    
   }
 
   //아이디
-  //수정중
   const onChangeRegId = (e) => {
     const inputId = e.target.value;
     setRegId(inputId);
-    if(!idRegEx.test(inputId)) {
+    if(!idRegEx.test(inputId) && !(inputId.length === 0)) {
       setIsRegId(false);
       setRegIdMsg("3~15자리 영문자 또는 숫자를 입력해주세요.");
-      // setIsRegId(false); //false로 바꾸기
-      // setRegIdMsg("아이디 중복 확인이 필요합니다.")
-    } else if(!isRegIdCk){
+    } else if(!isRegIdCk && !(inputId.length === 0)){
       setIsRegIdCk(false)
       setRegIdMsg("아이디 중복 확인이 필요합니다.");
+    } else if(inputId.length === 0) {
+      setIsRegId(false);
+      setRegIdMsg("아이디는 필수 항목 입니다.");
     }
   }
 
   //아이디 중복확인
-  // const onClickRegIdDup = () => {
-  //   console.log("아이디 중복체크 할 때 들어온 값" + regId);
-  //   if((regId.length !== 0) && (regId.length < 16)) {
-  //     const fetchSearchData = async () => {
-  //       try {
-  //         const response = await api.memberIdDup(regId);
-  //         if(response.data === true) {
-  //           setIsRegIdCk(true);
-  //           setIsRegId(true);
-  //           setRegIdMsg("사용 가능한 아이디 입니다.");
-  //           // setIsRegOnPhone(true);
-  //         } else if (response.data === false) {
-  //           setIsRegIdCk(false);
-  //           setIsRegId(true);
-  //           setRegIdMsg("이미 존재하는 아이디 입니다.");
-  //         }
-  //       } catch (e) {
-  //         console.log(e);
-  //       }
-  //     };
-  //     fetchSearchData();
-  //   } else {
-  //     setIsRegIdCk(false);
-  //     setIsRegId(false);
-  //     setRegIdMsg("아이디 형식을 확인 후 중복 체크를 해주세요.")
-  //   }
-  // };
-
   const onClickRegIdDup = () => {
     console.log("아이디 중복체크 할 때 들어온 값" + regId);
-    if((regId.length > 2) && (regId.length < 16)) {
+    if(idRegEx.test(regId)) {
     const fetchData = async () => {
       try {
         const response = await api.memberIdDup(regId);
@@ -143,8 +118,8 @@ const RegisterPage = () =>{
           setIsRegId(true);
           setRegIdOkMsg("사용 가능한 아이디 입니다.");
         } else if (response.data === false) {
-          setIsRegId(true);
-          setIsRegIdCk(false);
+          setIsRegId(false);
+          setIsRegIdCk(true);
           setRegIdMsg("이미 존재하는 아이디 입니다.");
         } 
       } catch (e) {
@@ -152,12 +127,12 @@ const RegisterPage = () =>{
       }      
     };
     fetchData();
-  } else {
-    setIsRegId(false);
-    setIsRegIdCk(false);
-    setRegIdMsg("아이디 형식을 확인 후 중복 체크를 해주세요.")
+    } else {
+      setIsRegId(false);
+      setIsRegIdCk(false);
+      setRegIdMsg("아이디 형식을 확인 후 중복 체크를 해주세요.")
+    }
   }
-}
 
   //비밀번호
   const onChangeRegPwd = (e) => {
@@ -198,12 +173,43 @@ const RegisterPage = () =>{
   const onChangeRegNick = (e) => {
     const inputNick = e.target.value;
     setRegNick(inputNick);
-    if(inputNick.length > 15 && inputNick.length < 2) {
+    if(!nickRegEx.test(inputNick) && !(inputNick.length === 0)) {
       setIsRegNick(false);
-      setRegNickMsg("2~15자리 한글,영문자,숫자를 입력해주세요.");
-    } else if (!regNickCk) {
-      setIsRegNick(true); //false로 바꾸기
+      setRegNickMsg("15자리 이하 한글,영문자,숫자를 입력해주세요.");
+    } else if (!isRegNickCk && !(inputNick.length === 0)) {
+      setIsRegNick(false); 
       setRegNickMsg("닉네임 중복 확인이 필요합니다.")
+    } else if(inputNick.length === 0) {
+      setIsRegNick(false); 
+      setRegNickMsg("닉네임은 필수 항목 입니다.")
+    }
+  }
+
+  //닉네임 중복확인
+  const onClickRegNickDup = () => {
+    console.log("닉네임 중복체크 할 때 들어온 값" + regNick);
+    if(nickRegEx.test(regNick)) {
+    const fetchData = async () => {
+      try {
+        const response = await api.memberNickDup(regNick);
+        if(response.data === true) {
+          setIsRegNickCk(true);
+          setIsRegNick(true);
+          setRegNickOkMsg("사용 가능한 아이디 입니다.");
+        } else if (response.data === false) {
+          setIsRegNick(false);
+          setIsRegNickCk(true);
+          setRegNickMsg("이미 존재하는 아이디 입니다.");
+        } 
+      } catch (e) {
+        console.log(e);
+      }      
+    };
+    fetchData();
+    } else {
+      setIsRegNick(false);
+      setIsRegNickCk(false);
+      setRegNickMsg("아이디 형식을 확인 후 중복 체크를 해주세요.")
     }
   }
   
@@ -318,6 +324,7 @@ const RegisterPage = () =>{
   //인증번호 받기 버튼
   const regPhoneCodeInput = document.getElementById('regPhoneCodeInput');
   const regPhoneCodeOk = document.getElementById('regPhoneCodeOk');
+
   const onClickGetRegPhoneCode = () => {
     if((regPhoneCodeInput.style.display === 'none') && (regPhoneCodeOk.style.display === 'none')) {
       regPhoneCodeInput.style.display = 'block';
@@ -330,7 +337,31 @@ const RegisterPage = () =>{
    
     const regPhoneInput = document.getElementById('regPhoneInput');
     regPhoneInput.readOnly = true;
-    regPhoneInput.style.backgroundColor = 'rgb(220, 220, 220)';
+    // regPhoneInput.style.backgroundColor = 'rgb(220, 220, 220)';
+    regPhoneInput.style.boxShadow = '0 0 0px 1000px rgb(220, 220, 220) inset';
+
+
+    // const fetchSearchData = async () => {
+    //   console.log("인증번호 요청하는 전화번호 " + regPhone);
+    //   try {
+    //     const response = await api.memberPhoneReg(regPhone);
+    //     console.log(response.data.result);
+    //     setRegVerifyCode(response.data.code);
+    //     // console.log(response.data.code);
+    //     if(response.data.result === "OK") {
+    //       setRegPhoneOkMsg("인증번호가 발송되었습니다.");
+    //     }else if(response.data.result === "DUP") {
+    //       setIsRegPhone(false);
+    //       setRegPhoneMsg("이미 가입 된 전화번호 입니다.");
+    //     } else {
+    //       setIsRegPhone(false);
+    //       setRegPhoneMsg("인증번호 발송에 실패했습니다.");
+    //     }
+    //   }catch (e) {
+    //     console.log(e);
+    //   }
+    // };
+    // fetchSearchData();
   }
 
   //전화번호 다시 입력 버튼
@@ -344,15 +375,33 @@ const RegisterPage = () =>{
 
     const regPhoneInput = document.getElementById('regPhoneInput');
     regPhoneInput.readOnly = false;
-    regPhoneInput.style.backgroundColor = '#fff';
+    // regPhoneInput.style.backgroundColor = '#fff';
+    regPhoneInput.style.boxShadow = '0 0 0px 1000px #fff inset';
+
+    const regPhoneVerErr = document.getElementById('regPhoneVerErr');
+    const regPhoneVerOk = document.getElementById('regPhoneVerOk');
+    regPhoneVerErr.style.display = 'none';
+    regPhoneVerOk.style.display = 'none';
   }
 
   //인증번호 입력 
   const onChangeRegPhoneCodeInput = (e) => {
-    const regVerifyCode = e.target.value
-    setRegVerifyCode(regVerifyCode);
-    if(CodeRegEx.test(regVerifyCode)) {
-    setIsRegVerifyCode(true);
+    const regphoneVer = e.target.value
+    setRegPhoneVer(regphoneVer);
+    if(CodeRegEx.test(regphoneVer)) {
+      setIsRegVerifyCode(true);
+    }
+  }
+
+  //인증번호 확인 버튼
+  const onClickRegPhoneVerCk = () => {
+    if(regphoneVer == regVerifyCode) {
+      setIsRegPhoneVer(true);
+      setRegPhoneVerOkMsg("인증번호가 확인되었습니다.");
+      setRegVerifyCode('');
+    } else {
+      setIsRegPhoneVer(false);
+      setRegPhoneVerMsg("인증번호 확인에 실패했습니다.");
     }
   }
   
@@ -417,7 +466,7 @@ const RegisterPage = () =>{
                 onChange={onChangeRegNick}></input>              
               </div>
               <div className="regIdOverlap">
-                <button className="regNickDupBut">중복확인</button>
+                <button className="regNickDupBut" onClick={onClickRegNickDup}>중복확인</button>
               </div>
             </div>
             <div className="regErrMsg">
@@ -511,12 +560,10 @@ const RegisterPage = () =>{
                 onChange={onChangeRegPhone}></input>              
               </div>
               <div className="regIdOverlap">
-
                 {/* {!isRegPhone && <button className="notRegGetPhoneCodeBut">인증번호 받기</button>}
                 {isRegPhone && <button className="regGetPhoneCodeBut" onClick={onClickGetRegPhoneCode}>인증번호 받기</button>} */}
-
                 <button id="regGetPhoneCode" className={isRegPhone ? 'regGetPhoneCodeBut' : 'notRegGetPhoneCodeBut'}
-                onClick={onClickGetRegPhoneCode}>인증번호 받기</button>
+                onClick={onClickGetRegPhoneCode} disabled={!isRegPhone}>인증번호 받기</button>
               </div>            
             </div>
             <div className="regErrMsg">
@@ -532,7 +579,7 @@ const RegisterPage = () =>{
                 <label></label>
               </div>
               <div className="regInputOut">
-                <input type="tel" value={regVerifyCode} id="regPhoneCodeInput" className="regPhoneCodeInput" placeholder="인증번호"
+                <input type="tel" value={regphoneVer} id="regPhoneCodeInput" className="regPhoneCodeInput" placeholder="인증번호"
                 onChange={onChangeRegPhoneCodeInput} style={{display: "none"}}></input>              
               </div>
               <div className="regIdOverlap">
@@ -540,11 +587,13 @@ const RegisterPage = () =>{
                 style={{display: 'none'}}>인증번호 확인</button>}
                 {isRegVerifyCode && <button id="regPhoneCodeOk" className="regVerifyCodeOkBut"
                 style={{display: 'none'}}>인증번호 확인</button>} */}
-
                 <button id="regPhoneCodeOk" className={isRegVerifyCode ? 'regVerifyCodeOkBut' : 'notRegVerifyCodeOkBut'}
-                style={{display: 'none'}}>인증번호 확인</button>
-
-              </div>            
+                style={{display: 'none'}} onClick={onClickRegPhoneVerCk}>인증번호 확인</button>
+              </div>           
+            </div> 
+            <div className="regErrMsg">
+              {!isRegPhoneVer && <span id="regPhoneVerErr" className="regPhoneVerErr">{regPhoneVerMsg}</span>}
+              {isRegPhoneVer && <span id="regPhoneVerOk" className="regPhoneVerOk">{regPhoneVerOkMsg}</span>}
             </div>  
             <div className="regComplete">
               {!(isRegId && isRegPwd && isRegPwdCk && isRegNick && isRegName && isRegEmail && isRegPhone && isRegPhoneVer)

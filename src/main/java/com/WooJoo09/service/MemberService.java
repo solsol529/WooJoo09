@@ -6,6 +6,7 @@ import com.WooJoo09.entity.Member;
 import com.WooJoo09.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
+import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -47,16 +48,16 @@ public class MemberService {
 
     //아이디 중복확인
     public boolean regIdDupCk(String id) {
+//        Optional<Member> member = memberRepository.findById(id);
+//        if(memberRepository.findById(id).isEmpty()) return true;
+//        else return false;
         return memberRepository.findById(id).isEmpty();
     }
 
-//    public boolean regIdDupCk(String id) {
-//        List<Member> memberList = memberRepository.findById(id);
-//        if(memberList == null) {
-//            return true;
-//        }
-//        return false;
-//    }
+    //닉네임 중복확인
+    public boolean regNickDupCk(String nickname) {
+        return memberRepository.findByNickname(nickname).isEmpty();
+    }
 
     //아이디 찾기
     public boolean findId(String realName, String email) {
@@ -67,6 +68,7 @@ public class MemberService {
         return false;
     }
 
+    //이메일로 회원정보 받아오기
     public List<MemberDTO> getMemberList(String email) {
         List<MemberDTO> memberDTOS = new ArrayList<>();
         List<Member> memberList = memberRepository.findByEmail(email);
@@ -82,5 +84,8 @@ public class MemberService {
             memberDTOS.add(memberDTO);
         }
         return memberDTOS;
+    }
+    public boolean getPhoneVer(String phone) {
+        return memberRepository.findByPhone(phone).isEmpty();
     }
 }

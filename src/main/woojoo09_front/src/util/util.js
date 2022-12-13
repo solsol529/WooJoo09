@@ -102,6 +102,9 @@ const defaultImgs = {
   },
 }
 
+const deliveryCompany = [
+  {deliveryCompany : "cj 대한통운", company:"cj"},
+  {deliveryCompany : "우체국", company :"epost"}
+]
 
-
-export {categories, getCategory, citys, towns, defaultImgs}
+export {categories, getCategory, citys, towns, defaultImgs, deliveryCompany}

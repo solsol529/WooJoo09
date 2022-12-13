@@ -30,18 +30,16 @@ const FindIdComplete = ({findIdEmail}) => {
       findIdData();
     }, []);
 
-    return (
-      
-        <>
-        
+    return (      
+        <>       
         <div className="findIdCompleteMain">
           회원님의 아이디 찾기가 완료되었습니다.
-          {/* {findIdEmail} */}
         </div>
         {findIdMember && findIdMember.map(member => (
         <div className="findIdCompleteDt" key={member.findIdEmail}>
           회원님의 아이디는<br/>
-          {member.id}입니다.  
+          <br/>
+          {member.id} 입니다.  
         </div>
         ))}
         <div className="findIdCompleteLogin">

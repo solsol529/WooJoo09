@@ -1,5 +1,5 @@
 import Map from "../components/Map"
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useState, useEffect, useRef } from "react";
 import profile from "../resources/profile_sample.png"
 import grade1 from "../resources/grade_icon1_wreck.png"
@@ -19,12 +19,14 @@ import MemberInfo from "./MemberInfo";
 
 const Detail = ({isLogin, isAdmin, tradeNum}) =>{
 
+  const navigate = useNavigate();
+
   const [displayMap, setDisplayMap] = useState(false);
-  const [displayComplainMsg, setDisplayComplainMsg] = useState(false);
   const [displayDeleteMsg, setDisplayDeleteMsg] = useState(false);
   const [myStar, setMyStar] = useState();
   const [starError, setStarError] = useState();
   const [complainMsg, setComplainMsg] = useState();
+  const [deleteMsg, setDeleteMsg] = useState();
 
   const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(new Date()));
 
@@ -84,13 +86,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
       fetchData();
   }, []);
 
-  const writeComplain = () =>{
-    setDisplayDeleteMsg(false);
-    setDisplayComplainMsg(true);
-  }
-
   const writeDelete = () =>{
-    setDisplayComplainMsg(false);
     setDisplayDeleteMsg(true);
   }
 
@@ -130,6 +126,48 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     fetchData();
   }
 
+  const complainInsert = () =>{
+    const fetchData = async () => {
+      try {
+        const response = await api.complainInsert(tradeNum);
+        console.log(response.data);
+        if(response.data.complainComplete === "loginError") {
+          setComplainMsg("로그인 상태를 확인해주세요");
+        } else if(response.data.complainComplete === "duplicate"){
+          setComplainMsg("이미 신고한 공동구매 입니다");
+        }
+        else setComplainMsg("신고 처리 되었습니다");
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }
+
+  const tradeDelete = () =>{
+    const fetchData = async () => {
+      try {
+        const response = await api.tradeDelete(tradeNum);
+        console.log(response.data);
+        if(response.data.completeDeleteTrade === "loginError") {
+          setDeleteMsg("로그인 상태를 확인해주세요");
+        } else if(response.data.completeDeleteTrade === "notData"){
+          setDeleteMsg("이미 삭제된 공동구매 입니다");
+        }
+        else{
+          setDisplayDeleteMsg(false);
+          setDeleteMsg("삭제 처리 되었습니다\n 10초후 메인으로 이동됩니다");
+          setTimeout(()=>{ 
+            navigate('/main');
+          }, 10000);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    };
+    fetchData();
+  }
+
   if(loading) {
     return (
       <div className={ (window.scrollY || document.documentElement.scrollTop) < 150 ? "category" : "category  changed"}
@@ -141,7 +179,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
 
   return(
     <div className="detail">
-      { data &&
+      { data && data.detail.product ?
         <>
         <div className="detailCard">
         <div className="detailImg">
@@ -200,7 +238,9 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
           <img className="cardStar" onClick={starDelete} src={yellowStar} alt="스크랩취소"/>}
         </div>
       </div>
-      {! isAdmin&& <>{isLogin? <button>참여하기</button> : <button disabled="true">참여하기</button>}</>}
+      {!isAdmin && <>{isLogin && data.detail.isMyWRite === "N" ? <button>참여하기</button> : (
+      data.detail.doneTrade === 'ONGOING'? <button disabled="true">마감하기</button> : 
+      <button disabled="true">종료하기</button>)}</>}
       {!isLogin && <p className="detailErrMsg">공동구매에 참여하려면 <Link to="/main" style={{textDecoration: "underline"}}>로그인</Link>하세요!</p>}
       <div className="detailProfile">
         <div>
@@ -214,6 +254,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
         <div>
           <p>주최자 소개</p>
           <p>{data.member.introduce ? data.member.introduce : `안녕하세요 ${data.member.nickname}의 상점입니다`}</p>
+          {isLogin && data.detail.isMyWRite === "Y" && <Link to="/member" className="writeHostInfo">주최자 정보 수정</Link>}
         </div>
         <div>
           <p>
@@ -254,20 +295,27 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
       </div>
       <div className="detailState">
         <p>
-          {isLogin && data.detail.isMyWRite === "N" && !isAdmin && <span onClick={writeComplain}>신고하기</span>}
-          {isAdmin && <span onClick={writeComplain}>신고하기</span>}
+          {isLogin && data.detail.isMyWRite === "N" && !isAdmin && <span onClick={complainInsert}>신고하기</span>}
+          {/* {isAdmin && <span>신고 횟수 {}회인 게시글입니다</span>} */}
           {isLogin && data.detail.isMyWRite === "Y" && 
           <><span>수정</span>
           <span onClick={writeDelete}>삭제</span></>}
         </p>
         <div>
-          {displayComplainMsg && !displayDeleteMsg && <p className="complainMsg">신고 처리 되었습니다</p>}
-          {displayDeleteMsg && !displayComplainMsg && <p className="deleteMsg">
-            <span>공동구매를 정말로 삭제하시겠습니까? <span>삭제하기</span></span>
-            <span>삭제하시면 채팅내역과 거래내용이 모두 사라집니다</span></p>}
+          {isLogin && data.detail.isMyWRite === "N" && !isAdmin && <p className="complainMsg">{complainMsg}</p>}
+          {displayDeleteMsg && <p className="deleteMsg">
+            <span>공동구매를 정말로 삭제하시겠습니까? <span onClick={tradeDelete}>삭제하기</span></span>
+            <span>채팅내역과 거래내용이 모두 사라집니다</span></p>}
+          {deleteMsg && <span style={{whiteSpace : "pre-line"}}>{deleteMsg}</span>}
         </div>
       </div>
-      </>}
+      </> : 
+      <div className="errorDetail">
+      <p>잘못된 접근입니다</p>
+      <p>삭제되었거나</p>
+      <p>존재하지 않는 게시글입니다</p>
+      <Link to="/"><button style={{width: "100%"}}>메인 페이지로 이동</button></Link>
+      </div>}
     </div>
   );
 }

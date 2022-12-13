@@ -84,12 +84,29 @@ const api = {
       city: city,
       town: town,
       tradePlace: tradePlace,
-      productDetail: productDetail
-    }
-    const tradeInsertCmdList = {
+      productDetail: productDetail,
       imgUrl: imgUrl
     }
-    return await axios.post(BASE_URL+ "tradeinsert", tradeInsertCmd, tradeInsertCmdList, HEADER);
+    return await axios.post(BASE_URL+ "tradeinsert", tradeInsertCmd, HEADER);
+  },
+  tradeUpdate: async function( tradeNum, imgUrl,
+    representUrl, category, product, price, limitPartner, dueDate, tradeMethod, city, town, tradePlace, productDetail) {
+    const tradeUpdateCmd = {
+      tradeNum :  tradeNum,
+      representUrl: representUrl,
+      category : category,
+      product: product,
+      price: price,
+      limitPartner: limitPartner,
+      dueDate: dueDate,
+      tradeMethod: tradeMethod,
+      city: city,
+      town: town,
+      tradePlace: tradePlace,
+      productDetail: productDetail,
+      imgUrl: imgUrl
+    }
+    return await axios.post(BASE_URL+ "tradeupdate", tradeUpdateCmd, HEADER);
   },
   tradeDetailSelect: async function(target) {
     const tradeDetailSelectCmd = {
@@ -108,6 +125,26 @@ const api = {
       target: target
     }
     return await axios.post(BASE_URL+ "partnerinsert", partnerInsertCmd, HEADER);
+  },
+  partnerDelete: async function(target) {
+    const partnerDeleteCmd = {
+      target: target
+    }
+    return await axios.post(BASE_URL+ "partnerdelete", partnerDeleteCmd, HEADER);
+  },
+  partnerDeleteHost: async function(target, partner) {
+    const partnerDeleteHostCmd = {
+      target: target,
+      partner : partner
+    }
+    return await axios.post(BASE_URL+ "partnerdeletehost", partnerDeleteHostCmd, HEADER);
+  },
+  partnerAccept: async function(target, partner) {
+    const partnerAcceptCmd = {
+      target: target,
+      partner : partner
+    }
+    return await axios.post(BASE_URL+ "partnerinsert", partnerAcceptCmd, HEADER);
   },
   complainInsert: async function(target) {
     const complainInsertCmd = {
@@ -198,6 +235,14 @@ const api = {
     return await axios.post(BASE_URL + "iddup", regIdDup, HEADER);
   },
 
+  //닉네임 중복체크
+  memberNickDup: async function(regNick) {
+    const regNickDup = {
+      regNick: regNick
+    }
+    return await axios.post(BASE_URL + "nickdup", regNickDup, HEADER);
+  },
+
   //아이디 찾기
   memberfindId: async function(findIdName, findIdEmail) {
     const findId = {
@@ -207,12 +252,28 @@ const api = {
     return await axios.post(BASE_URL + "findid", findId, HEADER);
   },
 
-  //이메일로 정보 가져오기
+  //이메일로 회원정보 가져오기
   memberinfoFindId: async function(findIdEmail) {
     const finIdMember = {
       findIdEmail: findIdEmail
     }
     return await axios.post(BASE_URL + "findidmember", finIdMember, HEADER);
+  },  
+  //휴대폰번호 인증
+  memberPhoneReg: async function(regPhone) {
+    const regPhoneCk = {
+      regPhone: regPhone
+    }
+    return await axios.post(BASE_URL + "phoneverify", regPhoneCk, HEADER);
+  },
+
+
+  // 채팅 리스트 가져오기
+  chatList: async function(chatListContent){
+    const chatList = {
+
+    }
+    return await axios.post(BASE_URL + "chatListSelect", chatList, HEADER);
   }
   
 }

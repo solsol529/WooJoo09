@@ -1,5 +1,4 @@
 
-
 import ChatList from "../components/ChatList";
 import "../style/chat.scss"
 import "../style/common.scss"
@@ -8,6 +7,9 @@ import logo from "../resources/logoWhite.png"
 
 
 const ChatListPage = () =>{
+
+
+
   return(
     <div>
       <div className="chatLeft"><ChatList/></div>

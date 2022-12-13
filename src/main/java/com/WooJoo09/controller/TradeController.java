@@ -150,35 +150,87 @@ public class TradeController {
     public ResponseEntity<Map<?, ?>> tradeInsert(
             @CookieValue(value = "token", required = false) String token,
             @RequestBody Map<String, Object> Data) throws Exception {
-//        String imgUrl = Data.get("imgUrl");
-//        String representUrl = Data.get("representUrl");
-//        String category = Data.get("category");
-//        String product = Data.get("product");
-//        int price = Integer.parseInt(Data.get("price"));
-//        int limitPartner = Integer.parseInt(Data.get("limitPartner"));
-//        String dueDateStr = Data.get("dueDate");
-//        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-//        Date dueDate = sdf.parse(dueDateStr);
-//        String tradeMethod = Data.get("tradeMethod");
-//        String city = Data.get("city");
-//        String town = Data.get("town");
-//        String tradePlace = Data.get("tradePlace");
-//        String productDetail = Data.get("productDetail");
+        // DTO로 하는게 더 편하려나 모르겠다
+        List<String> imgUrl = (List<String>) Data.get("imgUrl");
+        String representUrl = (String) Data.get("representUrl");
+        String category = (String) Data.get("category");
+        String product = (String) Data.get("product");
+        int price = Integer.parseInt((String)Data.get("price"));
+        int limitPartner = Integer.parseInt((String)Data.get("limitPartner"));
+        String dueDateStr = (String)Data.get("dueDate");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dueDate = sdf.parse(dueDateStr);
+        String tradeMethod = (String)Data.get("tradeMethod");
+        String city = (String)Data.get("city");
+        String town = (String)Data.get("town");
+        String tradePlace = (String)Data.get("tradePlace");
+        String productDetail = (String)Data.get("productDetail");
         Map<String ,String> map = new HashMap<>();
-//        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
-//            log.info("로그인상태입니당");
-//            String memberNumStr = jwtController.tokenCheck(token);
-//            Long memberNum = Long.parseLong(memberNumStr);
-//            map = tradeService.tradeInsert(memberNum, imgUrl, representUrl, category, product, price, limitPartner,
-//                    dueDate, tradeMethod, city, town, tradePlace, productDetail);
-//            return ResponseEntity.ok().body(map);
-//        }else {
-//            map.put("completePartner", "loginError");
-//            return ResponseEntity.ok().body(map);
-//        }
-        return ResponseEntity.ok().body(map);
+        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            map = tradeService.tradeInsert(memberNum, imgUrl, representUrl, category, product, price, limitPartner,
+                    dueDate, tradeMethod, city, town, tradePlace, productDetail);
+            return ResponseEntity.ok().body(map);
+        }else {
+            map.put("completeTrade", "loginError");
+            return ResponseEntity.ok().body(map);
+        }
     }
 
+    @PostMapping("/tradeupdate")
+    public ResponseEntity<Map<?, ?>> tradeUpdate(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        // DTO로 하는게 더 편하려나 모르겠다
+        String tradeNumStr = (String) Data.get("tradeNum");
+        Long tradeNum = Long.parseLong(tradeNumStr);
+        List<String> imgUrl = (List<String>) Data.get("imgUrl");
+        String representUrl = (String) Data.get("representUrl");
+        String category = (String) Data.get("category");
+        String product = (String) Data.get("product");
+        int price = Integer.parseInt((String)Data.get("price"));
+        int limitPartner = Integer.parseInt((String)Data.get("limitPartner"));
+        String dueDateStr = (String)Data.get("dueDate");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dueDate = sdf.parse(dueDateStr);
+        String tradeMethod = (String)Data.get("tradeMethod");
+        String city = (String)Data.get("city");
+        String town = (String)Data.get("town");
+        String tradePlace = (String)Data.get("tradePlace");
+        String productDetail = (String)Data.get("productDetail");
+        Map<String ,String> map = new HashMap<>();
+        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            map = tradeService.tradeUpdate(tradeNum, memberNum, imgUrl, representUrl, category, product, price, limitPartner,
+                    dueDate, tradeMethod, city, town, tradePlace, productDetail);
+            return ResponseEntity.ok().body(map);
+        }else {
+            map.put("completeTrade", "loginError");
+            return ResponseEntity.ok().body(map);
+        }
+    }
+
+    @PostMapping("/tradedelete")
+    public ResponseEntity<Map<?, ?>> tradeDelete(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        // DTO로 하는게 더 편하려나 모르겠다
+        String tradeNumStr = (String) Data.get("target");
+        Long tradeNum = Long.parseLong(tradeNumStr);
+        Map<String ,String> map = new HashMap<>();
+        if(token != null){ // 어드민은 애초에 버튼 노출 안되게 프론트에서 처리
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token); // 토큰 유효성 확인
+            map = tradeService.tradeDelete(tradeNum);
+        }else {
+            map.put("completeDeleteTrade", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 
 
 }

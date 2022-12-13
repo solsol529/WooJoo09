@@ -18,7 +18,9 @@ const SendDelivery = () => {
 
         <div className="sendDelivery">
           <div>운송장</div>
-          <input value={deliveryCompany} onChange= {onChangeDeliveryCompany} placeholder={"택배사"}/>
+          {/* <input value={deliveryCompany} onChange= {onChangeDeliveryCompany} placeholder={"택배사"}/> */}
+          <option value="">택배사 선택</option>
+          {}
           <input value={deliveryNum} onChange={onChangeDeliveryNum} placeholder={"운송장번호"}/>
 
           <button>전송</button>
