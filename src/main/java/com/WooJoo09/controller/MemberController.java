@@ -6,7 +6,6 @@ import com.WooJoo09.service.MemberService;
 import com.WooJoo09.service.sens_sms;
 import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.extern.slf4j.Slf4j;
-import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
