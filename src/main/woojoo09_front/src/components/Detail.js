@@ -156,7 +156,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
         }
         else{
           setDisplayDeleteMsg(false);
-          setDeleteMsg("삭제 처리 되었습니다\n 10초후 메인으로 이동됩니다");
+          setDeleteMsg("삭제 처리 되었습니다\n 메인으로 이동됩니다");
           setTimeout(()=>{ 
             navigate('/main');
           }, 10000);
