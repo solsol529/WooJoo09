@@ -25,8 +25,8 @@ const RegisterPage = () =>{
   const [isRegNickCk, setIsRegNickCk] = useState(false);
   const [isRegName, setIsRegName] = useState(false);
   const [isRegEmail, setIsRegEmail] = useState(false);
-  const [isRegPhone, setIsRegPhone] = useState(false);
-  const [isRegPhoneVer, setIsRegPhoneVer] = useState(true); //false로 바꾸기
+  const [isRegPhone, setIsRegPhone] = useState(false); //false로 바꾸기
+  const [isRegPhoneVer, setIsRegPhoneVer] = useState(false); //false로 바꾸기
   const [isRegOnPhone, setIsRegOnPhone] = useState(false);
   const [isRegVerifyCode, setIsRegVerifyCode] = useState(false);
   
@@ -73,11 +73,17 @@ const RegisterPage = () =>{
         console.log(date);
         const response = await api.memberReg(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone);
         if(response.data === true) {
-          localStorage.removeItem("adOk")
-          navigate("/celebrate");
+          localStorage.removeItem("adOk")          
           const sendEmailfetchData = async () => {
-            
-          }
+            try {
+              const response = await api.celMailSend(regEmail);
+              console.log(response.data);     
+            } catch (e) {
+              console.log(e)
+            }
+            navigate("/celebrate");
+          };
+          sendEmailfetchData();
         } else {
           alert("회원가입에 실패했습니다.");
         }
@@ -85,9 +91,7 @@ const RegisterPage = () =>{
         console.log(e);
       }
     };
-    fetchData();
-
-    
+    fetchData();  
   }
 
   //아이디
@@ -341,27 +345,27 @@ const RegisterPage = () =>{
     regPhoneInput.style.boxShadow = '0 0 0px 1000px rgb(220, 220, 220) inset';
 
 
-    // const fetchSearchData = async () => {
-    //   console.log("인증번호 요청하는 전화번호 " + regPhone);
-    //   try {
-    //     const response = await api.memberPhoneReg(regPhone);
-    //     console.log(response.data.result);
-    //     setRegVerifyCode(response.data.code);
-    //     // console.log(response.data.code);
-    //     if(response.data.result === "OK") {
-    //       setRegPhoneOkMsg("인증번호가 발송되었습니다.");
-    //     }else if(response.data.result === "DUP") {
-    //       setIsRegPhone(false);
-    //       setRegPhoneMsg("이미 가입 된 전화번호 입니다.");
-    //     } else {
-    //       setIsRegPhone(false);
-    //       setRegPhoneMsg("인증번호 발송에 실패했습니다.");
-    //     }
-    //   }catch (e) {
-    //     console.log(e);
-    //   }
-    // };
-    // fetchSearchData();
+    const fetchSearchData = async () => {
+      console.log("인증번호 요청하는 전화번호 " + regPhone);
+      try {
+        const response = await api.memberPhoneReg(regPhone);
+        console.log(response.data.result);
+        setRegVerifyCode(response.data.code);
+        // console.log(response.data.code);
+        if(response.data.result === "OK") {
+          setRegPhoneOkMsg("인증번호가 발송되었습니다.");
+        }else if(response.data.result === "DUP") {
+          setIsRegPhone(false);
+          setRegPhoneMsg("이미 가입 된 전화번호 입니다.");
+        } else {
+          setIsRegPhone(false);
+          setRegPhoneMsg("인증번호 발송에 실패했습니다.");
+        }
+      }catch (e) {
+        console.log(e);
+      }
+    };
+    fetchSearchData();
   }
 
   //전화번호 다시 입력 버튼
@@ -372,6 +376,8 @@ const RegisterPage = () =>{
     const regGetPhoneCode = document.getElementById('regGetPhoneCode');
     const html = '<div>인증번호 받기</div>';
     regGetPhoneCode.innerHTML = html;
+    regGetPhoneCode.style.color = '#8679D9';
+    regGetPhoneCode.style.border = '1px solid #8679D9';
 
     const regPhoneInput = document.getElementById('regPhoneInput');
     regPhoneInput.readOnly = false;

@@ -22,8 +22,9 @@ const ChatList = () =>{
      setLoading(true);
       try {
         const response = await api.chatList();
-        setLists(response.data);
+        setLists(response.data[0]);
         console.log(response.data);
+        console.log(response.data[0]);
         setPrepared(true);
       } catch (e) {
         console.log(e);
@@ -39,16 +40,16 @@ const ChatList = () =>{
                 채팅목록
             </div>
             { prepared && 
-            lists.map(({nickname, imgUrl, chatTime, chatContent, isRead }) => (
+            lists.chatListContent.map(({nickname, img_url, chat_time, chat_content, is_read }) => (
                 <div className="chatDetail">
               <div className="chatButton">
                   <NavLink to="/chat" onChange={onChangeSeller} >
                     <p>
-                      <div>{imgUrl}</div>
+                      <div><img src = {img_url} alt="물품이미지"/></div>
                       <p className="chatDetailNick">{nickname}</p>
-                      <p className="chatTime">{chatTime}</p>
-                      <div className="chatRecent">{chatContent}</div>
-                      {isRead === "unread" && <p className="chatAlert"/>}
+                      <p className="chatTime">{chat_time.substr(0,11)}</p>
+                      <div className="chatRecent">{chat_content}</div>
+                      {is_read === "UNREAD" && <p className="chatAlert"/>}
                     </p>
                   </NavLink> 
                 </div>

@@ -99,8 +99,7 @@ public class ChatController {
                 list = chatService.chatList(tokenInt);
             }
             list = chatService.chatList(tokenInt);
-
         }
-        return new ResponseEntity(list, HttpStatus.OK);
+        return new ResponseEntity<>(list, HttpStatus.OK);
     }
 }

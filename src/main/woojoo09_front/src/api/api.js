@@ -227,6 +227,14 @@ const api = {
     return await axios.post(BASE_URL + "memberinsert", regCheck, HEADER);
   },
 
+  //가입축하이메일
+  celMailSend: async function(regEmail) {
+    const celMail = {
+      regEmail: regEmail
+    }
+    return await axios.post(BASE_URL + "sendcelmail", celMail, HEADER);
+  },
+
   //아이디 중복체크
   memberIdDup: async function(regId) {
     const regIdDup = {
@@ -258,7 +266,17 @@ const api = {
       findIdEmail: findIdEmail
     }
     return await axios.post(BASE_URL + "findidmember", finIdMember, HEADER);
-  },  
+  },
+
+  //비밀번호 찾기
+  nameEmailCk: async function(findPwdName, findPwdEmail) {
+    const findPwd = {
+      findPwdName: findPwdName,
+      findPwdEmail: findPwdEmail
+    }
+    return await axios.post(BASE_URL + "findpwd", findPwd, HEADER);
+  },
+
   //휴대폰번호 인증
   memberPhoneReg: async function(regPhone) {
     const regPhoneCk = {

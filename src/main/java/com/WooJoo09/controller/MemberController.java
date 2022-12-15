@@ -2,24 +2,21 @@ package com.WooJoo09.controller;
 
 import com.WooJoo09.dto.MemberDTO;
 import com.WooJoo09.entity.Member;
+import com.WooJoo09.service.EmailService;
 import com.WooJoo09.service.MemberService;
 import com.WooJoo09.service.sens_sms;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import lombok.extern.slf4j.Slf4j;
+import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import javax.script.ScriptContext;
-import java.io.PrintWriter;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static java.lang.System.out;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
@@ -29,9 +26,11 @@ public class MemberController {
 
     // Service 로직 연결
     private MemberService memberService;
+    private final EmailService emailService;
 
-    public MemberController(MemberService memberService) {
+    public MemberController(MemberService memberService, EmailService emailService) {
         this.memberService = memberService;
+        this.emailService = emailService;
     }
 
     public ResponseEntity<List<Member>> findMember() {
@@ -56,6 +55,16 @@ public class MemberController {
         } else {
             return new ResponseEntity(false, HttpStatus.OK);
         }
+    }
+
+    //가입 후 소개 이메일 전송
+    @PostMapping("/sendcelmail")
+    @ResponseBody
+    public String mailConfirm(@RequestBody Map<String, String> regEmailSend) throws Exception {
+        String email = regEmailSend.get("regEmail");
+        String code = emailService.sendSimpleMessage(email);
+        log.info("인증코드 : " + code);
+        return code;
     }
 
     //아이디 중복 체크
@@ -131,4 +140,5 @@ public class MemberController {
         }
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
+
 }

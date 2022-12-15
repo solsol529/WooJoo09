@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import api from "../api/api";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import ResetPwd from "../components/ResetPwd";
@@ -60,13 +61,36 @@ const FindPwdPage = () =>{
     };
   }
 
+  //인증번호 받기 버튼
   const onClickFindPwdCode = () => {
     const findPwdCodeInput = document.getElementById('findPwdCodeInput');
-    if(isFindPwdName && isFindPwdEmail) {
-      findPwdCodeInput.style.display = 'block';
+    // if(isFindPwdName && isFindPwdEmail) {
+    //   findPwdCodeInput.style.display = 'block';
+    // }
+    const nameEmailFetchData = async () => {
+      try {
+        const response = await api.nameEmailCk(findPwdName, findPwdEmail);
+        if(response.data === true) {
+          findPwdCodeInput.style.display = 'block';
+          // const EmailfetchData = async () => {
+          //     try {
+          //       const response = await api.verifyCodeEmailSend()
+          //     } catch (e) {
+          //       console.log(e)
+          //     }
+          // }
+        } else if(response.data === false) {
+          setIsFindPwdEmail(false);
+          setFindPwdEmailMsg("가입하신 이름과 이메일을 찾을 수 없습니다.")
+        }
+      } catch (e) {
+          console.log(e);        
+      }
     }
+    nameEmailFetchData();
   }
 
+  
   const onChangeFindPwdCodeInput = (e) => {
     const findPwdCodeInput = e.target.value;
     setFindePwdCodeInput(findPwdCodeInput);

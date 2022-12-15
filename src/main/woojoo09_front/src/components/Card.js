@@ -73,7 +73,7 @@ const Card = ({lists, isLogin, isAdmin, changeLists}) =>{
       </div>
       <div className="cardDesc">
         <p>{list.categoryName}</p>
-        <p className="cardName">{list.product.length > 10 ? list.product.substring(0,10)+"..." : list.product}</p>
+        <p className="cardName">{list.product.length > 12 ? list.product.substring(0,12)+"..." : list.product}</p>
         <p>{list.price}원</p>
         <p>{list.city && <span>{list.city}</span>}{list.town && <span>{list.town}</span>}</p>
         {list.doneTrade === 'ONGOING' && <p><span>{list.acceptPartner} / {list.limitPartner}</span><span>D - {

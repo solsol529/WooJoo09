@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react'
+import { useNavigate } from "react-router-dom";
 import Map from './Map'
 import {categories, citys, towns} from "../util/util"
 import { storage } from "../api/firebase"
 import representIcon from "../resources/representImg_icon.png"
 import imgIcon from "../resources/images_icon.png"
+import api from '../api/api'
 
 const Write = () =>{
+  const navigate = useNavigate();
 
   const [category, setCategory] = useState('');
   const [name, setName] = useState('');
@@ -15,10 +18,13 @@ const Write = () =>{
   const [countPartner, setCountPartner] = useState(1);
   const [productDetail, setProductDetail] = useState('');
   const [dueDate, setDueDate] = useState('');
-  const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(new Date()));
+  var now = new Date();
+  const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(now));
+  const firstDate = new Date(now.setDate(now.getDate() + 1)); // 최소 1일부터
+  const lastDate = new Date(now.setDate(now.getDate() + 14)); // 최대 14일
   const [dueYear, setDueYear] = useState(Number(thisDate.split('.')[0]));
   const [dueMonth, setDueMonth] = useState(Number(thisDate.split('.')[1]));
-  const [dueDay, setDueDay] = useState(Number(thisDate.split('.')[2])+6);
+  const [dueDay, setDueDay] = useState(Number(thisDate.split('.')[2])+7); // 기본값 일주일
   const [tradeMethod, setTradeMethod] = useState('');
   const [images, setImages] = useState([]);
   const [urls, setUrls] = useState([]);
@@ -35,19 +41,122 @@ const Write = () =>{
   const [priceErr, setPriceErr] = useState("");
   const [limitPartErr, setLimitPartErr] = useState("인원수를 확인해 주세요!");
   const [tradeMethodErr, setTradeMethodErr] = useState("거래 방법을 확인해 주세요!");
-  const [dueDateErr, setDueDateErr] = useState("");
+  const [dueDateErr, setDueDateErr] = useState("마감 기한을 확인해 주세요!");
   const [detailErr, setDetailErr] = useState("");
 
   const [isName, setIsName] = useState('');
   const [isPrice, setIsPrice] = useState('');
   const [isTradeMethod, setIsTradeMethod] = useState('');
   const [isDetail, setIsDetail] = useState('');
+  const [isDate, setIsDate] = useState('');
 
   const [inputTradePlace, setInputTradePlace] = useState('');
   const [tradePlace, setTradePlace] = useState('');
 
-  
   const [displayMap, setDisplayMap] = useState(false);
+  const [insertMsg, setInsertMsg] = useState("");
+
+  const tradeInsert = () =>{
+    //imgUrl,representUrl, category, product, price, limitPartner, 
+    //dueDate, tradeMethod, city, town, tradePlace, productDetail
+    const fetchData = async () => {
+      try {
+        const response = await api.tradeInsert();
+        console.log(response.data);
+        if(response.data.myStar === "loginError") {
+          setInsertMsg("로그인 상태를 확인 해주세요");
+        } 
+        else if(response.data.myStar === "OK"){
+          setInsertMsg("공동구매가 등록 되었습니다\n 메인으로 이동됩니다");
+          setTimeout(()=>{ 
+            navigate('/main');
+          }, 10000);
+        }else{
+          setInsertMsg("공동구매 등록에 실패했습니다");
+        }
+      } catch (e) {
+        console.log(e);
+      }
+      // setLoading(false);
+    };
+    fetchData();
+  }
+
+  function checkValidDate(y, m ,d) {
+    var result = true;
+    try {
+        var dateRegex = /^(?=\d)(?:(?:31(?!.(?:0?[2469]|11))|(?:30|29)(?!.0?2)|29(?=.0?2.(?:(?:(?:1[6-9]|[2-9]\d)?(?:0[48]|[2468][048]|[13579][26])|(?:(?:16|[2468][048]|[3579][26])00)))(?:\x20|$))|(?:2[0-8]|1\d|0?[1-9]))([-.\/])(?:1[012]|0?[1-9])\1(?:1[6-9]|[2-9]\d)?\d\d(?:(?=\x20\d)\x20|$))?(((0?[1-9]|1[012])(:[0-5]\d){0,2}(\x20[AP]M))|([01]\d|2[0-3])(:[0-5]\d){1,2})?$/;
+        result = dateRegex.test(d+'-'+m+'-'+y);
+    } catch (err) {
+      result = false;
+    }    
+      return result;
+  }
+
+  const onChangeDueYear = (e) => {
+    const year = e.target.value;
+    setDueYear(e.target.value);
+    if(year < 1000){
+      setDueDateErr("날짜 형식을 확인해주세요");
+      setIsDate(false);
+    }else{
+      const month = (String(dueMonth -1).length === 1 ? "0"+String(dueMonth -1) : String(dueMonth -1));
+      const day = (String(dueDay).length === 1 ? "0"+String(dueDay) : String(dueDay));
+      var date = new Date(String(year), month, day);  
+      if((date.getTime() >= firstDate.getTime()) && (date.getTime() <= lastDate.getTime())){
+        setDueDateErr("");
+        setIsDate(true);
+      }
+      else{
+        setDueDateErr("마감일은 최소 1일부터 최대 14일까지 가능합니다");
+        setIsDate(false);
+      }
+    }
+  }
+
+  const onChangeDueMonth = (e) => {
+    const month = e.target.value;
+    setDueMonth(e.target.value);
+    if(month > 12 || month < 1){
+      setDueDateErr("날짜 형식을 확인해주세요");
+      setIsDate(false);
+      setDueMonth(1);
+    }
+    else{
+      const monthStr = (String(month -1).length === 1 ? "0"+String(month -1) : String(month -1));
+      const day = (String(dueDay).length === 1 ? "0"+String(dueDay) : String(dueDay));
+      var date = new Date(dueYear, monthStr, day);
+      if((date.getTime() >= firstDate.getTime()) && (date.getTime() <= lastDate.getTime())){
+        setDueDateErr("");
+        setIsDate(true);
+      }
+      else{
+        setDueDateErr("마감일은 최소 1일부터 최대 14일까지 가능합니다");
+        setIsDate(false);
+      }
+    }
+  }
+
+  const onChangeDueDay = (e) => {
+    const day =  e.target.value;
+    setDueDay(e.target.value);
+    const month = (String(dueMonth -1).length === 1 ? "0"+String(dueMonth -1) : String(dueMonth -1));
+    const dayStr = (String(day).length === 1 ? "0"+String(day) : String(day));
+    var date = new Date(dueYear, month, dayStr);
+    if(checkValidDate(dueYear, dueMonth, day)){
+      if((date.getTime() >= firstDate.getTime()) && (date.getTime() <= lastDate.getTime())){
+        setDueDateErr("");
+        setIsDate(true);
+      } else{
+        setDueDateErr("마감일은 최소 1일부터 최대 14일까지 가능합니다");
+        setIsDate(false);
+      }
+    }else{
+      setDueDateErr("날짜 형식을 확인해주세요");
+      setDueDay(1);
+      setIsDate(false);
+    }
+  }
 
   const onChangeName = (e) => {
     setName(e.target.value);
@@ -97,27 +206,12 @@ const Write = () =>{
     }
   }
 
-  const onChangeDueYear = (e) => {
-    setDueYear(e.target.value);
-  }
-
-  const onChangeDueMonth = (e) => {
-    setDueMonth(e.target.value);
-  }
-
-  const onChangeDueDay = (e) => {
-    setDueDay(e.target.value);
-  }
-
-  const dateComplete = () =>{
-  }
-
   const handleAddress = () => {
     setTradePlace(inputTradePlace);
-    setDisplayMap(!displayMap);
+    setDisplayMap(true);
   }
   const handleDisplayMap = () => {
-    setDisplayMap(!displayMap);
+    setDisplayMap(false);
   }
 
   const writeSubmit = ()=>{
@@ -129,6 +223,11 @@ const Write = () =>{
   const handleImage = (e) => {
     setUrls([]);
     let imgNum = 0;
+
+    if(!representUrl){
+      setError("대표 이미지를 먼저 선택해주세요!");
+      return;
+    }
 
     if (e.target.files.length === 0) {
       console.log("파일이 선택되지 않았습니다");
@@ -262,6 +361,7 @@ const Write = () =>{
         });
       }
     );
+    setRepresentImg('');
   };
 
   return(
@@ -274,13 +374,13 @@ const Write = () =>{
             <img src={representIcon} alt="대표이미지등록"/>
             <input type="file" accept="image/*" onChange={handleImageRepresent} />
             </label>
-            {representImg && <p>{representImg.name}</p>}
+            {representImg && <p className='imglst'>{representImg.name}</p>}
             {representImg && <button onClick={onSubmitRepresent}>선택 이미지 등록</button>}
           </form>
-          {representErr && <p>{representErr}</p>}
+          {representErr && <p className='imgErr'>{representErr}</p>}
           {representUrl && (
             <div className="imgPreview">
-              <p>이미지 미리보기</p>
+              <p className='representpreview'>이미지 미리보기</p>
               <div>
               <img className="representImgPreview" src={representUrl} alt="uploaded" />
               </div>
@@ -294,16 +394,16 @@ const Write = () =>{
           <input multiple type="file" accept="image/*" onChange={handleImage} />
           </label>
           {images.length > 0 && 
-          images.map((image)=>(<p>{image.name}</p>))}
+          images.map((image)=>(<p className='imglst'>{image.name}</p>))}
           {images.length > 0 && 
           <button onClick={onSubmit}>선택 이미지 등록</button>}
         </form>
-        {error && <p>{error}</p>}
+        {error && <p className='imgErr'>{error}</p>}
         {(urls.length >= 1) && (
           <div className="imgPreview">
             <p>이미지 미리보기</p>
             <div>
-            {urls.map((imageUrl)=>(<img className="writeImgPreview" src={imageUrl} alt="uploaded" />))}
+            {urls.map((imageUrl)=>(<img className="writeImgPreview" src={imageUrl} alt="uploaded"/>))}
             </div>
           </div>
         )}
@@ -368,6 +468,7 @@ const Write = () =>{
           <input type="number" value={dueDay} onChange={onChangeDueDay}></input>
           </div>
         </label>
+        {dueDateErr && <span className="tradeMethodErr">{dueDateErr}</span>}
       </div>
       <div className="tradeMethodInput">
         <label><span>거래 방법<span className="essential5">*</span></span>
@@ -416,8 +517,8 @@ const Write = () =>{
       <div className="placeInput">
         <label htmlFor="tradePlace"><span>직거래 장소</span>
         <div>
-          <input id="tradePlace" placeholder="직거래 장소를 입력하세요" onChange={onChangeTradePlace} value={inputTradePlace} />
-          {displayMap? <button onClick={handleDisplayMap}>지도 닫기</button> : 
+          <input id="tradePlace" placeholder="장소를 입력하세요" onChange={onChangeTradePlace} value={inputTradePlace} />
+          {displayMap? <><button onClick={handleAddress} className="resetmapbtn">재검색</button><button onClick={handleDisplayMap} className="closemapbtn">지도 닫기</button></> : 
           <button onClick={handleAddress}>지도 보기</button>}
         </div>
         </label>
@@ -432,8 +533,9 @@ const Write = () =>{
       {detailErr && <span className="detailErr">{detailErr}</span>}
       </div>
       </div>
-      {isName && isPrice && isTradeMethod && isDetail ? <button className="writeSubmitBtn" onClick={writeSubmit}>등록</button> :
+      {isName && isPrice && isTradeMethod && isDetail && isDate ? <button className="writeSubmitBtn" onClick={writeSubmit}>등록</button> :
       <button className="writeSubmitBtn nobutton">등록</button>}
+      {insertMsg && <p>{insertMsg}</p>}
     </div>
   );
 }

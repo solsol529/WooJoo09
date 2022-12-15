@@ -47,6 +47,25 @@ input[type="file"] {
   }
 }
 
+.representInput, .imgInput{
+  button{
+    background-color: $bluePurple3Alpha35;
+    padding: 2px 5px;
+    border-radius: 5px;
+    border: none;
+    &:hover{
+      background-color: $bluePurple3Alpha5;
+    }
+    cursor: pointer;
+  }
+  .imgErr{
+    color: $darkGray2Alpha5;
+  }
+  .imglst{
+    padding: 2px 0px 5px 0px;
+  }
+}
+
 .writeInput{
   display: flex;
   flex-direction: column;
@@ -93,6 +112,17 @@ input[type="file"] {
   }
 }
 
+.writeImgInput{
+  span{
+    padding-bottom: 5px;
+  }
+}
+
+.imgInput{
+  padding-bottom: 15px;
+  border-bottom: solid 1px #e3e9ed;
+}
+
 .representInput, .imgInput{
   // background-color: red;
   display: flex;
@@ -100,9 +130,15 @@ input[type="file"] {
   label{
     display: flex;
     flex-direction: column;
+    img{
+      cursor: pointer;
+    }
   }
   .imgPreview{
     margin: 0px auto;
+    >p{
+      padding-bottom: 5px;
+    }
     >div{
       display: grid;
       grid-auto-rows: 15vw;
@@ -110,7 +146,7 @@ input[type="file"] {
       grid-template-columns: repeat(3, 15vw);
       img{
         border-radius: 3px;
-        background-color: $yellow3Alpha4;
+        // background-color: $yellow3Alpha4;
         // padding: 10px;
         width: 100%;
         height: 100%;
@@ -184,6 +220,12 @@ input[type="file"] {
 }
 
 .placeInput{
+  >label{
+    position: relative;
+    >div{
+      width: 70%;
+    }
+  }
   div{
     display: flex;
     flex-direction: row;
@@ -195,7 +237,27 @@ input[type="file"] {
     // background-color: royalblue;
     display: flex;
     justify-content: center;
-
+  }
+  input{
+    min-width: 120px;
+    width: 80%;
+    max-width: 400px;
+  }
+  button{
+    background-color: $bluePurple1Alpha8;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 2px 5px;
+    &:hover{
+      background-color: $bluePurple1;
+    }
+  }
+  .closemapbtn{
+    position: absolute;
+    bottom: -150%;
+    z-index: 10;
+    left: 11%
   }
 }
 
@@ -211,9 +273,9 @@ input[type="file"] {
   position: relative;
   .writecontentlength{
     position: absolute;
-    right: 3.5vw;
-    bottom: 2px;
-    color: #e3e9ed;
+    right: 3.2vw;
+    bottom: -14px;
+    color: $darkGray2Alpha3;
   }
   >label{
     padding-bottom: 3px;
@@ -291,13 +353,44 @@ input[type="file"] {
   >label{
     padding-bottom: 3px;
   }
+  input{
+    width: 60%;
+  }
 }
 
-.nameInput, .priceInput{
-// 여기서부터 내일
+.priceInput{
+  input{
+    text-align: center;
+    min-width: 100px;
+    width: 40%;
+    max-width: 200px;
+  } 
 }
+
 
 @media screen and (max-width:767px) {
+
+  .placeInput{
+    .closemapbtn{
+      position: absolute;
+      bottom: -150%;
+      z-index: 10;
+      right: 10%;
+      width: fit-content;
+    }
+  }
+
+  .nameInput{
+    >label{
+      padding-bottom: 3px;
+    }
+    input{
+      min-width: none;
+      width: 100%;
+      max-width: 450px;
+    }
+  }
+
   .writeErr, .detailErr, .tradeMethodErr{
     color: $darkGray2Alpha5;
     width: 100%;
@@ -348,7 +441,7 @@ input[type="file"] {
     .writecontentlength{
       position: absolute;
       right: 8%;
-      bottom: 2px;
+      bottom: -14px;
     }
   }
   
@@ -411,7 +504,28 @@ input[type="file"] {
 }
 
 @media screen and (max-width:500px) {
+  .placeInput{
+    >label{
+      width: 110%;
+      input{
+        max-width: 200px;
+      }
+    }
+    .closemapbtn{
+      position: absolute;
+      bottom: -150%;
+      z-index: 10;
+      left: 5%;
+      width: fit-content;
+    }
+  }
   
+  .detailErr{
+    position: absolute;
+    left: 0px;
+    bottom: -14px;
+  }
+
   .essential5{
     top: -0px;
   }
@@ -465,8 +579,9 @@ input[type="file"] {
     width: 100%;
     .writecontentlength{
       position: absolute;
-      right: 2%;
-      bottom: 2px;
+      right: .5%;
+      bottom: -12px;
+      font-size: .8rem;
     }
   }
   
@@ -500,6 +615,20 @@ input[type="file"] {
   }
   
 
+}
+@media screen and (max-width:430px) {
+  .placeInput{
+    .closemapbtn{
+      position: absolute;
+      bottom: -80%;
+      z-index: 10;
+      left: 2%;
+    }
+    .resetmapbtn{
+      position: relative;
+      width: 80%;
+    }
+  }
 }
 
 @media screen and (max-width:390px) {

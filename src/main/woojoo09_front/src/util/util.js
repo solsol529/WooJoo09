@@ -102,9 +102,29 @@ const defaultImgs = {
   },
 }
 
-const deliveryCompany = [
-  {deliveryCompany : "cj 대한통운", company:"cj"},
-  {deliveryCompany : "우체국", company :"epost"}
+const logisticsCompanys = [
+  {logisticsCompany : "cj 대한통운", gisvalue:"cjlogistics"},
+  {logisticsCompany : "우체국택배", gisvalue :"epost"},
+  {logisticsCompany : "롯데택배", gisvalue :"lotteglogis"},
+  {logisticsCompany : "한진택배", gisvalue :"hanjin"},
+  {logisticsCompany : "로젠택배", gisvalue :"ilogen"},
+  {logisticsCompany : "gs편의점택배", gisvalue :"gscvs"},
+  {logisticsCompany : "cu편의점택배", gisvalue :"cupost"},
+  {logisticsCompany : "gs반값택배", gisvalue :"gscvshalf"},
+  {logisticsCompany : "cu끼리택배", gisvalue :"cupostbetweencu"},
+  {logisticsCompany: "직접입력", gisvalue : "directInput"}
 ]
 
-export {categories, getCategory, citys, towns, defaultImgs, deliveryCompany}
+const BankKind = [
+  {bankName: "KB국민", bankValue : "kbstar"}, 
+  {bankName: "NH농협", bankValue : "nonghyup"}, 
+  {bankName: "카카오뱅크", bankValue : "kakaobank"}, 
+  {bankName: "신한", bankValue : "shinhan"}, 
+  {bankName: "우리", bankValue : "woori"}, 
+  {bankName: "IBK기업", bankValue : "ibk"}, 
+  {bankName: "하나", bankValue : "kebhana"}, 
+  {bankName: "직접입력", bankValue : "directInput"}
+
+]
+
+export {categories, getCategory, citys, towns, defaultImgs, logisticsCompanys, BankKind}
