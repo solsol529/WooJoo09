@@ -15,6 +15,7 @@ import TermPage from "./pages/TermPage";
 import LoginPage from "./pages/LoginPage"
 import MyTradePage from "./pages/MyTradePage"
 import SearchPage from "./pages/SearchPage"
+import UpdatePage from "./pages/UpdatePage";
 
 import "./style/common.scss";
 import "./style/detail.scss";
@@ -55,6 +56,7 @@ function App() {
           <Route path='/member' element={<MemberPage/>}/>
           <Route path='/MyTrade' element={<MyTradePage/>}/>
           <Route path='/write' element={<WritePage/>}/>
+          <Route path='/update' element={<UpdatePage/>}/>
           <Route path='/term' element={<TermPage/>}/>
           <Route path='/privacypolicy' element={<PrivacyPolicyPage/>}/>
           
