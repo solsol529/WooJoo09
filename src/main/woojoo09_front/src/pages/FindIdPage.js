@@ -21,6 +21,10 @@ const FindIdPage = () =>{
   const [findIdEmailOkMsg, setFindIdEmailOkMsg] = useState('');
   const [findIdEmailMsg, setFindIdEmailMsg] = useState('');
 
+  //정규식
+  const nameRegEx = /^[가-힣|a-z|A-Z|]+$/;
+  const emailRegEx = /^[a-zA-Z0-9+-\_.]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+
   // const changeFindIdEmail = (value) => {
   //   setFindIdEmail(value);
   // };
@@ -31,6 +35,9 @@ const FindIdPage = () =>{
     if(inputFindIdName.length === 0) {
       setIsFindIdName(false);
       setFindIdNameMsg("가입 시 등록한 이름을 입력해주세요.")
+    } else if(!nameRegEx.test(inputFindIdName) && !(inputFindIdName.length === 0)) {
+      setIsFindIdName(false);
+      setFindIdNameMsg("이름 형식에 맞지 않습니다.")
     } else {
       setIsFindIdName(true);
     }
@@ -42,20 +49,25 @@ const FindIdPage = () =>{
     if(inputFindIdEmail.length === 0) {
       setIsFindIdEmail(false);
       setFindIdEmailMsg("가입 시 등록한 이메일을 입력해주세요.")
+    } else if(!emailRegEx.test(inputFindIdEmail) && !(inputFindIdEmail.length === 0)) {
+      setIsFindIdEmail(false);
+      setFindIdEmailMsg("이메일 형식에 맞지 않습니다.")
     } else {
       setIsFindIdEmail(true);
     }
   }
 
+  //아이디 찾기 완료 버튼
   const onClickFindIdComplete = () => {
-
     const fetchData = async () => {
       try {
         const response = await api.memberfindId(findIdName, findIdEmail);
         if(response.data === true) {
           setChangeFindIdComplete(true);
-        } else {
-          setChangeFindIdComplete(false);
+        } else if(response.data === false){
+          setIsFindIdEmail(false);
+          setFindIdEmailMsg("가입하신 이름과 이메일을 찾을 수 없습니다.")
+          setChangeFindIdComplete(false);         
         }
       } catch (e) {
         console.log(e);
@@ -63,8 +75,6 @@ const FindIdPage = () =>{
     }
     fetchData();    
   }
-
-
 
   return(
     <div className="wrapper">
@@ -100,11 +110,9 @@ const FindIdPage = () =>{
             <div className="findIdComplete">
               {!(isFindIdName && isFindIdEmail)
               && <button className="findIdNotCompleteBut">확인</button>}  
-
               {/* {(isFindIdName && isFindIdEmail)
               && <button className="findIdCompleteBut" 
               onClick={()=>{setChangeFindIdComplete(true)}}>확인</button>}    */}
-
               {(isFindIdName && isFindIdEmail)
               && <button className="findIdCompleteBut" 
               onClick={onClickFindIdComplete}>확인</button>}  
