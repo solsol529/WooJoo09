@@ -327,12 +327,29 @@ const api = {
   },
 
   //비밀번호 찾기
-  nameEmailCk: async function(findPwdName, findPwdEmail) {
+  idEmailCk: async function(findPwdId, findPwdEmail) {
     const findPwd = {
-      findPwdName: findPwdName,
+      findPwdId: findPwdId,
       findPwdEmail: findPwdEmail
     }
     return await axios.post(BASE_URL + "findpwd", findPwd, HEADER);
+  },
+
+  //이메일 인증번호 전송
+  verifyCodeEmailSend: async function(findPwdEmail) {
+    const findPwdCodeSend = {
+      findPwdEmail: findPwdEmail
+    }
+    return await axios.post(BASE_URL + "findpwdverify", findPwdCodeSend, HEADER);
+  },
+
+  //비밀번호 재설정
+  resetPwdData: async function(findPwdId, resetPwd) {
+    const resetPwdData = {
+      findPwdId: findPwdId,
+      resetPwd: resetPwd
+    }
+    return await axios.post(BASE_URL + "resetpwd", resetPwdData, HEADER);
   },
 
   //휴대폰번호 인증
@@ -350,8 +367,25 @@ const api = {
 
     }
     return await axios.post(BASE_URL + "chatListSelect", chatList, HEADER);
-  }
+  },
   
+  // 채팅 내용 가져오기
+  chatContent: async function(partner_num){
+    const chatContent = {
+      partner_num: partner_num
+    }
+    return await axios.post(BASE_URL + "chatContentSelect", chatContent, HEADER);
+  },
+
+  // 웹소켓
+  // 채팅방 개설 API
+  chatRoomOpen: async function(name) {
+    const chatObject = {
+        "name" : name
+    }
+    return await axios.post(BASE_URL + "chat", chatObject, HEADER);
+  }
+
 }
 
 export default api;

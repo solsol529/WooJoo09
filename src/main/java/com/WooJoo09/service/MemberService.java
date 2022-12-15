@@ -61,11 +61,11 @@ public class MemberService {
 
     //아이디 찾기
     public boolean findId(String realName, String email) {
-        List<Member> memberList = memberRepository.findByRealNameAndEmail(realName, email);
-        for(Member e : memberList) {
-            return true;
-        }
-        return false;
+//        List<Member> memberList = memberRepository.findByRealNameAndEmail(realName, email);
+//        for(Member e : memberList) {
+//            return true;
+//        }
+        return !memberRepository.findByRealNameAndEmail(realName, email).isEmpty();
     }
 
     //이메일로 회원정보 받아오기
@@ -85,6 +85,24 @@ public class MemberService {
         }
         return memberDTOS;
     }
+
+    //비밀번호 찾기
+    public boolean findPwd(String id, String email) {
+        return !memberRepository.findByIdAndEmail(id, email).isEmpty();
+    }
+
+    //비밀번호 재설정
+    public boolean memberIdService(String id, String newPwd) {
+        Optional<Member> memberId = memberRepository.findById(id);
+        if(memberId.isEmpty()) return false;
+        Member member = memberId.get();
+        member.setPwd(newPwd);
+        Member savedMember = memberRepository.save(member);
+        log.info(savedMember.toString());
+        return true;
+    }
+
+    //전화번호 중복체크
     public boolean getPhoneVer(String phone) {
         return memberRepository.findByPhone(phone).isEmpty();
     }

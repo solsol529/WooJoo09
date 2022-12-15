@@ -52,7 +52,7 @@ function App() {
           <Route path='/detail/:tradeNum' element={<DetailPage/>}/>
           <Route path='/search/:target' element={<SearchPage/>}/>
           <Route path='/chatlist' element={<ChatListPage/>}/>
-          <Route path='/chat' element={<ChatPage/>}/>
+          <Route path='/chat/:partner_num' element={<ChatPage/>}/>
           <Route path='/member' element={<MemberPage/>}/>
           <Route path='/MyTrade' element={<MyTradePage/>}/>
           <Route path='/write' element={<WritePage/>}/>
