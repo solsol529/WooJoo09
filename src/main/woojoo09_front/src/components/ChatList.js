@@ -42,9 +42,9 @@ const ChatList = () =>{
   const chatTest = (partnerNum) =>{
     const fetchData = async () => {
       try {
-        console.log(partnerNum);
+        console.log("partnerNum : " + partnerNum);
           const res = await api.chatRoomOpen(partnerNum);
-          console.log(res.data);
+          console.log("res.data" + res.data);
           // window.localStorage.setItem("chatRoomId", res.data);
           // setRoomId(res.data);
           //  window.location.replace("/chat");

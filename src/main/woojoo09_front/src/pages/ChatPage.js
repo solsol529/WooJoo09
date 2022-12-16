@@ -28,7 +28,7 @@ const ChatPage = () =>{
    let ws = useRef(null);
    const [items, setItems] = useState([]);
 
-  const roomId = partner_num;
+  let roomId = partner_num;
   
   const [visible, setVisible] = useState(false);
   const [type, setType] = useState('');
@@ -55,7 +55,7 @@ const ChatPage = () =>{
       setLoading(false);
     };
     fetchData();
-  }, []);
+  }, [partner_num]);
 
 
   const visibleAccount = (e) => {
@@ -119,6 +119,7 @@ const ChatPage = () =>{
   useEffect(() => {
   //   // 화면이 렌더링 될 때 불러지는것, 자동으로 세션 연결
   //   // 화면이 로딩되자마자 웹소켓을 열어달라고 요청
+      setItems([]);
       console.log("방번호 : " + roomId);
       if (!ws.current) {
           ws.current = new WebSocket(webSocketUrl);
@@ -143,7 +144,7 @@ const ChatPage = () =>{
           setRcvMsg(data.message);
           setItems((prevItems) => [...prevItems, data]);
     };
-  }, [socketConnected]);
+  }, [roomId, socketConnected]);
 
 
       
@@ -190,10 +191,10 @@ const ChatPage = () =>{
           </>
           ))} 
                <div>
-                {items.map((item) => {
-                    return (memberNum != sender &&<div className="chatMessage">{`${item.message}`}</div>),
-                    (memberNum && <div className="chatMessage-My">{`${item.message}`}</div>);
-                    })}
+                {items.map((item) => (
+                    <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>{`${item.message}`}</div>
+                    // <div className="chatMessage-My">{`${item.message}`}</div>
+                    ))}
                 </div>  
        
               {/* 강사님 웹소켓 채팅 코드
