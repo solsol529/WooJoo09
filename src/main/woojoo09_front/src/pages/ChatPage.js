@@ -13,16 +13,16 @@ import send1 from "../resources/buluepurple_rocket.png"
 const ChatPage = () =>{
 
   let { partner_num } = useParams();
-  const location = useLocation();
-  const memberNum = location.state.memberNum;
+   const location = useLocation();
+   const memberNum = location.state.memberNum;
   // const sender = location.state.sender;
-  const roomId = location.state.roomId
+  //const roomId = location.state.roomId
   
   
   useEffect(() => {
     //console.log(sender);
-    console.log(memberNum);
-    console.log(roomId)
+    // console.log(memberNum);
+    // console.log(roomId)
   }, []);
 
 
@@ -32,10 +32,12 @@ const ChatPage = () =>{
   const webSocketUrl = `ws://localhost:9009/ws/chat`;
   // // roomId랑 sender은 받아와야함 -> navigate로 받아오면 될듯
   // const roomId = window.localStorage.getItem("chatRoomId");
-  // const sender = "곰돌이사육사";
+  //  const sender = "곰돌이사육사";
+   let ws = useRef(null);
+    const [items, setItems] = useState([]);
 
-  // const roomId = partner_num;
-  const sender = memberNum;
+  const roomId = partner_num;
+  // const sender = memberNum;
   
   const [visible, setVisible] = useState(false);
   const [type, setType] = useState('');
@@ -62,8 +64,6 @@ const ChatPage = () =>{
   }, []);
 
 
-
-
   const visibleAccount = (e) => {
     setVisible(!visible);
     // setType(e.target.value)
@@ -74,8 +74,7 @@ const ChatPage = () =>{
 
 
     
-  let ws = useRef(null);
-  const [items, setItems] = useState([]);
+ 
 
   const onChangMsg = (e) => {
       setInputMsg(e.target.value)
@@ -91,16 +90,33 @@ const ChatPage = () =>{
           JSON.stringify({
           "type":"TALK",
           "roomId": roomId,
-          "sender": sender,
-          "message":inputMsg}));
-          setInputMsg("");
+          "sender": memberNum,
+          "message":inputMsg
+      }));
+      setInputMsg("");
   }
+
+  const msgInsert = () =>{
+    const fetchData = async () => {
+      try {
+        console.log(items);
+          const res = await api.chatContentInsert(partner_num, inputMsg, "text", memberNum);
+          console.log(res.data);
+          // window.localStorage.setItem("chatRoomId", res.data);
+          // setRoomId(res.data);
+          //  window.location.replace("/chat");
+      } catch {
+          console.log("error");
+      }
+    };
+    fetchData();
+  } 
   const onClickMsgClose = () => {
       ws.current.send(
           JSON.stringify({
           "type":"CLOSE",
           "roomId": roomId,
-          "sender":sender,
+          "sender":memberNum,
           "message":"종료 합니다."}));
       ws.current.close();
   }
@@ -122,7 +138,7 @@ const ChatPage = () =>{
               JSON.stringify({
               "type":"ENTER",
               "roomId": roomId,
-              "sender": sender,
+              "sender": memberNum,
               "message":"처음으로 접속 합니다."}));
       }
       ws.current.onmessage = (evt) => {
@@ -158,8 +174,8 @@ const ChatPage = () =>{
              {memberNum === sender && <div className="chatMessage">{chat_content}</div>}
              {memberNum === sender && <div className="chatTalkTime">{chat_time.substr(11,11)}</div>}
              {memberNum !== sender && <div className="chatTalkTime-My">{chat_time.substr(11,11)}</div>}
-              {memberNum !== sender && <div className="chatMessage-My">{chat_content}</div>} 
-          </>
+            {memberNum !== sender && <div className="chatMessage-My">{chat_content}</div>}     
+                </>
           ))} 
        
               {/* 강사님 웹소켓 채팅 코드
@@ -179,23 +195,24 @@ const ChatPage = () =>{
                     <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button>
                   </div> */}
 
-          <ChatSellButton/>
+       
 
-        <div>
-          <div>socket</div>
-          <div>socket connected : {`${socketConnected}`}</div>
-          <div>방번호: {roomId}</div>
-          <h2>소켓으로 문자 전송하기 테스트</h2>
-                    <div>
-                        {items.map((item) => {
-                        return <div>{`${item.sender} > ${item.message}`}</div>;
-                        })}
-                    </div>
-          </div> 
+          <div>
+            <div>socket</div>
+            <div>socket connected : {`${socketConnected}`}</div>
+            <div>방번호: {roomId}</div>
+            <h2>소켓으로 문자 전송하기 테스트</h2>
+                      <div>
+                          {items.map((item) => {
+                          return <div>{ `${item.message}`}</div>;
+                          })}
+                      </div> 
+            </div>   
         </div>
+        <ChatSellButton/>
         <div className="chatBottom">
           <input className="chatSend" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
-          <button onClick={onClickMsgSend} ><img src={send1} alt="send"/></button>
+          <button onClick={ (e) => {onClickMsgSend(e); msgInsert();}}><img src={send1} alt="send"/></button>
           <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button>
         </div>
         

@@ -13,6 +13,7 @@ const ChatList = () =>{
   const [loading, setLoading] = useState(false);
   const [prepared, setPrepared] = useState(false);
   const [roomId, setRoomId] = useState('');
+  // const [partnerNum, setPartnerNum] = useState();
   const navigate = useNavigate();
 
 
@@ -23,9 +24,10 @@ const ChatList = () =>{
       try {
         const response = await api.chatList();
         setLists(response.data[0]);
-        // console.log(response.data);
-        console.log(response.data[0]);
-        // console.log(response.data[0].partner_num);
+        console.log(response.data);
+        console.log(response.data[0].chatListContent);
+        // console.log(response.data[0].chatListContent[0].partner_num);
+        // setPartnerNum(response.data[0].chatListContent[0].partner_num)
         setPrepared(true);
       } catch (e) {
         console.log(e);
@@ -35,16 +37,23 @@ const ChatList = () =>{
     fetchData();
   }, []);
 
-  const chatTest = async() => {
-    try {
-        const res = await api.chatRoomOpen("테스트 채팅방");
-        console.log(res.data);
-        setRoomId(res.data);
-        // window.location.replace("/Socket");
-    } catch {
-        console.log("error");
-    }
-}
+
+  const chatTest = (partnerNum) =>{
+    const fetchData = async () => {
+      try {
+        console.log(partnerNum);
+          const res = await api.chatRoomOpen(partnerNum);
+          console.log(res.data);
+          // window.localStorage.setItem("chatRoomId", res.data);
+          // setRoomId(res.data);
+          //  window.location.replace("/chat");
+      } catch {
+          console.log("error");
+      }
+    };
+    fetchData();
+  } 
+
 
 
 
@@ -72,16 +81,16 @@ const ChatList = () =>{
             <div className="chatDetail"> 
             
               <div className="chatButton">
-                 <Link to={`/chat/${partner_num}`} state={{memberNum : member_num}}>
-                    
-                    <p onClick={chatTest}>
+                <Link to={`/chat/${partner_num}`} state={{memberNum : member_num}}>
+                 
+                    <p onClick={()=>{chatTest(partner_num)}}>
                       <span><img src = {img_url} alt="물품이미지"/></span>
                       <p className="chatDetailNick">{nickname}</p>
                       <p className="chatTime">{chat_time.substr(0,11)}</p>
                       <div className="chatRecent">{chat_content}</div>
                       {is_read === "UNREAD" && <p className="chatAlert"/>}
                     </p>
-                  
+                
                   </Link>    
                 </div>
                </div>
