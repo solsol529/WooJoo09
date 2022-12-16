@@ -93,15 +93,16 @@ public class ChatController {
         //int memberNum = Integer.parseInt(Data.get("target"));
         //int memberNumInt = Integer.parseInt(memberNum);
         //log.info("들어온값 " + memberNum + " 변환된값 " + memberNumInte);
-        List<?> list = new ArrayList<>();
+        List<Object> list = new ArrayList<>();
         if (token != null) {
             log.info("로그인상태입니당");
             String memberNumStr = jwtController.tokenCheck(token);
             int tokenInt = Integer.parseInt(memberNumStr);
             if (memberNumStr.equals("admin")) {
-                list = chatService.chatList(tokenInt);
+                list = (List<Object>) chatService.chatList(tokenInt);
             }
-            list = chatService.chatList(tokenInt);
+            list = (List<Object>) chatService.chatList(tokenInt);
+            list.add(memberNumStr);
         }
         return new ResponseEntity<>(list, HttpStatus.OK);
     }

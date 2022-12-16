@@ -1,7 +1,6 @@
 import { useEffect, useState, useRef } from "react";
 import ChatList from "../components/ChatList";
 import ChatHeader from "../components/ChatHeader";
-import ChatFooter from "../components/ChatFooter";
 import ChattingProduct from "../components/Chattingproduct";
 import ChattingProductBuy from "../components/ChattingPoductBuy";
 import ChatBuyButton from "../components/ChatBuyButton";
@@ -9,22 +8,15 @@ import ChatSellButton from "../components/ChatSellButton";
 import api from "../api/api";
 import { useLocation, useParams } from 'react-router-dom';
 import send1 from "../resources/buluepurple_rocket.png"
+import { Link } from "react-router-dom";
+import fashion from "../resources/fashion_sample.png";
+import "../style/chat.scss"
 
 const ChatPage = () =>{
 
   let { partner_num } = useParams();
    const location = useLocation();
    const memberNum = location.state.memberNum;
-  // const sender = location.state.sender;
-  //const roomId = location.state.roomId
-  
-  
-  useEffect(() => {
-    //console.log(sender);
-    // console.log(memberNum);
-    // console.log(roomId)
-  }, []);
-
 
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
@@ -34,16 +26,16 @@ const ChatPage = () =>{
   // const roomId = window.localStorage.getItem("chatRoomId");
   //  const sender = "곰돌이사육사";
    let ws = useRef(null);
-    const [items, setItems] = useState([]);
+   const [items, setItems] = useState([]);
 
   const roomId = partner_num;
-  // const sender = memberNum;
   
   const [visible, setVisible] = useState(false);
   const [type, setType] = useState('');
   const [lists, setLists] = useState('');
   const [loading, setLoading] = useState(false);
   const [prepared, setPrepared] = useState(false);
+  const [sender, setSender] = useState();
 
 
   useEffect(() => {
@@ -53,7 +45,9 @@ const ChatPage = () =>{
         const response = await api.chatContent(partner_num);
         setLists(response.data[0]);
         // console.log(response.data);
-        console.log(response.data[0]);
+        console.log(response.data[0].chattingContent[0].sender);
+        setSender(response.data[0].chattingContent[0].sender);
+        // console.log(response.data[0])
         setPrepared(true);
       } catch (e) {
         console.log(e);
@@ -69,12 +63,12 @@ const ChatPage = () =>{
     // setType(e.target.value)
   }
 
-  const EntranceBuy  = visible?
-      <ChattingProductBuy /> :  <ChattingProduct />;
+  // const EntranceBuy  = visible?
+    //  <ChattingProductBuy /> :  <ChattingProduct />;
 
 
-    
- 
+
+
 
   const onChangMsg = (e) => {
       setInputMsg(e.target.value)
@@ -117,7 +111,8 @@ const ChatPage = () =>{
           "type":"CLOSE",
           "roomId": roomId,
           "sender":memberNum,
-          "message":"종료 합니다."}));
+          "message": "종료 합니다."
+        }));
       ws.current.close();
   }
 
@@ -139,7 +134,8 @@ const ChatPage = () =>{
               "type":"ENTER",
               "roomId": roomId,
               "sender": memberNum,
-              "message":"처음으로 접속 합니다."}));
+              "message": "처음으로 접속 합니다."
+            }));
       }
       ws.current.onmessage = (evt) => {
           const data = JSON.parse(evt.data);
@@ -158,7 +154,22 @@ const ChatPage = () =>{
         
         <ChatHeader/>
 
-        {EntranceBuy}
+        <div className="chattingProduct">
+          <div>
+              <Link to="/write">
+                <img src={fashion} alt="패션"/>
+              </Link>
+                <div>
+                  <p className="chatProductName">상품이름</p>
+                  <div className="chatPrice">가격</div>
+                  
+                    <button>공구승인</button>
+                    <button>공구거절</button>
+                    {/* 공구 구매자 */}
+                    {/* <button>공구나가기</button> */}
+                </div>
+          </div>
+        </div>
         {/* <ChattingProduct /> */}
 
         <div className="chatContent">
@@ -171,12 +182,19 @@ const ChatPage = () =>{
           {prepared &&
           lists.chattingContent.map(({chat_content, chat_time, sender}) => (
           <>
-             {memberNum === sender && <div className="chatMessage">{chat_content}</div>}
-             {memberNum === sender && <div className="chatTalkTime">{chat_time.substr(11,11)}</div>}
-             {memberNum !== sender && <div className="chatTalkTime-My">{chat_time.substr(11,11)}</div>}
-            {memberNum !== sender && <div className="chatMessage-My">{chat_content}</div>}     
-                </>
+              {memberNum != sender && <div className="chatMessage">{chat_content}</div>}
+              {memberNum != sender && <div className="chatTalkTime">{chat_time.substr(11,11)}</div>}
+              {memberNum == sender && <div className="chatTalkTime-My">{chat_time.substr(11,11)}</div>}
+              {memberNum == sender && <div className="chatMessage-My">{chat_content}</div>}  
+               
+          </>
           ))} 
+               <div>
+                {items.map((item) => {
+                    return (memberNum != sender &&<div className="chatMessage">{`${item.message}`}</div>),
+                    (memberNum && <div className="chatMessage-My">{`${item.message}`}</div>);
+                    })}
+                </div>  
        
               {/* 강사님 웹소켓 채팅 코드
                   <div>
@@ -196,7 +214,7 @@ const ChatPage = () =>{
                   </div> */}
 
        
-
+{/* 
           <div>
             <div>socket</div>
             <div>socket connected : {`${socketConnected}`}</div>
@@ -207,7 +225,7 @@ const ChatPage = () =>{
                           return <div>{ `${item.message}`}</div>;
                           })}
                       </div> 
-            </div>   
+            </div>    */}
         </div>
         <ChatSellButton/>
         <div className="chatBottom">
