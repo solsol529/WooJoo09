@@ -188,4 +188,16 @@ public class MemberController {
         return new ResponseEntity<>(map, HttpStatus.OK);
     }
 
+    //로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<Map<?,?>> logout(HttpServletResponse response, @RequestBody Map<String, String> Data) {
+        Map<String, String> map = new HashMap<>();
+        Cookie cookie = new Cookie("token", null); // choiceCookieName(쿠키 이름)에 대한 값을 null로 지정
+        cookie.setMaxAge(0); // 유효시간을 0으로 설정
+        cookie.setHttpOnly(true);
+        cookie.setPath("/");
+        response.addCookie(cookie); // 응답 헤더에 추가해서 없어지도록 함
+        map.put("logout", "OK");
+        return new ResponseEntity<>(map, HttpStatus.OK);
+    }
 }
