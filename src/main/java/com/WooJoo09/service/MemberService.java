@@ -50,6 +50,7 @@ public class MemberService {
             } else {
                 String token;
                 if(id.equals("admin")){
+                    log.info("관리자입니다 관리자용 토큰 발급합니다");
                     token = jwtController.tokenCreate("admin");
                     map.put("token", token);
                 } else {

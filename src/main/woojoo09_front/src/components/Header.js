@@ -32,6 +32,7 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
         } else if(response.data.state === 'admin'){
           changeIsLogin(true);
           changeIsAdmin(true);
+          console.log("관리자입니다")
         }
         else{
           changeIsLogin(false);
@@ -91,7 +92,7 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
           <img src={search} alt="검색" onClick={handleButton}/>
         </div>
         <div className="headerLogin">
-          { isLogin ?
+          { isLogin && !isAdmin ?
           <>
           <Link to="/member">
             <img src={scrollPosition < 150 ? profileBlack : profileWhite} alt="내정보"/>
