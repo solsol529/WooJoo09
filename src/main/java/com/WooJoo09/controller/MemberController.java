@@ -11,6 +11,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletResponse;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -39,10 +41,19 @@ public class MemberController {
 
     //로그인
     @PostMapping("/login")
-    public ResponseEntity<Boolean> memberLogin(@RequestBody Map<String, String> loginData) {
+    public ResponseEntity<Boolean> memberLogin(HttpServletResponse response, @RequestBody Map<String, String> loginData) throws Exception {
         String id = loginData.get("loginId");
         String pwd = loginData.get("loginPwd");
-        return ResponseEntity.ok(memberService.loginService(id, pwd));
+        if((boolean)memberService.loginService(id, pwd).get("login")){
+            log.info("로그인 성공 해서 토큰을 발급");
+            String token = (String)memberService.loginService(id, pwd).get("token");
+            Cookie cookie = new Cookie("token", token); // 생성된 토큰을 cookie에 세팅
+            cookie.setMaxAge(60 * 60); // 유효기간 60분으로 설정
+            cookie.setHttpOnly(true);
+            cookie.setPath("/");
+            response.addCookie(cookie); // 응답에 쿠키 추가
+            return ResponseEntity.ok(true);
+        }else return ResponseEntity.ok(false);
     }
 
     //회원가입

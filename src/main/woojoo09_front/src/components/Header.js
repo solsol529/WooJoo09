@@ -102,7 +102,9 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
               : <img src={scrollPosition < 150 ? chatMovingBlack : chatMovingWhite} alt="채팅"/>}
           </Link>
           </> : (isAdmin? <button>관리자(admin)</button>: 
-          <button>로그인</button>)}
+          <button onClick={()=>{
+            navigate("/login");
+          }}>로그인</button>)}
          
         </div>
       </div>

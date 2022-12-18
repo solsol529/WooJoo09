@@ -16,6 +16,10 @@ const RegisterPage = () =>{
     navigate('/termagree', {replace: true});
   }
 
+   useEffect(()=>{
+    window.scrollTo({ top: 0, behavior: "auto" });
+  }, [])
+
   // useEffect(() => {
   //   if(!location.state.checkItems) {
   //     return navigate('/termagree', {replace: true});
@@ -223,11 +227,11 @@ const RegisterPage = () =>{
         if(response.data === true) {
           setIsRegNickCk(true);
           setIsRegNick(true);
-          setRegNickOkMsg("사용 가능한 아이디 입니다.");
+          setRegNickOkMsg("사용 가능한 닉네임 입니다.");
         } else if (response.data === false) {
           setIsRegNick(false);
           setIsRegNickCk(true);
-          setRegNickMsg("이미 존재하는 아이디 입니다.");
+          setRegNickMsg("이미 존재하는 닉네임 입니다.");
         } 
       } catch (e) {
         console.log(e);
