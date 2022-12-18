@@ -289,7 +289,7 @@ const RegisterPage = () =>{
   });
 
   let years = [];
-  for(let y = now.getFullYear(); y >= 1930; y -= 1) {
+  for(let y = (now.getFullYear()-14); y >= 1930; y -= 1) {
     years.push(y.toString());
   }
   
@@ -432,6 +432,7 @@ const RegisterPage = () =>{
     }
   }
   
+
 
   return(
     <div className="registerwrapper">
@@ -576,6 +577,9 @@ const RegisterPage = () =>{
                 </div>
               </div>
               <div className="regFakeBox"></div>
+            </div>
+            <div className="regErrMsg">
+              <span>14세 이상부터 회원가입이 가능합니다.</span>
             </div>
 
             <div className="regSmallBox">

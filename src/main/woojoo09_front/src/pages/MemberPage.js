@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import api from "../api/api";
 
 const MemberPage = () =>{
+
   const navigate = useNavigate();
 
   const [isLogin, setIsLogin] = useState("");
@@ -40,6 +41,7 @@ const MemberPage = () =>{
     navigate("/login", {state : "유효하지 않은 접근입니다\n로그인 후 이용해 주세요"});
   } 
 
+
   return(
     <div className="memberinfowrapper">
       <Header
@@ -47,7 +49,8 @@ const MemberPage = () =>{
       changeIsLogin={changeIsLogin}
       isAdmin={isAdmin}
       changeIsAdmin={changeIsAdmin}/>
-      <MemberInfo/>
+      <MemberInfo
+      memberNum = {memberNum} />
       <Footer/>
     </div>
   );

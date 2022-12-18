@@ -199,5 +199,15 @@ public class MemberController {
         response.addCookie(cookie); // 응답 헤더에 추가해서 없어지도록 함
         map.put("logout", "OK");
         return new ResponseEntity<>(map, HttpStatus.OK);
-    }
+    }    
+	
+	//닉네임 변경하기
+    //값 두개 가져와야 함
+//    @PostMapping("/infoNewNick")
+//    @ResponseBody
+//    public ResponseEntity<Boolean> infoNewNick(@RequestBody Map<String, String> infoNewNickData) {
+//        String nickname = infoNewNickData.get("infoNewNickInput");
+//        return ResponseEntity.ok(memberService.newNick(nickname));
+//    }
+
 }
