@@ -25,8 +25,6 @@ const ChatPage = () =>{
    const price = location.state.list.price;
    const imgUrl = location.state.list.img_url;
    const host = location.state.list.host;
-  //  console.log("doneTrade:" + doneTrade);
-  //  console.log("acceptTrade:" + acceptTrade);
 
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
@@ -180,9 +178,9 @@ const ChatPage = () =>{
         
       <div className="chatNickname">
         <span>{nickname}</span> 
-        {/* {{doneTrade} === 'ONGOING' && {acceptTrade} === 'REJECT' && <div className="chatStateWait">대기</div>} 
-        {{doneTrade} == 'ONGOING' && {acceptTrade} == 'ACCEPT' && <div className="chatStatejoin">참여</div>} 
-        {{doneTrade} == 'DONE' && <div className="chatStatedone">완료</div>} */}
+        {doneTrade == 'ONGOING' && acceptTrade == 'REJECT' && <div className="chatStateWait">대기</div>} 
+        {doneTrade == 'ONGOING' && acceptTrade == 'ACCEPT' && <div className="chatStatejoin">참여</div>} 
+        {doneTrade == 'DONE' && <div className="chatStatedone">완료</div>}
       </div>
 
         <div className="chattingProduct">
@@ -222,7 +220,8 @@ const ChatPage = () =>{
           </>
           ))} 
                <div>
-                {items.map((item) => (
+                {items.filter((item) => item.type !== "ENTER")
+                .map((item) => (
                     <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>{`${item.message}`}</div>
                     // <div className="chatMessage-My">{`${item.message}`}</div>
                     ))}
@@ -245,7 +244,8 @@ const ChatPage = () =>{
                     <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button>
                   </div> */}
         </div>
-        {host == memberNum? <ChatSellButton/>: <ChatBuyButton/> }
+
+          {host == memberNum?  <ChatBuyButton partner_num={partner_num}/> : <ChatSellButton partner_num={partner_num}/> }
         <div className="chatBottom">
           <input className="chatSend" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
           <button onClick={ (e) => {onClickMsgSend(e);}}><img src={send1} alt="send"/></button>
