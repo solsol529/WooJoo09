@@ -15,7 +15,7 @@ const ChatBuyButton = () => {
         setvisibleDelLook(false);
         setType(e.target.value)
     }
-        console.log("값이 있나요?" +type);
+        // console.log("값이 있나요?" +type);
     const visibleDeliveryLook = (e) => {
         setvisibleDelLook(!visibleDelLook);
         setvisibleDelInput(false);

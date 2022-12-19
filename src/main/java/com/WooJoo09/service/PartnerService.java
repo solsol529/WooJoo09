@@ -48,6 +48,7 @@ public class PartnerService {
                 Chat savedChat = chatRepository.save(chat);
                 log.info(savedChat.toString());
                 map.put("completePartner", "OK");
+                map.put("partnerNum", savedPartner.getPartnerNum().toString());
             } else map.put("completePartner", "duplicateChat");
         } else map.put("completePartner", "duplicate");
         return map;

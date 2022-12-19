@@ -25,8 +25,8 @@ const ChatPage = () =>{
    const price = location.state.list.price;
    const imgUrl = location.state.list.img_url;
    const host = location.state.list.host;
-   console.log("doneTrade:" + doneTrade);
-   console.log("acceptTrade:" + acceptTrade);
+  //  console.log("doneTrade:" + doneTrade);
+  //  console.log("acceptTrade:" + acceptTrade);
 
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
@@ -85,19 +85,34 @@ const ChatPage = () =>{
   }
 
   const onEnterKey = (e) => {
-      if(e.key === 'Enter') onClickMsgSend(e);
+      if(e.key === 'Enter') {
+        onClickMsgSend(e);
+      }
   }
 
   const onClickMsgSend = (e) => {
-      e.preventDefault();
-      ws.current.send(
-          JSON.stringify({
-          "type":"TALK",
-          "roomId": roomId,
-          "sender": memberNum,
-          "message":inputMsg
-      }));
-      setInputMsg("");
+    const fetchData = async () => {
+      try {
+        console.log(items);
+          const res = await api.chatContentInsert(partner_num, inputMsg, "text", memberNum);
+          console.log(res.data);
+          // window.localStorage.setItem("chatRoomId", res.data);
+          // setRoomId(res.data);
+          //  window.location.replace("/chat");
+        } catch {
+            console.log("error");
+        }
+      };  
+    e.preventDefault();
+    ws.current.send(
+        JSON.stringify({
+        "type":"TALK",
+        "roomId": roomId,
+        "sender": memberNum,
+        "message":inputMsg
+    }));
+    setInputMsg("");
+    fetchData();
   }
 
   const msgInsert = () =>{
@@ -154,7 +169,7 @@ const ChatPage = () =>{
           setRcvMsg(data.message);
           setItems((prevItems) => [...prevItems, data]);
     };
-  }, [roomId, socketConnected]);
+  }, [roomId]);
 
 
       
@@ -233,7 +248,7 @@ const ChatPage = () =>{
         {host == memberNum? <ChatSellButton/>: <ChatBuyButton/> }
         <div className="chatBottom">
           <input className="chatSend" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
-          <button onClick={ (e) => {onClickMsgSend(e); msgInsert();}}><img src={send1} alt="send"/></button>
+          <button onClick={ (e) => {onClickMsgSend(e);}}><img src={send1} alt="send"/></button>
           {/* <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button> */}
         </div>
         
