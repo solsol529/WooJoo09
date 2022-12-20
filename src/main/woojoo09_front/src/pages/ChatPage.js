@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import ChatList from "../components/ChatList";
 import ChatHeader from "../components/ChatHeader";
 import ChattingProduct from "../components/Chattingproduct";
@@ -6,13 +6,14 @@ import ChattingProductBuy from "../components/ChattingPoductBuy";
 import ChatBuyButton from "../components/ChatBuyButton";
 import ChatSellButton from "../components/ChatSellButton";
 import api from "../api/api";
-import { useLocation, useParams } from 'react-router-dom';
+import { useNavigate, useLocation, useParams } from 'react-router-dom';
 import send1 from "../resources/buluepurple_rocket.png"
 import { Link } from "react-router-dom";
 import fashion from "../resources/fashion_sample.png";
 import "../style/chat.scss"
 
 const ChatPage = () =>{
+  const navigate = useNavigate();
 
   let { partner_num } = useParams();
   // {nickname, img_url, chat_time, chat_content, is_read, partner_num}
@@ -48,6 +49,7 @@ const ChatPage = () =>{
   // const $element = document.querySelecotr("div");
   // $element.scrollTop = $element.scrollHeight;
 
+  const [render, setRender] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -93,7 +95,7 @@ const ChatPage = () =>{
       try {
         console.log(items);
           const res = await api.chatContentInsert(partner_num, inputMsg, "text", memberNum);
-          console.log(res.data);
+          console.log("메시지 db에 보내짐" + res.data);
           // window.localStorage.setItem("chatRoomId", res.data);
           // setRoomId(res.data);
           //  window.location.replace("/chat");
@@ -148,10 +150,12 @@ const ChatPage = () =>{
           ws.current = new WebSocket(webSocketUrl);
           ws.current.onopen = () => {
               console.log("connected to " + webSocketUrl);
-          setSocketConnected(true);
+              setSocketConnected(true);
+              console.log("socketConnected", socketConnected)
           };
       }
       if (socketConnected) {
+        console.log("socketConnected", socketConnected)
         // 연결 되면 바로 방으로 진입
           ws.current.send(
               JSON.stringify({
@@ -169,10 +173,10 @@ const ChatPage = () =>{
     };
   }, [roomId]);
 
-
-      
   return(
-    <div className="wrapper">
+    <>
+    {
+      <div className="wrapper">
       <div className="chatLeft"><ChatList/></div>
       <div className="chatRight">
         
@@ -193,7 +197,7 @@ const ChatPage = () =>{
                   <div className="chatPrice">{price}원</div>
                   
 
-                  {host == memberNum?  <div><button>공구승인</button><button>공구거절</button></div>
+                  {host == memberNum?  <div><button>공ff구승인</button><button>공구거절</button></div>
                      : <button>공구나가기</button>  }
                     {/* 공구 구매자 */}
                     {/* <button>공구나가기</button> */}
@@ -221,7 +225,7 @@ const ChatPage = () =>{
           ))} 
                <div>
                 {/* .filter((item) => item.type !== "ENTER") */}
-                {items.filter((item) => item.type !== "ENTER")
+                {items
                 .map((item) => (
                     <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>{`${item.message}`}</div>
                     // <div className="chatMessage-My">{`${item.message}`}</div>
@@ -252,9 +256,10 @@ const ChatPage = () =>{
           <button onClick={ (e) => {onClickMsgSend(e);}}><img src={send1} alt="send"/></button>
           {/* <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button> */}
         </div>
-        
       </div>
     </div>
+  }
+  </>
   )
 }
 export default ChatPage

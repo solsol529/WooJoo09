@@ -107,6 +107,9 @@ public class PartnerService {
 //        return map;
 //    }
 
+
+
+
     public boolean accountsendService(Long partnerNum, String bank, String account, String accountholder) {
 //        Partner partner = partnerRepository.findByPartnerNum(partnerNum);
 //        Member member = memberRepository.findByMemberNum(memberNum);
