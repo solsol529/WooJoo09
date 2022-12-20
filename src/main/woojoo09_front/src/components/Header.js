@@ -44,9 +44,10 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
       }
     };
     fetchData();
-    setTimeout(() => { 
+    let chatFetch = setInterval(() => { 
       fetchData();
     }, 30000); // 30초마다 한번
+    return () => clearInterval(chatFetch);
   },[]);
 
 
