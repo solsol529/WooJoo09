@@ -40,9 +40,9 @@ public class ChatService {
     public List<ChatRoom> findAllRoom() {
         return new ArrayList<>(chatRooms.values());
     }
-    public ChatRoom findRoomById(String roomId) {
-        log.warn("chatRooms.get(roomId) : " + chatRooms.get(roomId).toString());
-        return chatRooms.get(roomId);
+    public Optional<ChatRoom> findRoomById(String roomId) {
+//        log.warn("chatRooms.get(roomId) : " + chatRooms.get(roomId).toString());
+        return Optional.ofNullable(chatRooms.get(roomId));
     }
 
 //    // 방을 만들기

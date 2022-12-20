@@ -27,9 +27,16 @@ public class ChatController {
     @PostMapping("/chat")
     public ResponseEntity<String> createRoom(@RequestBody Map<String, String> Data) {
         String partnerNum = Data.get("partnerNum");
-        ChatRoom room = chatService.createRoom(partnerNum);
-        log.warn("room.getRoomId()" + room.getRoomId());
-        return new ResponseEntity(room.getRoomId(), HttpStatus.OK);
+        if(chatService.findRoomById(partnerNum).isEmpty()){
+            ChatRoom room = chatService.createRoom(partnerNum);
+            log.warn("room.getRoomId()" + room.getRoomId());
+            return new ResponseEntity(room.getRoomId(), HttpStatus.OK);
+        }
+        else {
+            ChatRoom room = chatService.findRoomById(partnerNum).get();
+            log.warn("room.getRoomId()" + room.getRoomId());
+            return new ResponseEntity(room.getRoomId(), HttpStatus.OK);
+        }
     }
     @GetMapping
     public List<ChatRoom> findAllRoom() {
