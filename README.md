@@ -28,9 +28,9 @@
 - Admin 페이지에서 편리하게 각 공동구매와 회원을 관리
 
 ### 팀원
-- 신은지
-- 이희주
-- 이한솔
+- [신은지](https://github.com/eunjishinrabbit)
+- [이희주](https://github.com/brownsally2)
+- [이한솔](https://github.com/solsol529)
 
 ### 개발 기간
 - 기획 : 2022.11.21 - 2022.12.02
