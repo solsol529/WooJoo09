@@ -21,7 +21,7 @@ const MemberPage = () =>{
     setIsAdmin(value);
   };
 
-    useEffect(() => {
+  useEffect(() => {
     const fetchData = async () => {
       try {
         const response = await api.tokencheck();
@@ -49,7 +49,6 @@ const MemberPage = () =>{
   if (!isLogin){
     navigate("/login", {state : "유효하지 않은 접근입니다\n로그인 후 이용해 주세요"});
   } 
-
 
   return(
     <div className="memberinfowrapper">

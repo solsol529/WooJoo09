@@ -12,12 +12,13 @@ import angel_yellow from "../resources/angel_yellow.png"
 import devil from "../resources/devil_gray4.png"
 import devil_pink from "../resources/devil_pink.png"
 import devil_red from "../resources/devil_red.png"
-import {useLocation} from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import api from "../api/api";
-import useInfiniteScroll from "../util/useInfiniteScroll"
 import { defaultImgs } from "../util/util";
 
 const MyTradePage =() =>{
+  const navigate = useNavigate();
+
   const [thisDate, setThisDate] =  useState(new Intl.DateTimeFormat('kr').format(new Date()));
   const [lists, setLists] = useState([]);
   const [size, setSize] = useState(5);
@@ -34,6 +35,9 @@ const MyTradePage =() =>{
       setIsAdmin(value);
   };
 
+  if (!isLogin){
+    navigate("/login", {state : "유효하지 않은 접근입니다\n로그인 후 이용해 주세요"});
+  } 
 
   const location = useLocation();
   const name = location.state.name;
@@ -49,7 +53,7 @@ const MyTradePage =() =>{
       try {
         const fetchData = async () => {
           const response = await api.hostTradeSelect(page, size);
-          setLists(prev => ([...prev, ...response.data.content.content]));;
+          setLists(prev => ([...prev, ...response.data.content.content]));
           setPage(page + 1);
           if(response.data.content.last === true) setIsLastPage(true)
         }
@@ -61,7 +65,7 @@ const MyTradePage =() =>{
       try {
         const fetchData = async () => {
           const response = await api.partnerTradeSelectReject(page, size);
-          setLists(prev => ([...prev, ...response.data.content.content]));;
+          setLists(prev => ([...prev, ...response.data.content.content]));
           setPage(page + 1);
           if(response.data.content.last === true) setIsLastPage(true)
         }
@@ -73,7 +77,7 @@ const MyTradePage =() =>{
       try {
         const fetchData = async () => {
           const response = await api.partnerTradeSelectOngoing(page, size);
-          setLists(prev => ([...prev, ...response.data.content.content]));;
+          setLists(prev => ([...prev, ...response.data.content.content]));
           setPage(page + 1);
           if(response.data.content.last === true) setIsLastPage(true)
         }
@@ -85,7 +89,7 @@ const MyTradePage =() =>{
       try {
         const fetchData = async () => {
           const response = await api.partnerTradeSelectDone(page, size);
-          setLists(prev => ([...prev, ...response.data.content.content]));;
+          setLists(prev => ([...prev, ...response.data.content.content]));
           setPage(page + 1);
           if(response.data.content.last === true) setIsLastPage(true)
         }
@@ -97,7 +101,7 @@ const MyTradePage =() =>{
       try {
         const fetchData = async () => {
           const response = await api.starTradeSelect(page, size);
-          setLists(prev => ([...prev, ...response.data.content.content]));;
+          setLists(prev => ([...prev, ...response.data.content.content]));
           setPage(page + 1);
           if(response.data.content.last === true) setIsLastPage(true)
         }
