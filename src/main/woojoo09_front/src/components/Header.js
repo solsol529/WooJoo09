@@ -48,6 +48,11 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
       fetchData();
     }, 30000); // 30초마다 한번
     return () => clearInterval(chatFetch);
+    // 이게 좀더 나으려나? 재귀 setTimeOut
+    // let timerId = setTimeout(function tick() {
+    //   alert('tick');
+    //   timerId = setTimeout(tick, 2000); // (*)
+    // }, 2000);
   },[]);
 
 
