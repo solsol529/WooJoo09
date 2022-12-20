@@ -29,7 +29,7 @@
 
 ### :stars: 팀원
 - [:rabbit2:신은지](https://github.com/eunjishinrabbit)
-- [이희주](https://github.com/brownsally2)
+- [:dolphin:이희주](https://github.com/brownsally2)
 - [:hatched_chick:이한솔](https://github.com/solsol529)
 
 ### :stars: 개발 기간
