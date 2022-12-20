@@ -220,6 +220,7 @@ const ChatPage = () =>{
           </>
           ))} 
                <div>
+                {/* .filter((item) => item.type !== "ENTER") */}
                 {items.filter((item) => item.type !== "ENTER")
                 .map((item) => (
                     <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>{`${item.message}`}</div>
