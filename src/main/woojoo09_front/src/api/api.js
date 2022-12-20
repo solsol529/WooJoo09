@@ -200,33 +200,38 @@ const api = {
     }
     return await axios.post(BASE_URL+ "donetradeupdatedone", doneTradeUpdateDoneCmd, HEADER);
   },
-  hostTradeSelect: async function() {
+  hostTradeSelect: async function(page, size) {
     const hostTradeSelectCmd = {
-      cmd : "hostTradeSelect"
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "hosttradeselect", hostTradeSelectCmd, HEADER);
   },
-  partnertTradeSelectReject: async function(target) {
-    const partnertTradeSelectRejectCmd = {
-      target: target
+  partnerTradeSelectReject: async function(page, size) {
+    const partnerTradeSelectRejectCmd = {
+      page: page,
+      size: size
     }
-    return await axios.post(BASE_URL+ "partnertradeselectreject", partnertTradeSelectRejectCmd, HEADER);
+    return await axios.post(BASE_URL+ "partnertradeselectreject", partnerTradeSelectRejectCmd, HEADER);
   },
-  partnerTradeSelectOngoing: async function(target) {
+  partnerTradeSelectOngoing: async function(page, size) {
     const partnerTradeSelectOngoingCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "partnertradeselectongoing", partnerTradeSelectOngoingCmd, HEADER);
   },
-  partnerTradeSelectDone: async function(target) {
+  partnerTradeSelectDone: async function(page, size) {
     const partnerTradeSelectDonetCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "partnertradeselectdone", partnerTradeSelectDonetCmd, HEADER);
   },
-  starTradeSelect: async function(target) {
+  starTradeSelect: async function(page, size) {
     const starTradeSelectCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "startradeselect", starTradeSelectCmd, HEADER);
   },
