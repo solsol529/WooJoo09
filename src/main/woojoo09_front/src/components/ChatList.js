@@ -20,6 +20,8 @@ const ChatList = () =>{
   // const [product, setProduct] = useState('');
   // const [price, setPrice] = useState('');
   const navigate = useNavigate();
+  const now = new Date();	
+  // console.log(now);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -75,6 +77,7 @@ const ChatList = () =>{
       }
     });
   }
+
   };
 
   return(

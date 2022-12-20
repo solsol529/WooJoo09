@@ -6,9 +6,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
+import org.springframework.web.socket.CloseStatus;
 import org.springframework.web.socket.TextMessage;
 import org.springframework.web.socket.WebSocketSession;
 import org.springframework.web.socket.handler.TextWebSocketHandler;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 @Slf4j
@@ -31,4 +34,10 @@ public class WebSocketHandler extends TextWebSocketHandler {
         log.info("chatMessage : " + chatMessage.toString());
         chatRoom.handlerActions(session, chatMessage, chatService);
     }
+
+//    @Override
+//    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+//        List<ChatRoom> chatRooms = chatService.findAllRoom();
+//        sessions.remove(session);
+//    }
 }

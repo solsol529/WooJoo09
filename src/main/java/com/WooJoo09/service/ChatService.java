@@ -121,7 +121,7 @@ public class ChatService {
         return result;
     }
 
-    public List<?> chatContent(int partnerNum){
+    public List<?> chatContentService(int partnerNum){
         List<Map<String, List<?>>> result = new ArrayList<>();
         Map<String, List<?>>map = new HashMap<>();
         map.put("chattingContent", chatRepository.chatContent(partnerNum));

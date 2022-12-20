@@ -37,4 +37,5 @@ public class ChatRoom {
         sessions.parallelStream()
                 .forEach(session -> chatService.sendMessage(session, message));
     }
+
 }

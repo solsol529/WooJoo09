@@ -13,6 +13,7 @@ import lombok.ToString;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -107,9 +108,6 @@ public class PartnerService {
 //        return map;
 //    }
 
-
-
-
     public boolean accountsendService(Long partnerNum, String bank, String account, String accountholder) {
 //        Partner partner = partnerRepository.findByPartnerNum(partnerNum);
 //        Member member = memberRepository.findByMemberNum(memberNum);
@@ -139,8 +137,44 @@ public class PartnerService {
         partner.setDeliveryAddress(deliveryAddress);
         partner.setDeliveryName(deliveryName);
         partner.setDeliveryPhone(deliveryPhone);
+
         Partner savedDeliveryAddr = partnerRepository.save(partner);
         log.info(savedDeliveryAddr.toString());
         return true;
     }
+    public List<?> chatDeliSelectService(int partnerNum){
+        List<Map<String, List<?>>> result = new ArrayList<>();
+        Map<String, List<?>>map = new HashMap<>();
+        map.put("chatDeliaddress", partnerRepository.chatDeliSelect(partnerNum));
+        System.out.print(map);
+        for(int i = 0; i < map.size(); i++){
+            result.add(map);
+        }
+        return result;
+    }
+
+
+    public List<?> chatAccountSelectService(int partnerNum){
+        List<Map<String, List<?>>> result = new ArrayList<>();
+        Map<String, List<?>>map = new HashMap<>();
+        map.put("chatAccount", partnerRepository.chatAccountSelect(partnerNum));
+        System.out.print(map);
+        for(int i = 0; i < map.size(); i++){
+            result.add(map);
+        }
+        return result;
+    }
+
+    public List<?> chatDeliveryNumSelectService(int partnerNum){
+        List<Map<String, List<?>>> result = new ArrayList<>();
+        Map<String, List<?>>map = new HashMap<>();
+        map.put("chatDeliNum", partnerRepository.chatDeliveryNumSelect(partnerNum));
+        System.out.print(map);
+        for(int i = 0; i < map.size(); i++){
+            result.add(map);
+        }
+        return result;
+    }
+
+
 }

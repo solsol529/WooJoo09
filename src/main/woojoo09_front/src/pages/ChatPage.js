@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef, useCallback } from "react";
+import { useEffect, useState, useRef } from "react";
 import ChatList from "../components/ChatList";
 import ChatHeader from "../components/ChatHeader";
 import ChattingProduct from "../components/Chattingproduct";
@@ -6,14 +6,13 @@ import ChattingProductBuy from "../components/ChattingPoductBuy";
 import ChatBuyButton from "../components/ChatBuyButton";
 import ChatSellButton from "../components/ChatSellButton";
 import api from "../api/api";
-import { useNavigate, useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams } from 'react-router-dom';
 import send1 from "../resources/buluepurple_rocket.png"
 import { Link } from "react-router-dom";
 import fashion from "../resources/fashion_sample.png";
 import "../style/chat.scss"
 
 const ChatPage = () =>{
-  const navigate = useNavigate();
 
   let { partner_num } = useParams();
   // {nickname, img_url, chat_time, chat_content, is_read, partner_num}
@@ -26,6 +25,9 @@ const ChatPage = () =>{
    const price = location.state.list.price;
    const imgUrl = location.state.list.img_url;
    const host = location.state.list.host;
+   const target = location.state.list.trade_num;
+   const partner = location.state.list.part_mem_num;
+
 
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
@@ -46,8 +48,17 @@ const ChatPage = () =>{
   const [prepared, setPrepared] = useState(false);
   const [sender, setSender] = useState();
 
-  // const $element = document.querySelecotr("div");
-  // $element.scrollTop = $element.scrollHeight;
+  // const $element = document.querySelecotr(".chatContent");
+  // const eh = $element.clientHeight + $element.scrollTop;
+  // const isScroll = $element.scrollHeight <= eh;
+
+      // 스크롤이 최하단 일때만 고정
+    // if (isScroll) {
+    //   $element.scrollTop = $element.scrollHeight;
+    // }
+
+  // const scrollRef = useRef();
+  // console.log(scrollRef.current) 
 
   useEffect(() => {
     const fetchData = async () => {
@@ -170,10 +181,52 @@ const ChatPage = () =>{
     };
   }, [roomId, socketConnected]);
 
+  const partnerAccept = () => {
+    const fetchData = async () => {
+      try {
+        console.log(items);
+          const res = await api.chatPartnerAccept(target, partner);
+          console.log(res.data);
+      } catch {
+          console.log("error");
+      }
+    };
+    fetchData();
+ } 
+
+  const partnerRejecthost = () => {
+    const fetchData = async () => {
+      try {
+        console.log(items);
+          const res = await api.chatPartnerRejecthost(target, partner);
+          console.log(res.data);
+      } catch {
+          console.log("error");
+      }
+    };
+    fetchData();
+} 
+
+const partnerReject = () => {
+  const fetchData = async () => {
+    try {
+      console.log(items);
+        const res = await api.chatPartnerReject(target);
+        console.log(res.data);
+    } catch {
+        console.log("error");
+    }
+  };
+  fetchData();
+} 
+// 스크롤 고정
+// useEffect(()=>{
+//   window.scrollTo({ bottom: 0, behavior: "auto" });
+// }, [])
+
+      
   return(
-    <>
-    {
-      <div className="wrapper">
+    <div className="wrapper">
       <div className="chatLeft"><ChatList/></div>
       <div className="chatRight">
         
@@ -194,8 +247,9 @@ const ChatPage = () =>{
                   <div className="chatPrice">{price}원</div>
                   
 
-                  {host == memberNum?  <div><button>공ff구승인</button><button>공구거절</button></div>
-                     : <button>공구나가기</button>  }
+                  {host == memberNum?  <div className="PartAcceptBtn"><button onClick={partnerAccept}>공구승인</button>
+                                        <button onClick={partnerRejecthost}>공구거절</button></div>
+                     : <button className="PartAcceptBtn2" onClick={partnerReject}>공구나가기</button>  }
                     {/* 공구 구매자 */}
                     {/* <button>공구나가기</button> */}
                 </div>
@@ -211,18 +265,21 @@ const ChatPage = () =>{
           <div className="chatMessage-My">내가 보낸 메시지!!!!!!</div> */}
 
           {prepared &&
-          lists.chattingContent.map(({chat_content, chat_time, sender}) => (
+          lists.chattingContent
+          // .slice()
+          // .reverse()
+          .map(({chat_content, chat_time, sender}) => (
           <>
               {memberNum != sender && <div className="chatMessage">{chat_content}</div>}
-              {memberNum != sender && <div className="chatTalkTime">{chat_time.substr(11,11)}</div>}
-              {memberNum == sender && <div className="chatTalkTime-My">{chat_time.substr(11,11)}</div>}
+              {memberNum != sender && <div className="chatTalkTime">{chat_time.substr(0,11)}</div>}
+              {memberNum == sender && <div className="chatTalkTime-My">{chat_time.substr(0,11)}</div>}
               {memberNum == sender && <div className="chatMessage-My">{chat_content}</div>}  
                
           </>
           ))} 
                <div>
                 {/* .filter((item) => item.type !== "ENTER") */}
-                {items
+                {items.filter((item) => item.type !== "ENTER")
                 .map((item) => (
                     <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>{`${item.message}`}</div>
                     // <div className="chatMessage-My">{`${item.message}`}</div>
@@ -247,16 +304,15 @@ const ChatPage = () =>{
                   </div> */}
         </div>
 
-          {host == memberNum?  <ChatBuyButton partner_num={partner_num}/> : <ChatSellButton partner_num={partner_num}/> }
+          {host == memberNum?   <ChatSellButton partner_num={partner_num}/> : <ChatBuyButton partner_num={partner_num}/>   }
         <div className="chatBottom">
           <input className="chatSend" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
           <button onClick={ (e) => {onClickMsgSend(e);}}><img src={send1} alt="send"/></button>
           {/* <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button> */}
         </div>
+        
       </div>
     </div>
-  }
-  </>
   )
 }
 export default ChatPage

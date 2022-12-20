@@ -123,7 +123,7 @@ public class ChatController {
            log.info("들어온값 " + partnerNumStr + " 변환된값 " + partnerNum);
            Map<?, ?> map = new HashMap<>();
            List<?> list = new ArrayList<>();
-           list =  chatService.chatContent(partnerNum);
+           list =  chatService.chatContentService(partnerNum);
            return new ResponseEntity(list, HttpStatus.OK);
     }
 
