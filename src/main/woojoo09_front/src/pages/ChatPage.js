@@ -49,7 +49,7 @@ const ChatPage = () =>{
   // const $element = document.querySelecotr("div");
   // $element.scrollTop = $element.scrollHeight;
 
-  const [render, setRender] = useState(false);
+  const [chatting, setChatting] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -68,7 +68,7 @@ const ChatPage = () =>{
       setLoading(false);
     };
     fetchData();
-  }, [partner_num]);
+  }, [partner_num, chatting]);
 
 
   const visibleAccount = (e) => {
@@ -151,7 +151,8 @@ const ChatPage = () =>{
           ws.current.onopen = () => {
               console.log("connected to " + webSocketUrl);
               setSocketConnected(true);
-              console.log("socketConnected", socketConnected)
+              console.log("socketConnected", socketConnected);
+              setChatting(true);
           };
       }
       if (socketConnected) {
@@ -171,7 +172,7 @@ const ChatPage = () =>{
           setRcvMsg(data.message);
           setItems((prevItems) => [...prevItems, data]);
     };
-  }, [roomId]);
+  }, [roomId, chatting]);
 
   return(
     <>
@@ -222,7 +223,8 @@ const ChatPage = () =>{
               {memberNum == sender && <div className="chatMessage-My">{chat_content}</div>}  
                
           </>
-          ))} 
+          ))} <button onClick={() =>{setChatting(!chatting)}}>채팅연결하기</button>
+          {/* 이거 보낸 메시지가 보이지 않는다면 여기를 눌러주세요 이런 멘트나,, 그런걸로 바꾸면 될듯 */}
                <div>
                 {/* .filter((item) => item.type !== "ENTER") */}
                 {items
