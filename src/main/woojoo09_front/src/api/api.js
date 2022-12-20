@@ -361,6 +361,15 @@ const api = {
     return await axios.post(BASE_URL + "findpwdverify", findPwdCodeSend, HEADER);
   },
 
+  //현재 비밀번호 맞는지 체크
+  currentPwd: async function(memberNum, inputPwd1) {
+    const currentPwdData = {
+      memberNum: memberNum,
+      inputPwd1: inputPwd1
+    }
+    return await axios.post(BASE_URL + "currentPwd", currentPwdData, HEADER);
+  },
+
   //비밀번호 재설정
   resetPwdData: async function(findPwdId, resetPwd) {
     const resetPwdData = {
@@ -378,9 +387,18 @@ const api = {
     return await axios.post(BASE_URL + "phoneverify", regPhoneCk, HEADER);
   },
 
+  //현재 닉네임 가져오기
+  memberInfoNewNick: async function(memberNum) {
+    const memberNick = {
+      memberNum: memberNum
+    }
+    return await axios.post(BASE_URL + "memberNick", memberNick, HEADER);
+  },
+
   //닉네임 변경하기
-  infoNewNickOk: async function(infoNewNickInput) {
+  infoNewNickOk: async function(memberNum, infoNewNickInput) {
     const infoNewNick = {
+      memberNum: memberNum,
       infoNewNickInput: infoNewNickInput
     }
     return await axios.post(BASE_URL + "infoNewNick", infoNewNick, HEADER); 
@@ -426,6 +444,35 @@ const api = {
 
     }
     return await axios.post(BASE_URL + "chatInsert", chatObject, HEADER);
+  }, 
+  accountsend : async function(partner_num, bank, account, accountholder) {
+    const chatObject = {
+      partner_num : partner_num,
+      bank :bank,
+      account : account,
+      accountholder : accountholder
+
+    }
+    return await axios.post(BASE_URL + "accountsend", chatObject, HEADER);
+  }, 
+  deliverysend : async function(partner_num, deliveryCompany, deliveryNum) {
+    const chatObject = {
+      partner_num : partner_num,
+      deliveryCompany :deliveryCompany,
+      deliveryNum : deliveryNum
+
+    }
+    return await axios.post(BASE_URL + "deliverysend", chatObject, HEADER);
+  }, 
+    deliveryaddrsend : async function(partner_num, deliveryAddress, deliveryName, deliveryPhone) {
+    const chatObject = {
+      partner_num : partner_num,
+      deliveryAddress :deliveryAddress,
+      deliveryName : deliveryName,
+      deliveryPhone : deliveryPhone
+
+    }
+    return await axios.post(BASE_URL + "deliveryaddrsend", chatObject, HEADER);
   }, 
 
 }
