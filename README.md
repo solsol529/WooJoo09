@@ -14,6 +14,8 @@
 
 ### 프로젝트 소개
 
+![](../header.png)
+
 ### 프로젝트 주요 기능
 - 사이트 자체 회원가입시 문자 및 이메일 인증(Naver Cloud Platform Sens api, Java Mail api)
 - jwt(Java Web Token)과 Password Encoder(Spring Security)를 이용해 보안 성능 향상
@@ -42,4 +44,16 @@
   - 작업 진행 중
   
 ### 정보
+
+### 빌드
+
+```sh
+./gradlew build - test
+```
+이후
+```sh
+java -jar build/libs/WooJoo09-0.0.1-SNAPSHOT.jar
+```
+으로 실행
+
 
