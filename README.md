@@ -55,7 +55,7 @@
 ### :stars: 빌드
 
 ```sh
-./gradlew build - test
+./gradlew build -x test
 ```
 ```sh
 java -jar build/libs/WooJoo09-0.0.1-SNAPSHOT.jar
