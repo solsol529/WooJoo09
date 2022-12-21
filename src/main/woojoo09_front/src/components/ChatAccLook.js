@@ -15,8 +15,12 @@ const ChatAccLook = ({partner_num}) =>{
             setLists(response.data[0]);
             console.log(response.data);
             // console.log(response.data[0].chatListContent[0].partner_num);
-            console.log(partner_num);
-            setPrepared(true);
+            console.log(partner_num); 
+            if(response.data[0].chatAccount[0].account_holder == null &&
+              response.data[0].chatAccount[0].account_num == null&&
+              response.data[0].chatAccount[0].bank == null
+              ) {setPrepared(false);}
+             else { setPrepared(true);}
           } catch (e) {
             console.log(e);
           }
@@ -27,7 +31,7 @@ const ChatAccLook = ({partner_num}) =>{
 
     return(
         <>
-        {prepared &&
+        {prepared ?
         lists.chatAccount.map(({account_holder, account_num, bank}) => (
            
         <div>
@@ -40,7 +44,9 @@ const ChatAccLook = ({partner_num}) =>{
             은행 : {bank} 입니다.
         </div>
 
-        ))} 
+        )):
+        <div>아직 입력된 계좌 정보가 없습니다.</div>
+      } 
         </>
     );
 }

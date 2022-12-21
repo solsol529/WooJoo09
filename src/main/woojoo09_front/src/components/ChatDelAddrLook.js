@@ -17,7 +17,13 @@ const DelAddrLook = ({partner_num}) => {
             console.log(response.data);
             // console.log(response.data[0].chatListContent[0].partner_num);
             console.log(partner_num);
-            setPrepared(true);
+            if(response.data[0].chatDeliaddress[0].delivery_name == null &&
+              response.data[0].chatDeliaddress[0].delivery_address == null&&
+              response.data[0].chatDeliaddress[0].delivery_phone == null
+              ){
+              setPrepared(false);
+            }
+            else{setPrepared(true);}
           } catch (e) {
             console.log(e);
           }
@@ -30,7 +36,7 @@ const DelAddrLook = ({partner_num}) => {
 
     return(
         <>
-        {prepared &&
+        {prepared ?
         lists.chatDeliaddress.map(({delivery_name, delivery_address, delivery_phone}) => (
            
         <div>
@@ -41,9 +47,11 @@ const DelAddrLook = ({partner_num}) => {
             배송지정보 : {delivery_address},
             <br/>
             핸드폰 번호 : {delivery_phone} 입니다.
-        </div>
+        </div> 
 
-        ))} 
+        )) :
+        <div>아직 입력된 배송 정보가 없습니다.</div>
+        } 
         </>
     );
 }

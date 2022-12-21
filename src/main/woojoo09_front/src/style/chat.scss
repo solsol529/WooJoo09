@@ -454,8 +454,9 @@
 }
 .chatTalkTime-My{
     position:relative ;
-    left: 43vw;
-    top: 80px;
+    // left: 40vw;
+    right : -43vw;
+    top: -15px;
 }
 
 .chatContainer{
@@ -475,6 +476,12 @@
 .PartAcceptBtn2:hover{
         background-color: $purple1Alpha4;
     
+}
+.chatWriteImgInput{
+    img{
+        width: 100px;
+        height: 100px;
+    }
 }
 
 
@@ -520,14 +527,27 @@
            button{
             width: 7vw;
             height: 4.7vh;
-            left: 32vw;
-            top : 3vh;
+            left: 37vw;
+            top : 0.5vh;
             position: relative;
            }
             }
     }
     .chatSend{
         width: 63%;
+    }
+    .chatStateWait, .chatStatejoin, .chatStatedone{
+        width: 5vw;
+        height: 30px;
+    }
+    .chatBottom {
+        img{
+            margin : 25px 10px 25px 0px;
+        }
+    }
+    .chatContent{
+        margin : 150px 0px 0px 0px ;
+        padding : 0px 0px 70px 0px ;
     }
 }
 
@@ -559,8 +579,8 @@
             font-weight: 530;
             width: 7.8vw;
             height: 4.5vh;
-            left: 27vw;
-            top : 3vh;
+            left: 32.5vw;
+            top : 2.3vh;
             position: relative;
            }
         }
@@ -574,13 +594,13 @@
         height:15vh;
         width:70%;
         position:fixed;
-        bottom:20px;
+        bottom:30px;
         // position :fixed;
         // bottom:10vh;
       
         button{
             margin: 10px;
-            width: 6vw;
+            width: 9.3vw;
             height: 4.5vh;
          
         }
@@ -592,6 +612,18 @@
 
         }
     }
+    
+.chatStateWait, .chatStatejoin, .chatStatedone{
+    width: 5.4vw;
+
+}
+.chatContent{
+    margin : 130px 0px 0px 0px ;
+    padding : 0px 0px 200px 0px ;
+}
+
+
+    
 
 }
 // @media screen and (max-width:767px) {

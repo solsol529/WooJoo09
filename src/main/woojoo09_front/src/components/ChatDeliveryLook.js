@@ -16,7 +16,12 @@ const ChatDeliveryLook = ({partner_num}) =>{
             console.log(response.data);
             // console.log(response.data[0].chatListContent[0].partner_num);
             console.log(partner_num);
-            setPrepared(true);
+            if(response.data[0].chatDeliNum[0].delivery_company == null &&
+              response.data[0].chatDeliNum[0].delivery_num == null
+              ){
+              setPrepared(false);
+            }
+            else{setPrepared(true);}
           } catch (e) {
             console.log(e);
           }
@@ -27,7 +32,7 @@ const ChatDeliveryLook = ({partner_num}) =>{
       
     return(
         <>
-        {prepared &&
+        {prepared ?
         lists.chatDeliNum.map(({delivery_company, delivery_num}) => (
            
         <div>
@@ -38,7 +43,8 @@ const ChatDeliveryLook = ({partner_num}) =>{
             운송장 번호 : {delivery_num} 입니다.
         </div>
 
-        ))} 
+        )) :
+        <div>아직 입력된 운송장 정보가 없습니다.</div>} 
         </>
     );
     }

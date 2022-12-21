@@ -16,6 +16,7 @@ const ChatSellButton = ({partner_num}) => {
         setVisible(!visible);
         setVisibleDel(false);
         setVisiblePho(false);
+        setVisibleDelAddr(false);
         setType(e.target.value)
     }
         // console.log("값이 있나요?" +type);
@@ -23,17 +24,20 @@ const ChatSellButton = ({partner_num}) => {
         setVisibleDel(!visibleDel);
         setVisible(false);
         setVisiblePho(false);
+        setVisibleDelAddr(false);
 
     }
     const visiblePhoto = (e) => {
         setVisiblePho(!visiblePho);
         setVisible(false);
         setVisibleDel(false);
+        setVisibleDelAddr(false);
     }
     const visibleDelAddress = (e) => {
         setVisibleDelAddr(!visibleDelAddr);
         setVisible(false);
         setVisibleDel(false);
+        console.log(partner_num);
     }
 
 

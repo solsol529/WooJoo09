@@ -437,10 +437,10 @@ const api = {
   },
 
   //회원정보수정 - 프로필사진 변경
-  pfImgChange: async function(memberNum, pfImg) {
+  pfImgChange: async function(memberNum, infoPfImgUrl) {
     const infoImgChange = {
       memberNum: memberNum,
-      pfImg: pfImg
+      infoPfImgUrl: infoPfImgUrl
     }
     return await axios.post(BASE_URL + "infoImgChange", infoImgChange, HEADER); 
   },

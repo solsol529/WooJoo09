@@ -35,9 +35,12 @@ public class WebSocketHandler extends TextWebSocketHandler {
         chatRoom.handlerActions(session, chatMessage, chatService);
     }
 
-//    @Override
-//    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
-//        List<ChatRoom> chatRooms = chatService.findAllRoom();
-//        sessions.remove(session);
-//    }
+    @Override
+    public void afterConnectionClosed(WebSocketSession session, CloseStatus status) throws Exception {
+        log.warn("커넥션 끊겨서 세션 삭제함~ 삭제하는 세션 : " + session.toString() );
+        List<ChatRoom> chatRooms = chatService.findAllRoom();
+        for(ChatRoom e : chatRooms){
+            e.getSessions().remove(session);
+        }
+    }
 }

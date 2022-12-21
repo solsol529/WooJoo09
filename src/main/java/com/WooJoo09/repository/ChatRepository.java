@@ -41,7 +41,8 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
                     "and p.trade_num = pi2.trade_num\n" +
                     "and case p.part_mem_num when :memberNum then p.trade_num = t.trade_num\n" +
                     "else (p.trade_num = t.trade_num and t.host = :memberNum) end\n" +
-                    "and pi2.is_represent = 'REPRESENT'\n" +
+                    "and pi2.is_represent = 'REPRESENT' and p.accept_trade != 'DELETE'\n" +
+                    "and m.is_active = 'ACTIVE' and t.done_trade != 'DELETE'\n" +
                     "group by p.partner_num, pi2.img_url\n" +
                     "order by c.chat_time desc",
             nativeQuery = true

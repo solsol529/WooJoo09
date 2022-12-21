@@ -118,8 +118,10 @@ public class ChatService {
         for(int i = 0; i < map.size(); i++){
             result.add(map);
         }
+        log.warn("result" + result);
         return result;
     }
+
 
     public List<?> chatContentService(int partnerNum){
         List<Map<String, List<?>>> result = new ArrayList<>();
