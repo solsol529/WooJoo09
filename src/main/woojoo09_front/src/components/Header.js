@@ -67,15 +67,15 @@ const Header = ({isLogin, changeIsLogin, isAdmin, changeIsAdmin}) =>{
   
   const handleKeyPress = e => {
     if(e.key === 'Enter') {
-      console.log(e.target.value);
-      navigate(`/search/${e.target.value}`, {state : {isLogin : isLogin}});
+      console.log(e.target.value.trim());
+      navigate(`/search/${e.target.value.trim()}`, {state : {isLogin : isLogin}});
     }
   }
 
   const handleButton = () => {
-    if(searchTarget) {
-      console.log(searchTarget);
-      navigate(`/search/${searchTarget}`, {state : {isLogin : isLogin}});
+    if(searchTarget.trim()) {
+      console.log(searchTarget.trim());
+      navigate(`/search/${searchTarget.trim()}`, {state : {isLogin : isLogin}});
     }
   }
 
