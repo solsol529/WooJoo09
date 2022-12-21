@@ -200,33 +200,38 @@ const api = {
     }
     return await axios.post(BASE_URL+ "donetradeupdatedone", doneTradeUpdateDoneCmd, HEADER);
   },
-  hostTradeSelect: async function() {
+  hostTradeSelect: async function(page, size) {
     const hostTradeSelectCmd = {
-      cmd : "hostTradeSelect"
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "hosttradeselect", hostTradeSelectCmd, HEADER);
   },
-  partnertTradeSelectReject: async function(target) {
-    const partnertTradeSelectRejectCmd = {
-      target: target
+  partnerTradeSelectReject: async function(page, size) {
+    const partnerTradeSelectRejectCmd = {
+      page: page,
+      size: size
     }
-    return await axios.post(BASE_URL+ "partnertradeselectreject", partnertTradeSelectRejectCmd, HEADER);
+    return await axios.post(BASE_URL+ "partnertradeselectreject", partnerTradeSelectRejectCmd, HEADER);
   },
-  partnerTradeSelectOngoing: async function(target) {
+  partnerTradeSelectOngoing: async function(page, size) {
     const partnerTradeSelectOngoingCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "partnertradeselectongoing", partnerTradeSelectOngoingCmd, HEADER);
   },
-  partnerTradeSelectDone: async function(target) {
+  partnerTradeSelectDone: async function(page, size) {
     const partnerTradeSelectDonetCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "partnertradeselectdone", partnerTradeSelectDonetCmd, HEADER);
   },
-  starTradeSelect: async function(target) {
+  starTradeSelect: async function(page, size) {
     const starTradeSelectCmd = {
-      target: target
+      page: page,
+      size: size
     }
     return await axios.post(BASE_URL+ "startradeselect", starTradeSelectCmd, HEADER);
   },
@@ -404,6 +409,52 @@ const api = {
     return await axios.post(BASE_URL + "infoNewNick", infoNewNick, HEADER); 
   },
 
+  //회원정보수정 - 비밀번호 변경
+  infoResetPwd: async function(memberNum, inputPwd2) {
+    const infoResetPwd = {
+      memberNum: memberNum,
+      inputPwd2: inputPwd2
+    }
+    return await axios.post(BASE_URL + "infoResetPwd", infoResetPwd, HEADER); 
+  },
+
+  //회원정보수정 - 이메일 변경
+  infoResetEmail: async function(memberNum, inputEmail) {
+    const infoResetEmail = {
+      memberNum: memberNum,
+      inputEmail: inputEmail
+    }
+    return await axios.post(BASE_URL + "infoResetEmail", infoResetEmail, HEADER); 
+  },
+  
+  //회원정보수정 - 광고수신여부 변경
+  infoIsAd: async function(memberNum, infoAd) {
+    const infoResetAd = {
+      memberNum: memberNum,
+      infoAd: infoAd
+    }
+    return await axios.post(BASE_URL + "infoResetAd", infoResetAd, HEADER); 
+  },
+
+  //회원정보수정 - 프로필사진 변경
+  pfImgChange: async function(memberNum, infoPfImgUrl) {
+    const infoImgChange = {
+      memberNum: memberNum,
+      infoPfImgUrl: infoPfImgUrl
+    }
+    return await axios.post(BASE_URL + "infoImgChange", infoImgChange, HEADER); 
+  },
+
+  //회원정보수정 - 주최자소개내용 변경
+  infoIntroduce: async function(memberNum, inputIntroduce) {
+    const newIntroduce = {
+      memberNum: memberNum,
+      inputIntroduce: inputIntroduce
+    }
+    return await axios.post(BASE_URL + "newIntroduce", newIntroduce, HEADER); 
+  },
+
+
   // 채팅 리스트 가져오기
   chatList: async function(chatListContent){
     const chatList = {
@@ -464,7 +515,7 @@ const api = {
     }
     return await axios.post(BASE_URL + "deliverysend", chatObject, HEADER);
   }, 
-    deliveryaddrsend : async function(partner_num, deliveryAddress, deliveryName, deliveryPhone) {
+  deliveryaddrsend : async function(partner_num, deliveryAddress, deliveryName, deliveryPhone) {
     const chatObject = {
       partner_num : partner_num,
       deliveryAddress :deliveryAddress,
@@ -474,6 +525,53 @@ const api = {
     }
     return await axios.post(BASE_URL + "deliveryaddrsend", chatObject, HEADER);
   }, 
+  chatDeliAddr : async function(partner_num) {
+    const chatObject = {
+      partner_num : partner_num
+
+    }
+    return await axios.post(BASE_URL + "chatDeliSelect", chatObject, HEADER);
+  }, 
+  chatAccount : async function(partner_num) {
+    const chatObject = {
+      partner_num : partner_num
+
+    }
+    return await axios.post(BASE_URL + "chatAccountSelect", chatObject, HEADER);
+  }, 
+  chatDeliveryNum : async function(partner_num) {
+    const chatObject = {
+      partner_num : partner_num
+
+    }
+    return await axios.post(BASE_URL + "chatDeliNumSelect", chatObject, HEADER);
+  }, 
+  chatPartnerAccept : async function(target, partner) {
+    const chatObject = {
+      target : target,
+      partner : partner
+
+    }
+    return await axios.post(BASE_URL + "partneraccept", chatObject, HEADER);
+  }, 
+  chatPartnerRejecthost : async function(target, partner) {
+    const chatObject = {
+      target : target,
+      partner : partner
+
+    }
+    return await axios.post(BASE_URL + "partnerdeletehost", chatObject, HEADER);
+  }, 
+  chatPartnerReject : async function(target) {
+    const chatObject = {
+      target : target
+      // partner : partner
+
+    }
+    return await axios.post(BASE_URL + "partnerdelete", chatObject, HEADER);
+  }, 
+
+
 
 }
 
