@@ -126,6 +126,12 @@ public class ChatService {
     public List<?> chatContentService(int partnerNum){
         List<Map<String, List<?>>> result = new ArrayList<>();
         Map<String, List<?>>map = new HashMap<>();
+        Partner partner = partnerRepository.findByPartnerNum((long) partnerNum);
+        List<Chat> chats = chatRepository.findByPartnerNum(partner);
+        for(Chat e : chats){
+            // 채팅 불러오는 시점에 읽음 상태로 바꿈
+            e.setIsRead(IsRead.READ);
+        }
         map.put("chattingContent", chatRepository.chatContent(partnerNum));
         System.out.print(map);
         for(int i = 0; i < map.size(); i++){

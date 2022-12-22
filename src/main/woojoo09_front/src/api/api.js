@@ -252,29 +252,7 @@ const api = {
       cmd: "bannerSelect"
     }
     return await axios.post(BASE_URL+ "bannerselect", bannerSelectCmd, HEADER);
-  },  
-  bannerInsert: async function(name, url) {
-    const bannerInsertCmd = {
-      name: name,
-      url : url
-    }
-    return await axios.post(BASE_URL+ "bannerinsert", bannerInsertCmd, HEADER);
-  },  
-  bannerUpdate: async function(bannerNum, name, url, isActive) {
-    const bannerUpdateCmd = {
-      bannerNum : bannerNum,
-      name: name,
-      url : url,
-      isActive : isActive
-    }
-    return await axios.post(BASE_URL+ "bannerupdate", bannerUpdateCmd, HEADER);
-  },  
-  bannerDelete: async function(bannerNum) {
-    const bannerDeleteCmd = {
-      bannerNum: bannerNum
-    }
-    return await axios.post(BASE_URL+ "bannerdelete", bannerDeleteCmd, HEADER);
-  },  
+  }, 
   //로그아웃
   logout: async function() {
     const logoutCmd = {
