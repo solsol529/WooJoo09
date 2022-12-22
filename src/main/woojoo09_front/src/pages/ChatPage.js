@@ -20,8 +20,10 @@ const ChatPage = () =>{
    const location = useLocation();
    const memberNum = location.state.memberNum;
    const nickname = location.state.list.nickname;
-   const acceptTrade = location.state.list.accept_trade;
-   const doneTrade = location.state.list.done_trade;
+   const acceptTradeData = location.state.list.accept_trade;
+   const [acceptTrade, setAcceptTrade] = useState(acceptTradeData);
+   const doneTradeData = location.state.list.done_trade;
+   const [doneTrade, setDoneTrade] = useState(doneTradeData);
    const product = location.state.list.product;
    const price = location.state.list.price;
    const imgUrl = location.state.list.img_url;
@@ -82,6 +84,8 @@ const ChatPage = () =>{
         setChatContent(response.data[0].chattingContent[0].chat_content);
         // console.log(response.data[0])
         setPrepared(true);
+        setAcceptTrade(acceptTradeData);
+        setDoneTrade(doneTradeData);
       } catch (e) {
         console.log(e);
       }
@@ -201,6 +205,7 @@ const ChatPage = () =>{
         console.log(items);
           const res = await api.chatPartnerAccept(target, partner);
           console.log(res.data);
+          setAcceptTrade('ACCEPT')
       } catch {
           console.log("error");
       }
@@ -214,6 +219,7 @@ const ChatPage = () =>{
         console.log(items);
           const res = await api.chatPartnerRejecthost(target, partner);
           console.log(res.data);
+          setAcceptTrade('DELETE')
       } catch {
           console.log("error");
       }
@@ -227,6 +233,7 @@ const partnerReject = () => {
       console.log(items);
         const res = await api.chatPartnerReject(target);
         console.log(res.data);
+        setAcceptTrade('DELETE')
     } catch {
         console.log("error");
     }
@@ -260,7 +267,7 @@ const partnerReject = () => {
 
           <div className="chattingProduct">
             <div>
-                <Link to="/write">
+                <Link to={`/detail/${target}`}>
                   <img img src = {imgUrl} alt="물품이미지"/>
                 </Link>
                   <div className="chatProInfo">
@@ -268,9 +275,12 @@ const partnerReject = () => {
                   <div className="chatPrice">{price}원</div>
                     
 
-                  {host == memberNum?  <div className="PartAcceptBtn"><button onClick={partnerAccept}>공구승인</button>
-                                          <button onClick={partnerRejecthost}>공구거절</button></div>
-                    : <button className="PartAcceptBtn2" onClick={partnerReject}>공구나가기</button>  }
+                  {host == memberNum ? acceptTrade == 'REJECT'? 
+                  <div className="PartAcceptBtn"><button onClick={partnerAccept}>공구승인</button>
+                    <button onClick={partnerRejecthost}>공구거절</button></div>
+                    : <></>
+                    : <button className="PartAcceptBtn2" onClick={partnerReject}>공구나가기</button>
+                    }
                   </div>
             </div>
           </div>
