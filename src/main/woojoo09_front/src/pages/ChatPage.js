@@ -59,6 +59,15 @@ const ChatPage = () =>{
   // new Date(+date + TIME_ZONE).toISOString().replace('T', ' ').replace(/\..*/, '');
 
 
+  var options = {
+    // year: 'numeric',
+    month: 'numeric',
+    day: 'numeric',
+    hour: 'numeric',
+    // hour: '2-digit',
+    minute : 'numeric',
+  }
+
   useEffect(() => {
     const fetchData = async () => {
      setLoading(true);
@@ -120,7 +129,8 @@ const ChatPage = () =>{
         "type":"TALK",
         "roomId": roomId,
         "sender": memberNum,
-        "message":inputMsg
+        "message":inputMsg,
+        "time" : new Date()
     }));
     setInputMsg("");
     fetchData();
@@ -147,7 +157,8 @@ const ChatPage = () =>{
           "type":"CLOSE",
           "roomId": roomId,
           "sender":memberNum,
-          "message": "종료 합니다."
+          "message": "종료 합니다.",
+          "time" : new Date()
         }));
       ws.current.close();
   }
@@ -172,7 +183,8 @@ const ChatPage = () =>{
               "type":"ENTER",
               "roomId": roomId,
               "sender": memberNum,
-              "message": "처음으로 접속 합니다."
+              "message": "처음으로 접속 합니다.",
+              "time" : new Date()
             }));
       }
       ws.current.onmessage = (evt) => {
@@ -276,9 +288,9 @@ const partnerReject = () => {
                                 .map(({chat_content, chat_time, sender}) => (
             <>
                 {memberNum != sender && <div className="chatMessage">{chat_content}</div>}
-                {memberNum != sender && <div className="chatTalkTime">{chat_time}</div>}
+                {memberNum != sender && <div className="chatTalkTime">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}
                 {memberNum == sender && <div className="chatMessage-My">{chat_content}</div>}
-                {memberNum == sender && <div className="chatTalkTime-My">{chat_time.substring(0,19)}</div>}  
+                {memberNum == sender && <div className="chatTalkTime-My">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}  
                 
             </>
             ))} 
@@ -288,7 +300,9 @@ const partnerReject = () => {
                         .filter((item) => item.type !== "ENTER")
                         .map((item) => (
                     <>
-                      <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>{`${item.message}`}</div>
+                    {/* new Intl.DateTimeFormat('kr').format(new Date()) */}
+                    <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>{item.message}</div>
+                    <div className={ memberNum != item.sender ? "chatTalkTime" : "chatTalkTime-My"}>{new Date(item.time).toLocaleDateString("ko-KR", options)}</div>
                     </>
                       // <div className="chatMessage-My">{`${item.message}`}</div>
                       ))}
