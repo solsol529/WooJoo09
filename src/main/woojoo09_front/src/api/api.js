@@ -4,7 +4,7 @@ import { UserInfoContextStore } from "../stores/UserInfoContext"
 import { getCookie } from "../util/cookie";
 const HEADER = {"Content-type" : "application/json"}
 // const HEADER = 'application/json';
-const BASE_URL = "http://localhost:9009/developerkirby/";
+const BASE_URL = "/developerkirby/";
 
 axios.defaults.withCredentials = true; // withCredentials 전역 설정
   // const cookieSet = {

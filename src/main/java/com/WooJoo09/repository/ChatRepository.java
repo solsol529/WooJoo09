@@ -25,10 +25,11 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
     List<Chat> findByPartnerNum(Partner partnerNum);
 
     @Query(
-            value = "select m.nickname, pi2.img_url, max(c.chat_time) as chat_time, \n" +
+            value = "select ANY_VALUE(m.nickname) nickname, ANY_VALUE(pi2.img_url) img_url, max(c.chat_time) as chat_time, \n" +
                     "ANY_VALUE(c.chat_content) chat_content,\n" +
-                    "ANY_VALUE(c.is_read) is_read, p.partner_num, p.accept_trade,\n" +
-                    "t.done_trade, t.product, t.price, t.host, t.trade_num, p.part_mem_num, c.sender,\n" +
+                    "ANY_VALUE(c.is_read) is_read, ANY_VALUE(p.partner_num) partner_num,ANY_VALUE(p.accept_trade) accept_trade,\n" +
+                    "ANY_VALUE(t.done_trade) done_trade,ANY_VALUE(t.product) product, ANY_VALUE(t.price) price, ANY_VALUE(t.host) host, \n" +
+                    "ANY_VALUE(t.trade_num) trade_num, ANY_VALUE(p.part_mem_num) part_mem_num, ANY_VALUE(c.sender) sender,\n" +
                     "(select count(case when is_read = 'UNREAD' then 1 end) from chat\n" +
                     "where (partner_num in (select partner_num from partner p, trade t \n" +
                     "where (p.trade_num = t.trade_num and host = :memberNum) or part_mem_num = :memberNum)) \n" +
@@ -47,7 +48,7 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
                     "else (p.trade_num = t.trade_num and t.host = :memberNum) end\n" +
                     "and pi2.is_represent = 'REPRESENT'\n" +
                     "group by p.partner_num, pi2.img_url\n" +
-                    "order by c.chat_time desc",
+                    "order by chat_time desc",
             nativeQuery = true
     )
     List<Map<?,?>> chatList(@Param("memberNum") int memberNum);
