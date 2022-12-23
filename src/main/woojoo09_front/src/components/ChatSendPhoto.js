@@ -18,6 +18,7 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend, sendImgbut
       console.log("파일이 선택되지 않았습니다");
       setChatImgErr("파일이 선택되지 않았습니다");
       setChatImg("");
+      changeChatSendImg("");
       setChatImgUrl("");
       return;
     }
@@ -66,6 +67,7 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend, sendImgbut
       }
     );
     setChatImg('');
+    changeChatSendImg('');
   };
 
   return (

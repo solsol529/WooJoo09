@@ -6,7 +6,7 @@ import ChattingProductBuy from "../components/ChattingPoductBuy";
 import ChatBuyButton from "../components/ChatBuyButton";
 import ChatSellButton from "../components/ChatSellButton";
 import api from "../api/api";
-import { useLocation, useParams } from 'react-router-dom';
+import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import send1 from "../resources/buluepurple_rocket.png"
 import { Link } from "react-router-dom";
 import fashion from "../resources/fashion_sample.png";
@@ -15,6 +15,7 @@ import "../style/chat.scss"
 
 const ChatPage = () =>{
 
+  const navigate = useNavigate();
   let { partner_num } = useParams();
   // {nickname, img_url, chat_time, chat_content, is_read, partner_num}
    const location = useLocation();
@@ -68,6 +69,7 @@ const ChatPage = () =>{
     hour: 'numeric',
     // hour: '2-digit',
     minute : 'numeric',
+    timeZone : 'Asia/Seoul'
   }
 
   useEffect(() => {
@@ -275,6 +277,10 @@ const partnerReject = () => {
     setInputMsg("");
     fetchData();
   }
+
+  if(acceptTrade == 'DELETE' || doneTrade == 'DELETE'){
+    navigate('/main')
+  }
   
 
   return(
@@ -300,10 +306,14 @@ const partnerReject = () => {
                     
 
                   {host == memberNum ? acceptTrade == 'REJECT'? 
-                  <div className="PartAcceptBtn"><button onClick={partnerAccept}>공구승인</button>
-                    <button onClick={partnerRejecthost}>공구거절</button></div>
+                  <div className="PartAcceptBtn">
+                    <button onClick={partnerAccept}>공구승인</button>
+                    <button onClick={partnerRejecthost}>공구거절</button>
+                    <p>공구를 거절하면 채팅 내용과 입력한 정보가 모두 사라집니다</p>
+                  </div>
                     : <></>
-                    : <button className="PartAcceptBtn2" onClick={partnerReject}>공구나가기</button>
+                    :<div> <button className="PartAcceptBtn2" onClick={partnerReject}>공구나가기</button>
+                      <p>공구를 나가면 채팅 내용과 입력한 정보가 모두 사라집니다</p></div>
                     }
                   </div>
             </div>

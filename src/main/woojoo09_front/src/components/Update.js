@@ -176,7 +176,7 @@ const Update = () =>{
     if(month > 12 || month < 1){
       setDueDateErr("날짜 형식을 확인해주세요");
       setIsDate(false);
-      setDueMonth(1);
+      setDueMonth(month);
     }
     else{
       const monthStr = (String(month -1).length === 1 ? "0"+String(month -1) : String(month -1));
@@ -215,7 +215,7 @@ const Update = () =>{
       }
     }else{
       setDueDateErr("날짜 형식을 확인해주세요");
-      setDueDay(1);
+      setDueDay(day);
       setIsDate(false);
     }
   }
