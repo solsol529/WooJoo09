@@ -187,7 +187,9 @@ public class MemberService {
     //회원정보수정 - 비밀번호 변경
     public boolean infoNewPwdService(Long memberNum, String pwd) {
         Member member = memberRepository.findByMemberNum(memberNum);
-        if(member == null) return false;
+        if(member == null) {
+            return false;
+        }
         member.setPwd(passwordEncoder.encode(pwd));
         Member savedMember = memberRepository.save(member);
         log.info(savedMember.toString());
