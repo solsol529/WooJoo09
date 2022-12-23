@@ -36,7 +36,7 @@ const ChatPage = () =>{
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
   const [rcvMsg, setRcvMsg] = useState("");
-  const webSocketUrl = `ws://localhost:9009/ws/chat`;
+  const webSocketUrl = `ws://13.209.198.107/ws/chat`;
   // // roomId랑 sender은 받아와야함 -> navigate로 받아오면 될듯
   // const roomId = window.localStorage.getItem("chatRoomId");
   //  const sender = "곰돌이사육사";
@@ -314,10 +314,11 @@ const partnerReject = () => {
             .map(({chat_content, chat_time, sender, msg_type}) => (
             <>
                 {memberNum != sender && <div className="chatMessage">
-                  {msg_type === 'IMG'? <img src={chat_content}/> : chat_content}</div>}
+                  {msg_type === 'IMG'? <img className="chatImg" src={chat_content} alt="상대방이 보낸 이미지"/> 
+                : chat_content}</div>}
                 {memberNum != sender && <div className="chatTalkTime">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}
                 {memberNum == sender && <div className="chatMessage-My">
-                  {msg_type === 'IMG'? <img src={chat_content}/> : chat_content}</div>}
+                  {msg_type === 'IMG'? <img className="chatImg" src={chat_content} alt="내가 보낸 이미지"/> : chat_content}</div>}
                 {memberNum == sender && <div className="chatTalkTime-My">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}  
                 
             </>
@@ -330,9 +331,11 @@ const partnerReject = () => {
                     <>
                     {/* new Intl.DateTimeFormat('kr').format(new Date()) */}
                     <div className={ memberNum != item.sender ? "chatMessage" : "chatMessage-My"}>
-                      {item.type == 'IMG'? <img src={item.message} alt="채팅이미지"/>: item.message}
+                      {item.type == 'IMG'? <img className="chatImg" src={item.message} alt="채팅이미지"/>
+                      : item.message}
                     </div>
-                    <div className={ memberNum != item.sender ? "chatTalkTime" : "chatTalkTime-My"}>{new Date(item.time).toLocaleDateString("ko-KR", options)}</div>
+                    <div className={ memberNum != item.sender ? "chatTalkTime" : "chatTalkTime-My"}>
+                      {new Date(item.time).toLocaleDateString("ko-KR", options)}</div>
                     </>
                       // <div className="chatMessage-My">{`${item.message}`}</div>
                       ))}
@@ -340,7 +343,8 @@ const partnerReject = () => {
           </div>
 
             {host == memberNum?  <ChatSellButton partner_num={partner_num}
-             changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}/> : <ChatBuyButton partner_num={partner_num}/>    }
+             changeChatSendImg={changeChatSendImg} onClickImgMsgSend={onClickImgMsgSend}/> 
+             : <ChatBuyButton partner_num={partner_num}/>    }
             <div className="chatBottom">
               <input className="chatSend" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
               <button onClick={ (e) => {onClickMsgSend(e);}}><img src={send1} alt="send"/></button>
