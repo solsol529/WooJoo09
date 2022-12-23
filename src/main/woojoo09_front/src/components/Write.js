@@ -99,7 +99,7 @@ const Write = () =>{
           setInsertMsg("공동구매가 등록 되었습니다\n 메인으로 이동됩니다");
           setTimeout(()=>{ 
             navigate('/main');
-          }, 5000);
+          }, 2500);
         }else{
           setInsertMsg("공동구매 등록에 실패했습니다");
         }
