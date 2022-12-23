@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.960eabd1.css",
-    "main.js": "/static/js/main.eb5d2c1d.js",
+    "main.css": "/static/css/main.0ee67827.css",
+    "main.js": "/static/js/main.b394a2dd.js",
     "static/media/chatMoving.gif": "/static/media/chatMoving.30958733a50ad66a43d8.gif",
     "static/media/chatMoving_black.gif": "/static/media/chatMoving_black.128078e265e156eccca6.gif",
     "static/media/grade_icon4_nebula.png": "/static/media/grade_icon4_nebula.d1bbcff95a85c99b7167.png",
@@ -31,15 +31,16 @@
     "static/media/starFill.png": "/static/media/starFill.01619380ebee465215bf.png",
     "static/media/chat.png": "/static/media/chat.4fa403dac9444d99f00b.png",
     "static/media/fashion_sample.png": "/static/media/fashion_sample.c844d8feaf3235e10186.png",
+    "static/media/house.png": "/static/media/house.fea3d83db1a02dc6c9bd.png",
     "static/media/representImg_icon.png": "/static/media/representImg_icon.17f6eeb138515818406b.png",
     "static/media/images_icon.png": "/static/media/images_icon.a951e698adbd3ddcd20e.png",
     "static/media/representImg_icon_yellow.png": "/static/media/representImg_icon_yellow.cd6743d3d791e0368fcb.png",
     "index.html": "/index.html",
-    "main.960eabd1.css.map": "/static/css/main.960eabd1.css.map",
-    "main.eb5d2c1d.js.map": "/static/js/main.eb5d2c1d.js.map"
+    "main.0ee67827.css.map": "/static/css/main.0ee67827.css.map",
+    "main.b394a2dd.js.map": "/static/js/main.b394a2dd.js.map"
   },
   "entrypoints": [
-    "static/css/main.960eabd1.css",
-    "static/js/main.eb5d2c1d.js"
+    "static/css/main.0ee67827.css",
+    "static/js/main.b394a2dd.js"
   ]
 }

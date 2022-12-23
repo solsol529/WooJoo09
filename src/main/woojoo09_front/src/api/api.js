@@ -442,9 +442,10 @@ const api = {
   },
   
   // 채팅 내용 가져오기
-  chatContent: async function(partner_num){
+  chatContent: async function(partner_num, memberNum){
     const chatContent = {
-      partner_num: partner_num
+      partner_num: partner_num,
+      memberNum : memberNum
     }
     return await axios.post(BASE_URL + "chatContentSelect", chatContent, HEADER);
   },
@@ -543,11 +544,12 @@ const api = {
   chatPartnerReject : async function(target) {
     const chatObject = {
       target : target
-      // partner : partner
+  
 
     }
     return await axios.post(BASE_URL + "partnerdelete", chatObject, HEADER);
   }, 
+
 
 
 

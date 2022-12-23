@@ -30,10 +30,9 @@ const ChatPage = () =>{
    const host = location.state.list.host;
    const target = location.state.list.trade_num;
    const partner = location.state.list.part_mem_num;
-  //  const chatContent = location.state.list.chat_content;
+   const tradeNum = location.state.list.trade_num
   
 
-  // console.log (doneTrade);
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
   const [rcvMsg, setRcvMsg] = useState("");
@@ -54,12 +53,7 @@ const ChatPage = () =>{
   const [sender, setSender] = useState();
   const [chatContent, setChatContent] = useState();
 
-  // const TIME_ZONE = 3240 * 10000;
   const date = new Date();
-  // console.log(date);
-
-  // new Date(+date + TIME_ZONE).toISOString().replace('T', ' ').replace(/\..*/, '');
-
 
   var options = {
     // year: 'numeric',
@@ -74,7 +68,7 @@ const ChatPage = () =>{
     const fetchData = async () => {
      setLoading(true);
       try {
-        const response = await api.chatContent(partner_num);
+        const response = await api.chatContent(partner_num, memberNum);
         setLists(response.data[0]);
         console.log(response.data[0]);
         //console.log("데이터" + response.data[0].chattingContent[0].chat_content);
@@ -88,6 +82,7 @@ const ChatPage = () =>{
         setDoneTrade(doneTradeData);
       } catch (e) {
         console.log(e);
+
       }
       setLoading(false);
     };
@@ -255,7 +250,7 @@ const partnerReject = () => {
 
   return(
     <div className="wrapper">
-      <div className="chatLeft"><ChatList/></div>
+      <div className="chatPageLeft"><ChatList/></div>
 
       <div className="chatRight">
         <div className="chatNickname">
@@ -267,8 +262,8 @@ const partnerReject = () => {
 
           <div className="chattingProduct">
             <div>
-                <Link to={`/detail/${target}`}>
-                  <img img src = {imgUrl} alt="물품이미지"/>
+                <Link to ={`/detail/${tradeNum}`}>
+                  <img src = {imgUrl} alt="물품이미지"/>
                 </Link>
                   <div className="chatProInfo">
                   <p className="chatProductName">{product}</p>
@@ -285,21 +280,13 @@ const partnerReject = () => {
             </div>
           </div>
           <div className="chatContent" ref={scrollRef} >
-            {/* <div className="chatDate">2022년 12월 1일</div>
-            <div className="chatMessage">상대가 보낸 메시지!!!!!</div>
-            <div className="chatTalkTime">19:00</div>
-            <div className="chatTalkTime-My">19:12</div>
-            <div className="chatMessage-My">내가 보낸 메시지!!!!!!</div> */}
-
             {prepared &&
             lists.chattingContent
-                                //  .slice()
-                                //  .reverse()
-                                .map(({chat_content, chat_time, sender}) => (
+            .map(({chat_content, chat_time, sender}) => (
             <>
                 {memberNum != sender && <div className="chatMessage">{chat_content}</div>}
                 {memberNum != sender && <div className="chatTalkTime">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}
-                {memberNum == sender && <div className="chatMessage-My">{chat_content}</div>}
+                {memberNum == sender && <div className="chatMessage-My"><div>{chat_content}</div></div>}
                 {memberNum == sender && <div className="chatTalkTime-My">{new Date(chat_time).toLocaleDateString("ko-KR", options)}</div>}  
                 
             </>
@@ -317,23 +304,6 @@ const partnerReject = () => {
                       // <div className="chatMessage-My">{`${item.message}`}</div>
                       ))}
                   </div>  
-        
-                {/* 강사님 웹소켓 채팅 코드
-                    <div>
-                      <div>socket</div>
-                      <div>socket connected : {`${socketConnected}`}</div>
-                      <div>방번호: {roomId}</div>
-                      <h2>소켓으로 문자 전송하기 테스트</h2>
-                      <div>
-                          {items.map((item) => {
-                          return <div>{`${item.sender} > ${item.message}`}</div>;
-                          })}
-                      </div>
-                      <input className="msg_input" placeholder="문자 전송" value ={inputMsg} onChange={onChangMsg} onKeyUp={onEnterKey}/>
-                      <button className="msg_send" onClick={onClickMsgSend}>전송</button>
-                      <p/>
-                      <button className="msg_close" onClick={onClickMsgClose}>채팅 종료 하기</button>
-                    </div> */}
           </div>
 
             {host == memberNum?  <ChatSellButton partner_num={partner_num}/> : <ChatBuyButton partner_num={partner_num}/>    }
