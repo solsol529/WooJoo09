@@ -116,7 +116,7 @@ const MemberManagement = () =>{
     <div className="center">
       <TopBar name="회원 현황" high1="회원 관리"/>
       <div className="searchBar">
-        <input type="text" placeholder="회원번호/닉네임/등급/실명" value ={inputSearch} onChange={onChangeSearch}/>
+        <input type="text" placeholder="닉네임/아이디/등급/실명" value ={inputSearch} onChange={onChangeSearch}/>
         <button onClick={memberSearch}>검색</button>
       </div>
       <div>

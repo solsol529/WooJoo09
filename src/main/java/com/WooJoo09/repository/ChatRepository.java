@@ -65,11 +65,28 @@ public interface ChatRepository extends JpaRepository<Chat, Long> {
 
     List<Chat> findBySenderNotAndPartnerNum(Member memberNum, Partner partnerNum);
 
+    @Query(
+            value = "select p.partner_num partnerNum, product, p.accept_trade acceptTrade, nickname partner, " +
+                    "(select count(*) from chat c where c.partner_num = p.partner_num) countChat, " +
+                    "(select nickname from member m2 where t.host = m2.member_num) host " +
+                    "from partner p, member m, trade t " +
+                    "where part_mem_num = m.member_num and p.trade_num = t.trade_num " +
+                    "order by partner_num",
+            nativeQuery = true
+    )
+    List<Map<?,?>> adminChatSelect();
 
-
-
-
-
-
+    @Query(
+            value = "select p.partner_num partnerNum, product, p.accept_trade acceptTrade, nickname partner, " +
+                    "(select count(*) from chat c where c.partner_num = p.partner_num) countChat, " +
+                    "(select nickname from member m2 where t.host = m2.member_num) host " +
+                    "from partner p, member m, trade t " +
+                    "where part_mem_num = m.member_num and p.trade_num = t.trade_num " +
+                    "and (product like :target or nickname like :target or " +
+                    "(select nickname from member m2 where t.host = m2.member_num) like :target) " +
+                    "order by partner_num",
+            nativeQuery = true
+    )
+    List<Map<?,?>> adminChatSearch(@Param("target") String target);
 
 }

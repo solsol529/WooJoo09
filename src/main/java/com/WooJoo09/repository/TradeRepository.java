@@ -448,5 +448,22 @@ public interface TradeRepository  extends JpaRepository<Trade, Long> {
     )
     Page<Map<?,?>> starTradeSelect(@Param("memberNum") Long memberNum, Pageable pageable);
 
+    @Query(
+            value = "select trade_num tradeNum, category_name categoryName, product, done_trade doneTrade, nickname, city, town, " +
+                    "(select count(*) from complain where complain_trade = trade_num) countComplain " +
+                    "from trade t, member m, category c where c.category_num = t.category and " +
+                    "m.member_num = t.host order by tradeNum",
+            nativeQuery = true
+    )
+    List<Map<?,?>> adminWriteSelect();
 
+    @Query(
+            value = "select trade_num tradeNum, category_name categoryName, product, done_trade doneTrade, nickname, city, town, " +
+                    "(select count(*) from complain where complain_trade = trade_num) countComplain " +
+                    "from trade t, member m, category c where c.category_num = t.category and m.member_num = t.host " +
+                    "and (product like :target or nickname like :target) " +
+                    "order by tradeNum",
+            nativeQuery = true
+    )
+    List<Map<?,?>> adminWriteSearch(@Param("target") String target);
 }
