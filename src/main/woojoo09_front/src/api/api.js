@@ -253,7 +253,14 @@ const api = {
       cmd: "bannerSelect"
     }
     return await axios.post(BASE_URL+ "bannerselect", bannerSelectCmd, HEADER);
-  }, 
+  },
+  memberDelete: async function(id, pwd) {
+    const memberDeleteCmd = {
+      id : id,
+      pwd : pwd
+    }
+    return await axios.post(BASE_URL+ "memberdelete", memberDeleteCmd, HEADER);
+  },
   //로그아웃
   logout: async function() {
     const logoutCmd = {

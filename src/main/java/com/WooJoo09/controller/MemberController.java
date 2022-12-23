@@ -5,6 +5,7 @@ import com.WooJoo09.entity.Member;
 import com.WooJoo09.service.EmailService;
 import com.WooJoo09.service.MemberService;
 import com.WooJoo09.service.sens_sms;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.json.JSONObject;
 import org.springframework.http.HttpStatus;
@@ -23,17 +24,14 @@ import java.util.Map;
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
 @Slf4j
+@RequiredArgsConstructor
 @RequestMapping(value="/developerkirby")
 public class MemberController {
 
     // Service 로직 연결
-    private MemberService memberService;
+    private final MemberService memberService;
     private final EmailService emailService;
-
-    public MemberController(MemberService memberService, EmailService emailService) {
-        this.memberService = memberService;
-        this.emailService = emailService;
-    }
+    private final JwtController jwtController;
 
     public ResponseEntity<List<Member>> findMember() {
         return ResponseEntity.ok().body(memberService.findMember());
@@ -271,6 +269,32 @@ public class MemberController {
         Long memberNum = Long.parseLong(newIntroduceData.get("memberNum"));
         String introduce = newIntroduceData.get("inputIntroduce");
         return ResponseEntity.ok(memberService.newIntroduceService(memberNum, introduce));
+    }
+
+    @PostMapping("/memberdelete")
+    public ResponseEntity<Map<?, ?>> memberDelete(
+            HttpServletResponse response,
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        String id = (String) Data.get("id");
+        String pwd = (String) Data.get("pwd");
+        Map<String ,String> map = new HashMap<>();
+        if(token != null){
+            log.info("로그인상태입니당");
+            String memberNumStr = jwtController.tokenCheck(token);
+            Long memberNum = Long.parseLong(memberNumStr);
+            map = memberService.memberDelete(memberNum, id, pwd);
+            if(map.get("memberDelete").equals("OK")){
+                Cookie cookie = new Cookie("token", null); // choiceCookieName(쿠키 이름)에 대한 값을 null로 지정
+                cookie.setMaxAge(0); // 유효시간을 0으로 설정
+                cookie.setHttpOnly(true);
+                cookie.setPath("/");
+                response.addCookie(cookie);
+            }
+        }else {
+            map.put("memberDelete", "loginError");
+        }
+        return ResponseEntity.ok().body(map);
     }
 
 

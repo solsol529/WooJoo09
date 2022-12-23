@@ -21,6 +21,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByRealNameAndEmail(String realName, String email);
     Optional<Member> findByIdAndEmail(String id, String email);
     List<Member> findByEmail(String email);
+    Optional<Member> findByMemberNumAndId(Long memberNum, String id);
 
     @Query(
             value = "select grade from mem_grade mg, member m \n" +

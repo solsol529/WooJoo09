@@ -1,10 +1,14 @@
 package com.WooJoo09.service;
 
+import com.WooJoo09.constant.AcceptTrade;
+import com.WooJoo09.constant.DoneTrade;
 import com.WooJoo09.constant.IsActive;
 import com.WooJoo09.constant.ReceiveAd;
 import com.WooJoo09.controller.JwtController;
 import com.WooJoo09.dto.MemberDTO;
 import com.WooJoo09.entity.Member;
+import com.WooJoo09.entity.Partner;
+import com.WooJoo09.entity.Trade;
 import com.WooJoo09.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
@@ -48,16 +52,19 @@ public class MemberService {
             if (!passwordEncoder.matches(pwd, loginMember.get().getPwd())){
                 map.put("login", false);
             } else {
-                String token;
-                if(id.equals("admin")){
-                    log.info("관리자입니다 관리자용 토큰 발급합니다");
-                    token = jwtController.tokenCreate("admin");
-                    map.put("token", token);
-                } else {
-                    token = jwtController.tokenCreate(loginMember.get().getMemberNum().toString());
-                    map.put("token", token);
+                if(loginMember.get().getIsActive() == IsActive.ACTIVE){
+                    String token;
+                    if(id.equals("admin")){
+                        log.info("관리자입니다 관리자용 토큰 발급합니다");
+                        token = jwtController.tokenCreate("admin");
+                        map.put("token", token);
+                    } else {
+                        token = jwtController.tokenCreate(loginMember.get().getMemberNum().toString());
+                        map.put("token", token);
+                    }
+                    map.put("login", true);
                 }
-                map.put("login", true);
+                else map.put("login", false);
             }
         }
         return map;
@@ -234,5 +241,23 @@ public class MemberService {
         Member savedMember = memberRepository.save(member);
         log.info(savedMember.toString());
         return true;
+    }
+
+    public Map<String, String> memberDelete(Long memberNum, String id, String pwd){
+        Map<String ,String> map = new HashMap<>();
+        Optional<Member> member= memberRepository.findByMemberNumAndId(memberNum, id);
+        if (member.isEmpty()) {
+            map.put("memberDelete", "notData");
+            return map;
+        }
+        if(passwordEncoder.matches(pwd, member.get().getPwd())){
+            member.get().setIsActive(IsActive.INACTIVE);
+            Member savedMember = memberRepository.save(member.get());
+            log.info(savedMember.toString());
+            map.put("memberDelete", "OK");
+            return map;
+        }
+        map.put("memberDelete", "NOK");
+        return map;
     }
 }
