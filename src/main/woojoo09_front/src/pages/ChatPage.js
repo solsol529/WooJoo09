@@ -37,7 +37,9 @@ const ChatPage = () =>{
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
   const [rcvMsg, setRcvMsg] = useState("");
-  const webSocketUrl = `ws://13.209.198.107/ws/chat`;
+  const webSocketUrl = `ws://localhost:9009/ws/chat`;
+
+  // const webSocketUrl = `ws://13.209.198.107/ws/chat`;
   // // roomId랑 sender은 받아와야함 -> navigate로 받아오면 될듯
   // const roomId = window.localStorage.getItem("chatRoomId");
   //  const sender = "곰돌이사육사";
@@ -59,8 +61,6 @@ const ChatPage = () =>{
   const changeChatSendImg = (e)=>{
     setChatSendImg(e);
   }
-
-  const date = new Date();
 
   var options = {
     // year: 'numeric',
@@ -119,6 +119,7 @@ const ChatPage = () =>{
 
   const onClickMsgSend = (e) => {
     const fetchData = async () => {
+      console.log(new Date());
       try {
         console.log(items);
           const res = await api.chatContentInsert(partner_num, inputMsg, "text", memberNum);
@@ -345,7 +346,7 @@ const partnerReject = () => {
                       : item.message}
                     </div>
                     <div className={ memberNum != item.sender ? "chatTalkTime" : "chatTalkTime-My"}>
-                      {new Date(item.time).toLocaleDateString("ko-KR", options)}</div>
+                      {new Date(Date.parse(item.time)+ 1*1000*60*60*9).toLocaleDateString("ko-KR", options)}</div>
                     </>
                       // <div className="chatMessage-My">{`${item.message}`}</div>
                       ))}

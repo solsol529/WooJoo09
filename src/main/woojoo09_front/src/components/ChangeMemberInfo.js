@@ -128,6 +128,7 @@ const ChangeMemberInfo = (props) =>{
       console.log(res.data);
       if(res.data === true) {
         setInfoPfImgErr("프로필 사진이 변경되었습니다.")
+        props.changeIsChange(!props.isChange)
         // setInfoProfileImg(false);
         // props.changeIsChange(++cnt);
         // setInfoPfImgUrl("");
@@ -143,6 +144,8 @@ const ChangeMemberInfo = (props) =>{
   //닉네임 input
   const onChangeMemberInfoNewNickInput = (e) => {
     const infoNewNickInput = e.target.value;
+    setInfoNewNickMsg("닉네임 중복 확인이 필요합니다.")
+    setIsInfoNewNickCk(false);
     setInfoNewNickInput(infoNewNickInput);
     if(!nickRegEx.test(infoNewNickInput) && !(infoNewNickInput.length === 0)) {
       setIsInfoNewNick(false);
@@ -190,6 +193,8 @@ const ChangeMemberInfo = (props) =>{
         if(response.data === true) {
           setIsInfoNewNick(true)
           setInfoNewNickOkMsg("닉네임이 변경되었습니다.")
+          props.changeIsChange(!props.isChange)
+          
         } else {
           setIsInfoNewNick(false)
           setInfoNewNickMsg("닉네임 형식을 확인 후 중복 체크를 해주세요.")
@@ -302,7 +307,8 @@ const ChangeMemberInfo = (props) =>{
             
             if(memberResetEmail.data === true) {
               setIsEmail(true);
-              setEmailMessage('이메일이 변경되었습니다.')             
+              setEmailMessage('이메일이 변경되었습니다.') 
+              props.changeIsChange(!props.isChange)            
             } else {
             }
         } catch (e) {
@@ -399,7 +405,7 @@ const ChangeMemberInfo = (props) =>{
               {isInfoNewNick && <span className="infoNewNickMsg">{infoNewNickOkMsg}</span>}
             </div>
             <div className="infoNewNickChangeBtnOut">
-              <button className="infoNewNickChangeBtn" onClick={onClickInfoNewNickChangeBtn}>변경</button>
+              {isInfoNewNickCk && <button className="infoNewNickChangeBtn" onClick={onClickInfoNewNickChangeBtn}>변경</button>}
             </div> 
             </>          
           }
@@ -464,7 +470,7 @@ const ChangeMemberInfo = (props) =>{
               <span className={`message ${isEmail ? 'success' : 'error'}`}>{emailMessage}</span>)}
             </div>
             <div className="email_change_yes">
-            <button onClick={onClickEmailUpdate}>변경</button>
+            {isEmail && <button onClick={onClickEmailUpdate}>변경</button>}
             </div>
           </div>
         }

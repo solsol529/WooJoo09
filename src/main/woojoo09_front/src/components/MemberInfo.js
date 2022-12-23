@@ -7,7 +7,7 @@ import api from "../api/api";
 import MemberInfoList from "./MemeberInfoList";
 
 
-const MemberInfo = ({memberNum, memberInfo, changeIsChange}) =>{
+const MemberInfo = ({memberNum, memberInfo, isChange, changeIsChange}) =>{
 
   
     return(
@@ -15,6 +15,7 @@ const MemberInfo = ({memberNum, memberInfo, changeIsChange}) =>{
         <MemberInfoList memberInfo={memberInfo}/>
         <div className="memberinfocenter">
           <ChangeMemberInfo 
+          isChange={isChange}
           changeIsChange={changeIsChange}
           memberNum={memberNum} 
           memberInfo={memberInfo}/>
