@@ -1,26 +1,17 @@
 package com.WooJoo09.service;
 
-import com.WooJoo09.constant.AcceptTrade;
-import com.WooJoo09.constant.DoneTrade;
 import com.WooJoo09.constant.IsActive;
 import com.WooJoo09.constant.ReceiveAd;
 import com.WooJoo09.controller.JwtController;
 import com.WooJoo09.dto.MemberDTO;
 import com.WooJoo09.entity.Member;
-import com.WooJoo09.entity.Partner;
-import com.WooJoo09.entity.Trade;
 import com.WooJoo09.repository.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
-import lombok.Value;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
-import javax.transaction.Transactional;
 import java.util.*;
 
 @Slf4j
@@ -258,6 +249,33 @@ public class MemberService {
             return map;
         }
         map.put("memberDelete", "NOK");
+        return map;
+    }
+
+    public Map<String, Object> adminMemberSelect(){
+        Map<String,Object> map = new HashMap<>();
+        map.put("memberData", memberRepository.adminMemberSelect());
+        map.put("adminMemberSelect", "OK");
+        return map;
+    }
+
+    public Map<String, Object> adminMemberSearch(String target){
+        Map<String,Object> map = new HashMap<>();
+        map.put("memberData", memberRepository.adminMemberSearch("%"+target+"%"));
+        map.put("adminMemberSearch", "OK");
+        return map;
+    }
+
+    public Map<String, Object> adminMemberDelete(List<Integer> targets){
+        Map<String,Object> map = new HashMap<>();
+        for (Integer e : targets){
+            Long memberNum = Long.valueOf(e);
+            Member member = memberRepository.findByMemberNum(memberNum);
+            member.setIsActive(IsActive.INACTIVE);
+            Member savedMember = memberRepository.save(member);
+            log.info(savedMember.toString());
+        }
+        map.put("adminMemberDelete", "OK");
         return map;
     }
 }

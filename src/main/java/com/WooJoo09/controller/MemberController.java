@@ -297,6 +297,71 @@ public class MemberController {
         return ResponseEntity.ok().body(map);
     }
 
+    @PostMapping("/adminmemberselect")
+    public ResponseEntity<Map<?, ?>> adminMemberSelect(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+            map = memberService.adminMemberSelect();
+        }else {
+            map.put("adminMemberSelect", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
 
+    @PostMapping("/adminmembersearch")
+    public ResponseEntity<Map<?, ?>> adminMemberSearch(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        String target = (String) Data.get("target");
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = memberService.adminMemberSearch(target);
+        }else {
+            map.put("adminMemberSearch", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @PostMapping("/adminmemberdelete")
+    public ResponseEntity<Map<?, ?>> adminMemberDelete(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, Object> Data) throws Exception {
+        List<Integer> targets = (List<Integer>) Data.get("target");
+        Map<String ,Object> map = new HashMap<>();
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin"))
+                map = memberService.adminMemberDelete(targets);
+        }else {
+            map.put("adminMemberDelete", "permissionError");
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    //광고 이메일 전송
+    @PostMapping("/adminnotisend")
+    @ResponseBody
+    public ResponseEntity<Boolean> adminNotiSend(
+            @CookieValue(value = "token", required = false) String token,
+            @RequestBody Map<String, String> Data) throws Exception {
+        String type = Data.get("mail");
+        String title = Data.get("title");
+        String content = Data.get("content");
+        if(token != null){
+            String memberNumStr = jwtController.tokenCheck(token);
+            if(memberNumStr.equals("admin")){
+                if(type.equals("ad")){
+                    return ResponseEntity.ok(emailService.sendSimpleAdMessage(title,content));
+                } else return ResponseEntity.ok(emailService.sendSimpleNoticeMessage(title,content));
+            }
+        }
+        return ResponseEntity.ok(false);
+    }
 
 }

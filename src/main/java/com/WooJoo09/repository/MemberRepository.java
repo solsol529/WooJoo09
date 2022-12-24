@@ -1,5 +1,6 @@
 package com.WooJoo09.repository;
 
+import com.WooJoo09.constant.ReceiveAd;
 import com.WooJoo09.dto.MemberDTO;
 import com.WooJoo09.entity.Member;
 import org.springframework.data.domain.Page;
@@ -24,6 +25,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Optional<Member> findByIdAndEmail(String id, String email);
     List<Member> findByEmail(String email);
     Optional<Member> findByMemberNumAndId(Long memberNum, String id);
+    List<Member> findByReceiveAd(ReceiveAd receiveAd);
 
     @Query(
             value = "select grade from mem_grade mg, member m \n" +
@@ -35,7 +37,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     Map<String,String> memberGrade (@Param("memberNum") Long memberNum);
 
     @Query(
-            value = "select member_num memberNum, id, is_active isActive, grade, pf_img pfImg, receive_ad receiveAD, " +
+            value = "select member_num memberNum, id, is_active isActive, grade, pf_img pfImg, receive_ad receiveAd, nickname, " +
                     "real_name realName, email, phone, birth_date birthDate, reg_date regDate, introduce, " +
                     "(select count(*) from trade t where host = member_num and done_trade = 'DONE') countTrade, " +
                     "(select count(*) from partner p where part_mem_num = member_num and accept_trade = 'ACCEPT') countPartner, " +
@@ -48,7 +50,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
     List<Map<?,?>> adminMemberSelect();
 
     @Query(
-            value = "select member_num memberNum, id, is_active isActive, grade, pf_img pfImg, receive_ad receiveAD, " +
+            value = "select member_num memberNum, id, is_active isActive, grade, pf_img pfImg, receive_ad receiveAd, nickname, " +
                     "real_name realName, email, phone, birth_date birthDate, reg_date regDate, introduce, " +
                     "(select count(*) from trade t where host = member_num and done_trade = 'DONE') countTrade, " +
                     "(select count(*) from partner p where part_mem_num = member_num and accept_trade = 'ACCEPT') countPartner, " +

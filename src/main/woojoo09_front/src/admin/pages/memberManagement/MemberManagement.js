@@ -7,8 +7,10 @@ import Loader from "../../components/Loader";
 import Modal from "../../components/Modal";
 import Header from "../../components/Header";
 import Sidebar from "../../components/SideBar";
+import { useNavigate } from "react-router-dom";
 
 const MemberManagement = () =>{
+  const navigate = useNavigate();
   const [lists, setLists] = useState('');
   const [limit, setLimit] = useState(10);
   const [page, setPage] = useState(1);
@@ -58,11 +60,14 @@ const MemberManagement = () =>{
   };
 
   useEffect(() => {
+    setInputSearch('');
     const fetchData = async () => {
      setLoading(true);
       try {
         const response = await api.adminMemberSelect();
-        setLists(response.data);
+        if(response.data.adminMemberSelect === "OK"){
+          setLists(response.data.memberData);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -84,7 +89,9 @@ const MemberManagement = () =>{
       setLoading(true);
        try {
          const response = await api.adminMemberSearch(inputSearch);
-         setLists(response.data);
+         if(response.data.adminMemberSearch === "OK"){
+          setLists(response.data.memberData);
+         }
        } catch (e) {
          console.log(e);
        }
@@ -99,7 +106,9 @@ const MemberManagement = () =>{
       setLoading(true);
        try {
          const response = await api.adminMemberDelete(checkItems);
-         setLists(response.data);
+         if(response.data.adminMemberDelete === "OK"){
+          navigate(0);
+         }
        } catch (e) {
          console.log(e);
        }
@@ -168,9 +177,9 @@ const MemberManagement = () =>{
               </tr>
             </thead>
             <tbody>
-              { lists &&
+              {lists &&
                 lists.slice(offset, offset + limit)
-                .map(({ memberNum, nickname, grade, countTrade, countPartner, phone, email, regDate, pfImg, isAdOk,
+                .map(({ memberNum, nickname, grade, countTrade, countPartner, phone, email, regDate, pfImg, receiveAd,
                 id, isActive, countComplain, birthDate, introduce, realName }) => (
                   <tr key={memberNum}>
                     <td>
@@ -194,7 +203,7 @@ const MemberManagement = () =>{
                     <td>{email}</td>
                     <td>{birthDate}</td>
                     <td>{regDate}</td>
-                    <td>{isAdOk}</td>
+                    <td>{receiveAd}</td>
                     <td>
                       {pfImg && <button onClick={() =>{
                         showModal()
