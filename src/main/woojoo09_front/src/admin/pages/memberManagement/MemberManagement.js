@@ -214,7 +214,7 @@ const MemberManagement = () =>{
                     <td>
                       {introduce && <button onClick={() =>{
                         showModal()
-                        setThisIntroduce(pfImg)
+                        setThisIntroduce(introduce)
                       }}>소개 보기</button>}
                       {modalOpen && <Modal setModalOpen={setModalOpen} text={thisIntroduce}/>}
                     </td>
