@@ -22,7 +22,7 @@ const MemberInfoList =(props) => {
       // setLoading(true); 로딩있으면 깜빡거리는거같아서 뺏음, 데이터 뭐 많이 가져오는것도없고
       try {
         const response = await api.logout();
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.logout === "OK") {
           navigate("/")
         } else {

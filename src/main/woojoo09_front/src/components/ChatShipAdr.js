@@ -24,7 +24,7 @@ const ChatShipAdr = ({partner_num, onChangeDelInput}) => {
       try {
         console.log();
           const res = await api.deliveryaddrsend(partner_num, deliveryAddress, deliveryName, deliveryPhone);
-          console.log(res.data);
+          // console.log(res.data);
           setDeliveryAddress("");
           setDeliveryName("");
           setDeliveryPhone("");

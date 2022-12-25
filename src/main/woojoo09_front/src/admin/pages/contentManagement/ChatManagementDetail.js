@@ -19,7 +19,7 @@ const ChatManagementDetail = () =>{
       try {
         const response = await api.adminChatSelectDetail(partnerNum);
         setLists(response.data.chatDetailData);
-        console.log(response.data.chatDetailData)
+        // console.log(response.data.chatDetailData)
       } catch (e) {
         console.log(e);
       }

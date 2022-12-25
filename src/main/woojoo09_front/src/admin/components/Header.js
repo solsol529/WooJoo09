@@ -11,7 +11,7 @@ const Header = () =>{
     const fetchData = async () => {
       try {
         const response = await api.logout();
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.logout === "OK") {
           navigate("/")
         }

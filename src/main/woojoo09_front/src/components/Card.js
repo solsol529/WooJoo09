@@ -14,7 +14,7 @@ const Card = ({lists, isLogin, isAdmin, changeLists}) =>{
       // setLoading(true); 로딩있으면 깜빡거리는거같아서 뺏음, 데이터 뭐 많이 가져오는것도없고
       try {
         const response = await api.starInsert(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.myStar === "loginError") {
           setStarError("로그인 상태를 확인해주세요");
         } else if (response.data.myStar === "duplicate"){
@@ -42,7 +42,7 @@ const Card = ({lists, isLogin, isAdmin, changeLists}) =>{
       // setLoading(true); 로딩있으면 깜빡거리는거같아서 뺏음, 데이터 뭐 많이 가져오는것도없고
       try {
         const response = await api.starDelete(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.myStar === "loginError") {
           setStarError("로그인 상태를 확인해주세요");
         } 

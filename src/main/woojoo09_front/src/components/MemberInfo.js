@@ -26,7 +26,7 @@ const MemberInfo = ({memberNum, memberInfo, isChange, changeIsChange}) =>{
     const fetchData = async () => {
       try {
         const response = await api.memberDelete(inputId, inputPwd);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.memberDelete === "loginError") {
           setMemberDeleteMsg("로그인 상태를 확인해주세요");
         } else if(response.data.memberDelete === "notData"){

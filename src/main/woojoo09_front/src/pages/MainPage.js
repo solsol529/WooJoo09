@@ -22,7 +22,7 @@ const MainPage = () =>{
 
   useEffect(() =>{
     if(location.state){
-      console.log(location.state.isLogin);
+      // console.log(location.state.isLogin);
       setIsLogin(location.state.isLogin);
     }
   }, []);

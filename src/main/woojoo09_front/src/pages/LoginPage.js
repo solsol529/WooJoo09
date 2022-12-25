@@ -132,7 +132,7 @@ const LoginPage = () =>{
                 <img src={kakaologo}></img>
               </KaKaoBtn> */}
 
-              <input type="button" className="kakaoLoginBut" onClick={handleLogin}></input>
+              {/* <input type="button" className="kakaoLoginBut" onClick={handleLogin}></input> */}
 
             </div> 
           </div>

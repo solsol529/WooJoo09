@@ -97,7 +97,7 @@ const MyTradePage =() =>{
           setLists(prev => ([...prev, ...response.data.content.content]));
           setPage(page + 1);
           if(response.data.content.last === true) setIsLastPage(true)
-          console.log(response.data.content);
+          // console.log(response.data.content);
         }
         fetchData();
       } catch(e) {
@@ -126,7 +126,7 @@ const MyTradePage =() =>{
     const fetchData = async () => {
       try {
         const response = await api.tradeFinish(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.finishTrade === "loginError") {
           setTradeCloseMsg("로그인 상태를 확인해주세요");
         } else if(response.data.finishTrade === "duplicate"){
@@ -144,7 +144,7 @@ const MyTradePage =() =>{
     const fetchData = async () => {
       try {
         const response = await api.goodInsert(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.completeGood === "OK") {
           let arr = lists.map(val => {
             if(val.tradeNum === tradeNum){
@@ -167,7 +167,7 @@ const MyTradePage =() =>{
     const fetchData = async () => {
       try {
         const response = await api.dislikeInsert(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.completeDislike === "OK") {
           let arr = lists.map(val => {
             if(val.tradeNum === tradeNum){
@@ -190,7 +190,7 @@ const MyTradePage =() =>{
     const fetchData = async () => {
       try {
         const response = await api.tradeClose(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.closeTrade === "loginError") {
           setTradeCloseMsg("로그인 상태를 확인해주세요");
         } else if(response.data.closeTrade === "duplicate"){

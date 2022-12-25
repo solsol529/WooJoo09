@@ -51,7 +51,7 @@ const ChatList = () =>{
         // let chatContent = lists.chat_content;
         // console.log(chatContent);
         setPrepared(true);
-        console.log(response.data);
+        // console.log(response.data);
         // 통신하지 않고 렌더링 치기 위함
         // let chatAlert = lists.map(e => { 
         //   if(e.partnerNum === partnerNum && e.sender !== memberNum){
@@ -72,11 +72,11 @@ const ChatList = () =>{
   const chatTest = (partnerNum) =>{
     const fetchData = async () => {
       try {
-        console.log("partnerNum : " + partnerNum);
+        // console.log("partnerNum : " + partnerNum);
           const res = await api.chatRoomOpen(partnerNum);
-          console.log("res.data" + res.data);
-      } catch {
-          console.log("error");
+          // console.log("res.data" + res.data);
+      } catch(e) {
+          console.log(e);
       }
     };
     fetchData();

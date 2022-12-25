@@ -13,9 +13,9 @@ const ChatAccLook = ({partner_num}) =>{
           try {
             const response = await api.chatAccount(partner_num);
             setLists(response.data[0]);
-            console.log(response.data);
+            // console.log(response.data);
             // console.log(response.data[0].chatListContent[0].partner_num);
-            console.log(partner_num); 
+            // console.log(partner_num); 
             if(response.data[0].chatAccount[0].account_holder == null &&
               response.data[0].chatAccount[0].account_num == null&&
               response.data[0].chatAccount[0].bank == null

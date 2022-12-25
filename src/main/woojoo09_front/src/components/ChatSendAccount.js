@@ -17,11 +17,11 @@ const SendAccount = ({partner_num, sendAccountButton}) => {
 
   const onChangeBank = (e) => {
     setBank(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   }
   const onChangeDirectBank = (e) => {
     setDirectBank(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   }
   const onChangeAccount = (e) => {
     setAccount(e.target.value);
@@ -34,27 +34,27 @@ const SendAccount = ({partner_num, sendAccountButton}) => {
     const fetchData = async () => {
       if(bank == "직접입력"){
         try {
-          console.log();
+          // console.log();
             const res = await api.accountsend(partner_num, directBank, account, accountholder);
-            console.log(res.data);
+            // console.log(res.data);
             setBank("");
             setAccount("");
             setAccountholder("");
             setbankSelect("");
-        } catch {
-            console.log("error");
+        } catch(e) {
+            console.log(e);
         }
       }else{
         try {
-          console.log();
+          // console.log();
             const res = await api.accountsend(partner_num, bank, account, accountholder);
-            console.log(res.data);
+            // console.log(res.data);
             setBank("");
             setAccount("");
             setAccountholder("");
             setbankSelect("");
-        } catch {
-            console.log("error");
+        } catch(e) {
+            console.log(e);
         }
       }
     };
