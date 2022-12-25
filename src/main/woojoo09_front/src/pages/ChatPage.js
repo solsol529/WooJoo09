@@ -9,7 +9,7 @@ import api from "../api/api";
 import { useLocation, useParams, useNavigate } from 'react-router-dom';
 import send1 from "../resources/buluepurple_rocket.png"
 import { Link } from "react-router-dom";
-import fashion from "../resources/fashion_sample.png";
+import { defaultImgs } from "../util/util";
 import "../style/chat.scss"
 
 
@@ -31,7 +31,8 @@ const ChatPage = () =>{
    const host = location.state.list.host;
    const target = location.state.list.trade_num;
    const partner = location.state.list.part_mem_num;
-   const tradeNum = location.state.list.trade_num
+   const tradeNum = location.state.list.trade_num;
+   const category_num = location.state.list.category_num;
   
 
   const [socketConnected, setSocketConnected] = useState(false);
@@ -299,7 +300,10 @@ const partnerReject = () => {
           <div className="chattingProduct">
             <div>
                 <Link to ={`/detail/${tradeNum}`}>
-                  <img src = {imgUrl} alt="물품이미지"/>
+                  <img src = {imgUrl? imgUrl : category_num === 1 ? defaultImgs.패션.imgUrl :
+                      category_num === 2 ? defaultImgs.뷰티.imgUrl : category_num === 3 ? defaultImgs.생활.imgUrl :
+                      category_num === 4 ? defaultImgs.식품.imgUrl : category_num === 5 ? defaultImgs.취미.imgUrl :
+                      defaultImgs.반려동물.imgUrl} alt="물품이미지"/>
                 </Link>
                   <div className="chatProInfo">
                   <p className="chatProductName">{product}</p>
