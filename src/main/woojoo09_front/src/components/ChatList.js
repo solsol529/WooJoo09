@@ -127,8 +127,8 @@ const ChatList = () =>{
                       defaultImgs.반려동물.imgUrl} alt="물품이미지"/></span>
                       <p className="chatDetailNick">{list.nickname}</p>
                       <p className="chatTime">{new Date(list.chat_time).toLocaleDateString("ko-KR", options)}</p>
-                      <div>{list.chat_content.length > 10 ? list.chat_content.substring(0,10)+"...": list.chat_content}</div>
-                      {list.countUnreadChat > 0 && <p className="chatAlert"/>}
+                      <div>{list.msgType == "IMG"? "사진" : list.chat_content.length > 10 ? list.chat_content.substring(0,10)+"...": list.chat_content}</div>                     
+                           {list.countUnreadChat > 0 && <p className="chatAlert"/>}
                     </p>
                 </div>
                </div>
