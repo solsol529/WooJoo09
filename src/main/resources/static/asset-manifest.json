@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/static/css/main.b888dcc3.css",
-    "main.js": "/static/js/main.fc76dc4b.js",
+    "main.css": "/static/css/main.16055875.css",
+    "main.js": "/static/js/main.ef8f241b.js",
     "static/media/chatMoving.gif": "/static/media/chatMoving.30958733a50ad66a43d8.gif",
     "static/media/chatMoving_black.gif": "/static/media/chatMoving_black.128078e265e156eccca6.gif",
     "static/media/grade_icon4_nebula.png": "/static/media/grade_icon4_nebula.d1bbcff95a85c99b7167.png",
@@ -36,12 +36,13 @@
     "static/media/representImg_icon.png": "/static/media/representImg_icon.17f6eeb138515818406b.png",
     "static/media/images_icon.png": "/static/media/images_icon.a951e698adbd3ddcd20e.png",
     "static/media/representImg_icon_yellow.png": "/static/media/representImg_icon_yellow.cd6743d3d791e0368fcb.png",
+    "static/media/cry3.png": "/static/media/cry3.da4d461044f5aa783577.png",
     "index.html": "/index.html",
-    "main.b888dcc3.css.map": "/static/css/main.b888dcc3.css.map",
-    "main.fc76dc4b.js.map": "/static/js/main.fc76dc4b.js.map"
+    "main.16055875.css.map": "/static/css/main.16055875.css.map",
+    "main.ef8f241b.js.map": "/static/js/main.ef8f241b.js.map"
   },
   "entrypoints": [
-    "static/css/main.b888dcc3.css",
-    "static/js/main.fc76dc4b.js"
+    "static/css/main.16055875.css",
+    "static/js/main.ef8f241b.js"
   ]
 }

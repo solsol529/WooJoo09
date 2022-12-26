@@ -52,6 +52,7 @@ const MyTradePage =() =>{
   const [changeGood, setChangeGood] = useState(false);
   const [changeDislike, setChangeDislike] = useState(false);
   const [tradeCloseMsg, setTradeCloseMsg] = useState();
+  const [closeTrade, setCloseTrade] = useState();
 
   const TradeSelect = async () => {
     if(value === "myHostTrade"){
@@ -132,7 +133,10 @@ const MyTradePage =() =>{
         } else if(response.data.finishTrade === "duplicate"){
           setTradeCloseMsg("이미 종료한 공동구매 입니다");
         }
-        else setTradeCloseMsg("종료 처리 되었습니다");
+        else {
+          setTradeCloseMsg("종료 처리 되었습니다");
+          setCloseTrade(tradeNum);
+        }
       } catch (e) {
         console.log(e);
       }
@@ -198,6 +202,7 @@ const MyTradePage =() =>{
         }
         else {
           setTradeCloseMsg("마감 처리 되었습니다");
+          setCloseTrade(tradeNum);
         }
       } catch (e) {
         console.log(e);
@@ -261,13 +266,13 @@ const MyTradePage =() =>{
             {value === "myHostTrade" && list.doneTrade === "ONGOING" &&
             <div className="MyTradeDone">
               <button style = {{zIndex : 100}} onClick={()=>{tradeClose(list.tradeNum)}}>거래 마감하기</button>
-              {tradeCloseMsg && <p>{tradeCloseMsg}</p>}
+              {list.tradeNum == closeTrade &&tradeCloseMsg && <p>{tradeCloseMsg}</p>}
             </div>
             }
             {value === "myHostTrade" && list.doneTrade === "FULL" &&
             <div className="MyTradeDone">
               <button style = {{zIndex : 100}} onClick={()=>{tradeFinish(list.tradeNum)}}>거래 종료하기</button>
-              {tradeCloseMsg && <p>{tradeCloseMsg}</p>}
+              {list.tradeNum == closeTrade && tradeCloseMsg && <p>{tradeCloseMsg}</p>}
             </div>
             }
           </p>        

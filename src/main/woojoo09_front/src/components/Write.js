@@ -23,9 +23,9 @@ const Write = () =>{
   const firstDate = new Date(now.setDate(now.getDate() + 1)); // 최소 1일부터
   const middleDate = new Date(now.setDate(now.getDate() + 7)); // 기본값 날짜
   const lastDate = new Date(now.setDate(now.getDate() + 14)); // 최대 14일
-  const [dueYear, setDueYear] = useState(Number(thisDate.split('.')[0]));
-  const [dueMonth, setDueMonth] = useState(Number(thisDate.split('.')[1]));
-  const [dueDay, setDueDay] = useState(Number(thisDate.split('.')[2])+7); // 기본값 일주일
+  const [dueYear, setDueYear] = useState(Number(middleDate.getFullYear()));
+  const [dueMonth, setDueMonth] = useState(Number(middleDate.getMonth())+1);
+  const [dueDay, setDueDay] = useState(Number(middleDate.getDay())); // 기본값 일주일
   const [dueDate, setDueDate] = useState(middleDate.getFullYear() +
   '-' + ( (middleDate.getMonth()+1) < 9 ? "0" + (middleDate.getMonth()+1) : (middleDate.getMonth()+1) )+
   '-' + ( (middleDate.getDate()) < 9 ? "0" + (middleDate.getDate()) : (middleDate.getDate()) ))
