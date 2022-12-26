@@ -44,7 +44,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
                     "(select count(*) from complain c where c.complain_trade in (select trade_num from trade where host = member_num)) countComplain " +
                     "from member m, mem_grade mg where ((select count(*) from good g, trade t where good_trade_num = trade_num and host = member_num) - " +
                     "(select count(*) from dislike d, trade t where dis_trade_num = trade_num and host = member_num)) " +
-                    "between low_good and high_good and member_num != 1 group by member_num order by member_num",
+                    "between low_good and high_good and member_num != 1 order by member_num",
             nativeQuery = true
     )
     List<Map<?,?>> adminMemberSelect();
@@ -59,7 +59,7 @@ public interface MemberRepository extends JpaRepository<Member, Long> {
                     "(select count(*) from dislike d, trade t where dis_trade_num = trade_num and host = member_num)) " +
                     "between low_good and high_good and member_num != 1 and " +
                     "(id like :target or nickname like :target or grade like :target or real_name like :target) " +
-                    "group by member_num order by member_num",
+                    "order by member_num",
             nativeQuery = true
     )
     List<Map<?,?>> adminMemberSearch(@Param("target") String target);
