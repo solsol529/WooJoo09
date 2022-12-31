@@ -87,15 +87,15 @@ const RegisterPage = () =>{
     const fetchData = async () => {
       try {
         const birthDate = form.year+"-"+form.month+"-"+form.day
-        console.log(birthDate);
-        console.log(date);
+        // console.log(birthDate);
+        // console.log(date);
         const response = await api.memberReg(regId, regPwd, regNick, regName, regEmail, birthDate, regPhone, isAdOk, isActive);
         if(response.data === true) {
           // localStorage.removeItem("adOk")          
           const sendEmailfetchData = async () => {
             try {
               const response = await api.celMailSend(regEmail);
-              console.log(response.data);     
+              // console.log(response.data);     
             } catch (e) {
               console.log(e)
             }
@@ -131,7 +131,7 @@ const RegisterPage = () =>{
 
   //아이디 중복확인
   const onClickRegIdDup = () => {
-    console.log("아이디 중복체크 할 때 들어온 값" + regId);
+    // console.log("아이디 중복체크 할 때 들어온 값" + regId);
     if(idRegEx.test(regId)) {
     const fetchData = async () => {
       try {
@@ -210,7 +210,7 @@ const RegisterPage = () =>{
 
   //닉네임 중복확인
   const onClickRegNickDup = () => {
-    console.log("닉네임 중복체크 할 때 들어온 값" + regNick);
+    // console.log("닉네임 중복체크 할 때 들어온 값" + regNick);
     if(nickRegEx.test(regNick)) {
     const fetchData = async () => {
       try {
@@ -356,10 +356,10 @@ const RegisterPage = () =>{
 
 
     const fetchSearchData = async () => {
-      console.log("인증번호 요청하는 전화번호 " + regPhone);
+      // console.log("인증번호 요청하는 전화번호 " + regPhone);
       try {
         const response = await api.memberPhoneReg(regPhone);
-        console.log(response.data.result);
+        // console.log(response.data.result);
         setRegVerifyCode(response.data.code);
         // console.log(response.data.code);
         if(response.data.result === "OK") {

@@ -19,7 +19,7 @@ const Update = () =>{
     const fetchData = async () => {
       try {
         const response = await api.tradeImgUpdate(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.tradeImageUpdate === "OK"){
           if(response.data.images){
             setUrls(response.data.images);
@@ -107,15 +107,15 @@ const Update = () =>{
   const tradeUpdate = () =>{
     //imgUrl,representUrl, category, product, price, limitPartner, 
     //dueDate, tradeMethod, city, town, tradePlace, productDetail
-    console.log("imgUrl : " + urls + "\nrepresentUrl : " + representUrl + "\ncategory : " + category +
-    "\nname : " + name +"\nprice : "+ price + "\ncountPartner : " + countPartner + "\ndueDate : " + dueDate +
-      "\ntradeMethod : " + tradeMethod + "\ncity : " + city + "\ntown : " + town + 
-      "\ninputTradePlace : " + inputTradePlace + "\nproductDetail : " + productDetail)
+    // console.log("imgUrl : " + urls + "\nrepresentUrl : " + representUrl + "\ncategory : " + category +
+    // "\nname : " + name +"\nprice : "+ price + "\ncountPartner : " + countPartner + "\ndueDate : " + dueDate +
+    //   "\ntradeMethod : " + tradeMethod + "\ncity : " + city + "\ntown : " + town + 
+    //   "\ninputTradePlace : " + inputTradePlace + "\nproductDetail : " + productDetail)
     const fetchData = async () => {
       try {
         const response = await api.tradeUpdate(tradeNum, urls, representUrl, category, name, String(price), countPartner,
           dueDate, tradeMethod, city, town, inputTradePlace, productDetail);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.completeTrade === "loginError") {
           setInsertMsg("로그인 상태를 확인 해주세요");
         } 
@@ -221,7 +221,7 @@ const Update = () =>{
   }
 
   const onChangeName = (e) => {
-    console.log("dueDate: " + dueDate);
+    // console.log("dueDate: " + dueDate);
     setName(e.target.value);
     const name = e.target.value;
     if(name.length > 30){
@@ -288,7 +288,7 @@ const Update = () =>{
     }
 
     if (e.target.files.length === 0) {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setError("파일이 선택되지 않았습니다");
       setImages([]);
       setUrls([]);
@@ -298,7 +298,7 @@ const Update = () =>{
     for(const image of e.target.files){
       setImages((prevState) => [...prevState, image]);
       imgNum++;
-      console.log(imgNum);
+      // console.log(imgNum);
 
       if(imgNum > 5){
         // setError("이미지 갯수 초과");
@@ -317,13 +317,13 @@ const Update = () =>{
     setError("");
 
     if (images.length < 1) {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setError("파일이 선택되지 않았습니다");
       return;
     }
 
     if ( images.length > 5){
-      console.log("이미지는 대표이미지 포함 최대 6장까지 선택 가능합니다");
+      // console.log("이미지는 대표이미지 포함 최대 6장까지 선택 가능합니다");
       setError("이미지는 대표이미지 포함 최대 6장까지 선택 가능합니다");
       setImages([]);
       return;
@@ -333,23 +333,23 @@ const Update = () =>{
 
     for (const image of images){
        // 업로드 처리
-      console.log("업로드 처리");
+      // console.log("업로드 처리");
       const storageRef = storage.ref("woojoo09/tradeImg/"); //어떤 폴더 아래에 넣을지 설정
-      // const imgName = (memberNum + "host"+ numOfTrade + "thTrade" + imgNum + "thImg");
-      // const imagesRef = storageRef.child(imgName);
-      const imagesRef = storageRef.child(uuidv4());
+      const imgName = (memberNum + "host"+ numOfTrade + "thTrade" + imgNum + "thImg"+uuidv4());
+      const imagesRef = storageRef.child(imgName);
+      // const imagesRef = storageRef.child(uuidv4());
       // const imagesRef = storageRef.child(image.name); //파일명
 
-      console.log("파일을 업로드하는 행위");
+      // console.log("파일을 업로드하는 행위");
       const upLoadTask = imagesRef.put(image);
-      console.log("태스크 실행 전");
+      // console.log("태스크 실행 전");
 
       upLoadTask.on(
         "state_changed",
         (snapshot) => {
-          console.log("snapshot", snapshot);
+          // console.log("snapshot", snapshot);
           const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-          console.log(percent + "% done");
+          // console.log(percent + "% done");
         },
         (error) => {
           console.log("err", error);
@@ -357,7 +357,7 @@ const Update = () =>{
         },
         () => {
           upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-            console.log("File available at", downloadURL);
+            // console.log("File available at", downloadURL);
             setUrls((prevState) => [...prevState, downloadURL]);
           });
         }
@@ -371,14 +371,14 @@ const Update = () =>{
     setRepresentUrl("");
     const image = event.target.files[0];
     if (!image) {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setRepresentErr("파일이 선택되지 않았습니다");
       setRepresentImg("");
       setRepresentUrl("");
       return;
     }
     setRepresentImg(image);
-    console.log(image);
+    // console.log(image);
     setRepresentErr("");
   };
 
@@ -386,36 +386,36 @@ const Update = () =>{
     event.preventDefault();
     setError("");
     if (representImg === "") {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setRepresentErr("파일이 선택되지 않았습니다");
       return;
     }
     // 업로드 처리
-    console.log("업로드 처리");
+    // console.log("업로드 처리");
     const storageRef = storage.ref("woojoo09/tradeImg/"); //어떤 폴더 아래에 넣을지 설정
     // const imgName = (memberNum + "host" + numOfTrade + "thTradeRepresentImg");
     // const imagesRef = storageRef.child(imgName);
     const imagesRef = storageRef.child(uuidv4());
     // const imagesRef = storageRef.child(image.name); //파일명
 
-    console.log("파일을 업로드하는 행위");
+    // console.log("파일을 업로드하는 행위");
     const upLoadTask = imagesRef.put(representImg);
-    console.log("태스크 실행 전");
+    // console.log("태스크 실행 전");
 
     upLoadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log("snapshot", snapshot);
+        // console.log("snapshot", snapshot);
         const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(percent + "% done");
+        // console.log(percent + "% done");
       },
       (error) => {
         console.log("err", error);
-        setRepresentErr("파일 업로드에 실패했습니다." + error);
+        // setRepresentErr("파일 업로드에 실패했습니다." + error);
       },
       () => {
         upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log("File available at", downloadURL);
+          // console.log("File available at", downloadURL);
           setRepresentUrl(downloadURL);
         });
       }
@@ -473,7 +473,7 @@ const Update = () =>{
           value={category}
           onChange={({ target: { value } }) => {
             setCategory(value);
-            console.log(value)
+            // console.log(value)
           }}
           onClick={()=>{setCategoryErr("");}}
         >

@@ -33,7 +33,7 @@ const Banner = () =>{
       setLoading(true);
         try {
           const response = await api.bannerSelect();
-          console.log(response.data);
+          // console.log(response.data);
           setBanner(response.data.banner);
           setImgSize(response.data.banner.length);
         } catch (e) {

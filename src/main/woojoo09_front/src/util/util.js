@@ -72,7 +72,7 @@ const towns = [
 
   {city: "수원시", town: "Yeongtong", name : "영통구"},
   {city: "수원시", town: "Jangan", name : "장안구"},
-  {city: "수원시", town: "Gwonseon", name : "종로구"},
+  {city: "수원시", town: "Gwonseon", name : "권선구"},
   {city: "수원시", town: "Paldal", name : "팔달구"},
 
   {city: "용인시", town: "Giheung", name : "기흥구"},

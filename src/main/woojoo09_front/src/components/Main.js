@@ -34,15 +34,15 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
 
   useEffect(() => {
     if(categoryName){
-      console.log("카테고리 통신 시작" + categoryName)
+      // console.log("카테고리 통신 시작" + categoryName)
       const fetchData = async () => {
         setPage(0)
         setLoading(true);
          try {
-          console.log("카테고리이름: " + categoryName);
-          console.log("카테고리한글이름: " + getCategory(categoryName));
+          // console.log("카테고리이름: " + categoryName);
+          // console.log("카테고리한글이름: " + getCategory(categoryName));
            const response = await api.tradeSelectCategory(getCategory(categoryName), lineUp, city, town, 0, size);
-           console.log(response.data.content);
+          //  console.log(response.data.content);
            setLists(response.data.content);
            setPage(1);
            setIsLastPage(false);
@@ -59,7 +59,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         setLoading(true);
          try {
            const response = await api.tradeSearchSelect(target, 0, size);
-           console.log(response.data.content);
+          //  console.log(response.data.content);
            setLists(response.data.content);
            setPage(1);
            setIsLastPage(false);
@@ -76,9 +76,9 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         setPage(0)
         setLoading(true);
          try {
-          console.log("lineUp: "+lineUp + " city: " + city + " town: " + town + " page: " + page + "size" + size)
+          // console.log("lineUp: "+lineUp + " city: " + city + " town: " + town + " page: " + page + "size" + size)
            const response = await api.tradeSelect(lineUp, city, town, 0, size);
-           console.log(response.data.content);
+          //  console.log(response.data.content);
            setLists(response.data.content);
            setPage(1);
            setIsLastPage(false);
@@ -98,7 +98,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         setLoading(true);
         try {
           const response = await api.tradeSelectCategory(getCategory(categoryName), lineUp, city, town, page, size);
-          console.log(response.data.content);
+          // console.log(response.data.content);
           setLists(prev => ([...prev, ...response.data.content]));
           setPage(page + 1);
           if(response.data.last === true) {
@@ -111,14 +111,14 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         setLoading(false);
       };
       fetchData();
-      console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop)
+      // console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop)
       goToBottom(document.documentElement.scrollTop)
     }else if(target){
       const fetchData = async () => {
         setLoading(true);
         try {
           const response = await api.tradeSearchSelect(target, page, size);
-          console.log(response.data.content);
+          // console.log(response.data.content);
           setLists(prev => ([...prev, ...response.data.content]));
           setPage(page + 1);
           if(response.data.last === true) {
@@ -131,16 +131,16 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         setLoading(false);
       };
       fetchData();
-      console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop )
+      // console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop )
       goToBottom(document.documentElement.scrollTop)
     }
     else{
       const fetchData = async () => {
         setLoading(true);
         try {
-          console.log("lineUp: "+lineUp + " city: " + city + " town: " + town + " page: " + page + "size" + size)
+          // console.log("lineUp: "+lineUp + " city: " + city + " town: " + town + " page: " + page + "size" + size)
           const response = await api.tradeSelect(lineUp, city, town, page, size);
-          console.log(response.data.content);
+          // console.log(response.data.content);
           setLists(prev => ([...prev, ...response.data.content]));
           setPage(page + 1);
           if(response.data.last === true) {
@@ -153,7 +153,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
         setLoading(false);
       };
       fetchData();
-      console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop )
+      // console.log("이동해야하는 스크롤의 위치는 " + document.documentElement.scrollTop )
       goToBottom(document.documentElement.scrollTop)
     }
   }
@@ -163,7 +163,7 @@ const Main = ({categoryName, target, isLogin, isAdmin})=>{
   };
 
   const goToBottom = (value) => {
-    console.log("이동할 스크롤 위치는 " + value);
+    // console.log("이동할 스크롤 위치는 " + value);
     window.scrollTo({top: value, behavior: "smooth"});
   };
 

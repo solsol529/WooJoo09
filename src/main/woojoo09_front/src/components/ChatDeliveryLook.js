@@ -13,9 +13,9 @@ const ChatDeliveryLook = ({partner_num}) =>{
           try {
             const response = await api.chatDeliveryNum(partner_num);
             setLists(response.data[0]);
-            console.log(response.data);
+            // console.log(response.data);
             // console.log(response.data[0].chatListContent[0].partner_num);
-            console.log(partner_num);
+            // console.log(partner_num);
             if(response.data[0].chatDeliNum[0].delivery_company == null &&
               response.data[0].chatDeliNum[0].delivery_num == null
               ){

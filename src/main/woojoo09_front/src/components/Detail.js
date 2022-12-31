@@ -70,7 +70,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
       setLoading(true);
         try {
           const response = await api.tradeDetailSelect(tradeNum);
-          console.log(response.data);
+          // console.log(response.data);
           setData(response.data);
           setMyStar(response.data.detail.myStar);
           setMeberNum(response.data.member.memberNum);
@@ -81,7 +81,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
         }
         try {
           const response = await api.tradeDetailImgSelect(tradeNum);
-          console.log(response.data);
+          // console.log(response.data);
           setImages(response.data);
           setImgSize(response.data.length);
         } catch (e) {
@@ -101,7 +101,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
       // setLoading(true); 로딩있으면 깜빡거리는거같아서 뺏음, 데이터 뭐 많이 가져오는것도없고
       try {
         const response = await api.starInsert(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.myStar === "loginError") {
           setStarError("로그인 상태를 확인해주세요");
         } else if (response.data.myStar === "duplicate"){
@@ -120,7 +120,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
       // setLoading(true); 로딩있으면 깜빡거리는거같아서 뺏음, 데이터 뭐 많이 가져오는것도없고
       try {
         const response = await api.starDelete(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.myStar === "loginError") {
           setStarError("로그인 상태를 확인해주세요");
         } else setMyStar(Number(response.data.myStar));
@@ -136,7 +136,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     const fetchData = async () => {
       try {
         const response = await api.complainInsert(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.complainComplete === "loginError") {
           setComplainMsg("로그인 상태를 확인해주세요");
         } else if(response.data.complainComplete === "duplicate"){
@@ -154,7 +154,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     const fetchData = async () => {
       try {
         const response = await api.tradeDelete(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.completeDeleteTrade === "loginError") {
           setDeleteMsg("로그인 상태를 확인해주세요");
         } else if(response.data.completeDeleteTrade === "notData"){
@@ -178,7 +178,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     const fetchData = async () => {
       try {
         const response = await api.tradeClose(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.closeTrade === "loginError") {
           setTradeCloseMsg("로그인 상태를 확인해주세요");
         } else if(response.data.closeTrade === "duplicate"){
@@ -199,7 +199,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     const fetchData = async () => {
       try {
         const response = await api.tradeFinish(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.finishTrade === "loginError") {
           setTradeCloseMsg("로그인 상태를 확인해주세요");
         } else if(response.data.finishTrade === "duplicate"){
@@ -230,7 +230,7 @@ const Detail = ({isLogin, isAdmin, tradeNum}) =>{
     const fetchData = async () => {
       try {
         const response = await api.partnerInsert(tradeNum);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data.completePartner === "loginError") {
           setTradeCloseMsg("로그인 상태를 확인해주세요");
         } else if(response.data.completePartner === "duplicate"){

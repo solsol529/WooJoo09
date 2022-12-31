@@ -14,9 +14,9 @@ const DelAddrLook = ({partner_num}) => {
           try {
             const response = await api.chatDeliAddr(partner_num);
             setLists(response.data[0]);
-            console.log(response.data);
+            // console.log(response.data);
             // console.log(response.data[0].chatListContent[0].partner_num);
-            console.log(partner_num);
+            // console.log(partner_num);
             if(response.data[0].chatDeliaddress[0].delivery_name == null &&
               response.data[0].chatDeliaddress[0].delivery_address == null&&
               response.data[0].chatDeliaddress[0].delivery_phone == null

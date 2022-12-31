@@ -25,7 +25,7 @@ const WriteManagementSearch = () =>{
 
   const [inputSearch, setInputSearch] = useState('');
 
-  console.log(query);
+  // console.log(query);
   
   const onChangeSearch = (e) =>{
     setInputSearch(e.target.value);

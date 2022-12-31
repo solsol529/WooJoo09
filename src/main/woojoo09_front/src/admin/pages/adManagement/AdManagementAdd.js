@@ -58,27 +58,27 @@ const AdManagementAdd = () =>{
     event.preventDefault();
     setError("");
     if (image === "") {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setError("파일이 선택되지 않았습니다");
       return;
     }
     // 업로드 처리
-    console.log("업로드 처리");
+    // console.log("업로드 처리");
     const storageRef = storage.ref("woojoo09/advertisement/"); //어떤 폴더 아래에 넣을지 설정
     const imgName = (bannerName + "Img");
     const imagesRef = storageRef.child(imgName);
     // const imagesRef = storageRef.child(image.name); //파일명
 
-    console.log("파일을 업로드하는 행위");
+    // console.log("파일을 업로드하는 행위");
     const upLoadTask = imagesRef.put(image);
-    console.log("태스크 실행 전");
+    // console.log("태스크 실행 전");
 
     upLoadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log("snapshot", snapshot);
+        // console.log("snapshot", snapshot);
         const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(percent + "% done");
+        // console.log(percent + "% done");
       },
       (error) => {
         console.log("err", error);
@@ -86,7 +86,7 @@ const AdManagementAdd = () =>{
       },
       () => {
         upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log("File available at", downloadURL);
+          // console.log("File available at", downloadURL);
           setImgUrl(downloadURL)
         });
       }

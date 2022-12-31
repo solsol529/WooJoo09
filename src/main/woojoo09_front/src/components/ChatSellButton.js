@@ -47,7 +47,7 @@ const ChatSellButton = ({partner_num, changeChatSendImg, onClickImgMsgSend}) => 
         setVisible(false);
         setVisibleDel(false);
         setVisiblePho(false);
-        console.log(partner_num);
+        // console.log(partner_num);
     }
 
     const sendImgbutton = (e) => {

@@ -15,7 +15,7 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend, sendImgbut
     setChatImgUrl("");
     const image = event.target.files[0];
     if (!image) {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setChatImgErr("파일이 선택되지 않았습니다");
       setChatImg("");
       changeChatSendImg("");
@@ -23,7 +23,7 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend, sendImgbut
       return;
     }
     setChatImg(image);
-    console.log(image);
+    // console.log(image);
     setChatImgErr("");
   };
 
@@ -31,28 +31,28 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend, sendImgbut
     event.preventDefault();
     setChatImgErr("");
     if (chatImg === "") {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setChatImgErr("파일이 선택되지 않았습니다");
       return;
     }
     // 업로드 처리
-    console.log("업로드 처리");
+    // console.log("업로드 처리");
     const storageRef = storage.ref("woojoo09/chatImg/"); //어떤 폴더 아래에 넣을지 설정
     const imgName = (partner_num + "chatImg" + uuidv4());
     // const imagesRef = storageRef.child(imgName);
     const imagesRef = storageRef.child(imgName);
     // const imagesRef = storageRef.child(image.name); //파일명
 
-    console.log("파일을 업로드하는 행위");
+    // console.log("파일을 업로드하는 행위");
     const upLoadTask = imagesRef.put(chatImg);
-    console.log("태스크 실행 전");
+    // console.log("태스크 실행 전");
 
     upLoadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log("snapshot", snapshot);
+        // console.log("snapshot", snapshot);
         const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(percent + "% done");
+        // console.log(percent + "% done");
       },
       (error) => {
         console.log("err", error);
@@ -60,7 +60,7 @@ const SendPhoto =({partner_num, changeChatSendImg, onClickImgMsgSend, sendImgbut
       },
       () => {
         upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log("File available at", downloadURL);
+          // console.log("File available at", downloadURL);
           setChatImgUrl(downloadURL);
           changeChatSendImg(downloadURL);
         });

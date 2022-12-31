@@ -64,7 +64,7 @@ const ResetPwd = ({findPwdId}) => {
     const resetPwdFetchData = async () => {
       try {
         const response = await api.resetPwdData(findPwdId, resetPwd);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data === true) {
           setChangeResetPwdCom(true);
         } else {

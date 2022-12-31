@@ -14,11 +14,11 @@ const SendDelivery = ( {partner_num, sendDelButton} ) => {
 
   const onChangeDeliveryCompany = (e) => {
     setDeliveryCompany(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   }
   const onChangeDirectDeliveryCompany = (e) => {
     setDirectcDeliveryCompany(e.target.value);
-    console.log(e.target.value);
+    // console.log(e.target.value);
   }
   const onChangeDeliveryNum = (e) => {
     setdeliveryNum(e.target.value);
@@ -27,25 +27,25 @@ const SendDelivery = ( {partner_num, sendDelButton} ) => {
     const fetchData = async () => {
       if (deliveryCompany == "직접입력"){
         try {
-          console.log();
+          // console.log();
             const res = await api.deliverysend(partner_num, directDeliveryCompany, deliveryNum);
-            console.log(res.data);
+            // console.log(res.data);
             setDeliveryCompany("");
             setdeliveryNum("");
             // setSelected("");
-        } catch {
-            console.log("error");
+        } catch(e) {
+            console.log(e);
         }
       }else{
         try {
-          console.log();
+          // console.log();
             const res = await api.deliverysend(partner_num, deliveryCompany, deliveryNum);
-            console.log(res.data);
+            // console.log(res.data);
             setDeliveryCompany("");
             setdeliveryNum("");
             // setSelected("");
-        } catch {
-            console.log("error");
+        } catch(e) {
+            console.log(e);
         }
       }
     };

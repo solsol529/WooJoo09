@@ -38,9 +38,9 @@ const ChatPage = () =>{
   const [socketConnected, setSocketConnected] = useState(false);
   const [inputMsg, setInputMsg] = useState("");
   const [rcvMsg, setRcvMsg] = useState("");
-  const webSocketUrl = `ws://localhost:9009/ws/chat`;
+  // const webSocketUrl = `ws://localhost:9009/ws/chat`;
 
-  // const webSocketUrl = `ws://13.209.198.107/ws/chat`;
+  const webSocketUrl = `ws://13.209.198.107/ws/chat`;
   // // roomId랑 sender은 받아와야함 -> navigate로 받아오면 될듯
   // const roomId = window.localStorage.getItem("chatRoomId");
   //  const sender = "곰돌이사육사";
@@ -120,11 +120,11 @@ const ChatPage = () =>{
 
   const onClickMsgSend = (e) => {
     const fetchData = async () => {
-      console.log(new Date());
+      // console.log(new Date());
       try {
-        console.log(items);
+        // console.log(items);
           const res = await api.chatContentInsert(partner_num, inputMsg, "text", memberNum);
-          console.log("메시지 db에 보내짐" + res.data);
+          // console.log("메시지 db에 보내짐" + res.data);
           // window.localStorage.setItem("chatRoomId", res.data);
           // setRoomId(res.data);
           //  window.location.replace("/chat");
@@ -148,9 +148,9 @@ const ChatPage = () =>{
   const msgInsert = () =>{
     const fetchData = async () => {
       try {
-        console.log(items);
+        // console.log(items);
           const res = await api.chatContentInsert(partner_num, inputMsg, "text", memberNum);
-          console.log(res.data);
+          // console.log(res.data);
           // window.localStorage.setItem("chatRoomId", res.data);
           // setRoomId(res.data);
           //  window.location.replace("/chat");
@@ -177,16 +177,16 @@ const ChatPage = () =>{
   //   // 화면이 렌더링 될 때 불러지는것, 자동으로 세션 연결
   //   // 화면이 로딩되자마자 웹소켓을 열어달라고 요청
       setItems([]);
-      console.log("방번호 : " + roomId);
+      // console.log("방번호 : " + roomId);
       if (!ws.current) {
           ws.current = new WebSocket(webSocketUrl);
           ws.current.onopen = () => {
-              console.log("connected to " + webSocketUrl);
+              // console.log("connected to " + webSocketUrl);
               setSocketConnected(true);
           };
       }
       if (socketConnected) {
-        console.log("socketConnected", socketConnected)
+        // console.log("socketConnected", socketConnected)
         // 연결 되면 바로 방으로 진입
           ws.current.send(
               JSON.stringify({
@@ -199,7 +199,7 @@ const ChatPage = () =>{
       }
       ws.current.onmessage = (evt) => {
           const data = JSON.parse(evt.data);
-          console.log(data.message);
+          // console.log(data.message);
           setRcvMsg(data.message);
           setItems((prevItems) => [...prevItems, data]);
     };
@@ -210,7 +210,7 @@ const ChatPage = () =>{
       try {
         console.log(items);
           const res = await api.chatPartnerAccept(target, partner);
-          console.log(res.data);
+          // console.log(res.data);
           setAcceptTrade('ACCEPT')
       } catch {
           console.log("error");
@@ -222,9 +222,9 @@ const ChatPage = () =>{
   const partnerRejecthost = () => {
     const fetchData = async () => {
       try {
-        console.log(items);
+        // console.log(items);
           const res = await api.chatPartnerRejecthost(target, partner);
-          console.log(res.data);
+          // console.log(res.data);
           setAcceptTrade('DELETE')
       } catch {
           console.log("error");
@@ -236,9 +236,9 @@ const ChatPage = () =>{
 const partnerReject = () => {
   const fetchData = async () => {
     try {
-      console.log(items);
+      // console.log(items);
         const res = await api.chatPartnerReject(target);
-        console.log(res.data);
+        // console.log(res.data);
         setAcceptTrade('DELETE')
     } catch {
         console.log("error");
@@ -261,9 +261,9 @@ const partnerReject = () => {
   const onClickImgMsgSend = () => {
     const fetchData = async () => {
       try {
-        console.log(items);
+        // console.log(items);
           const res = await api.chatContentInsert(partner_num, chatSendImg, "img", memberNum);
-          console.log("메시지 db에 보내짐" + res.data);
+          // console.log("메시지 db에 보내짐" + res.data);
         } catch {
           console.log("error");
         }

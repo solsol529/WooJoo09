@@ -67,7 +67,7 @@ const ChangeMemberInfo = (props) =>{
     setInfoPfImgUrl("");
     const image = event.target.files[0];
     if (!image) {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setInfoPfImgErr("파일이 선택되지 않았습니다");
       setInfoProfileImg("");
       setInfoPfImgUrl("");
@@ -75,7 +75,7 @@ const ChangeMemberInfo = (props) =>{
       return;
     }
     setInfoProfileImg(image);
-    console.log(image);
+    // console.log(image);
     setInfoPfImgErr("");
   };
 
@@ -83,29 +83,29 @@ const ChangeMemberInfo = (props) =>{
     event.preventDefault();
     setError("");
     if (infoProfileImg === "") {
-      console.log("파일이 선택되지 않았습니다");
+      // console.log("파일이 선택되지 않았습니다");
       setInfoPfImgErr("파일이 선택되지 않았습니다");
       setViewImgButton(false);
       return;
     }
     // 업로드 처리
-    console.log("업로드 처리");
+    // console.log("업로드 처리");
     const storageRef = storage.ref("woojoo09/profileImg/"); //어떤 폴더 아래에 넣을지 설정
     const imgName = (memberNum + "pfImg" + uuidv4());
     // const imagesRef = storageRef.child(imgName);
     const imagesRef = storageRef.child(imgName);
     // const imagesRef = storageRef.child(image.name); //파일명
 
-    console.log("파일을 업로드하는 행위");
+    // console.log("파일을 업로드하는 행위");
     const upLoadTask = imagesRef.put(infoProfileImg);
-    console.log("태스크 실행 전");
+    // console.log("태스크 실행 전");
 
     upLoadTask.on(
       "state_changed",
       (snapshot) => {
-        console.log("snapshot", snapshot);
+        // console.log("snapshot", snapshot);
         const percent = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-        console.log(percent + "% done");
+        // console.log(percent + "% done");
       },
       (error) => {
         console.log("err", error);
@@ -113,7 +113,7 @@ const ChangeMemberInfo = (props) =>{
       },
       () => {
         upLoadTask.snapshot.ref.getDownloadURL().then((downloadURL) => {
-          console.log("File available at", downloadURL);
+          // console.log("File available at", downloadURL);
           setInfoPfImgUrl(downloadURL);
         });
       }
@@ -125,7 +125,7 @@ const ChangeMemberInfo = (props) =>{
   const onClickPfImgChange = async() => {
     try {
       const res = await api.pfImgChange(memberNum, infoPfImgUrl);
-      console.log(res.data);
+      // console.log(res.data);
       if(res.data === true) {
         setInfoPfImgErr("프로필 사진이 변경되었습니다.")
         props.changeIsChange(!props.isChange)
@@ -136,7 +136,7 @@ const ChangeMemberInfo = (props) =>{
         setInfoPfImgErr("프로필 사진 변경이 실패하였습니다.")
       }
     } catch (e) {
-      console.log("로그인 에러..");
+      // console.log("로그인 에러..");
       console.log(e);
     }
   }
@@ -158,7 +158,7 @@ const ChangeMemberInfo = (props) =>{
 
   //닉네임 중복확인
   const onClickInfoNewNickDupBtn = () => {
-    console.log("닉네임 중복체크 할 때 들어온 값" + infoNewNickInput);
+    // console.log("닉네임 중복체크 할 때 들어온 값" + infoNewNickInput);
     if(nickRegEx.test(infoNewNickInput)) {
       const newNickFetchData = async () => {
         try {
@@ -189,7 +189,7 @@ const ChangeMemberInfo = (props) =>{
     const newNickOkFetchData = async () => {
       try {
         const response = await api.infoNewNickOk(memberNum, infoNewNickInput);
-        console.log(response.data);
+        // console.log(response.data);
         if(response.data === true) {
           setIsInfoNewNick(true)
           setInfoNewNickOkMsg("닉네임이 변경되었습니다.")
@@ -210,9 +210,9 @@ const ChangeMemberInfo = (props) =>{
   const onClickPwdUpdate1 = async() => {
       try {
           const res = await api.currentPwd(memberNum, inputPwd1);
-          console.log(res.data);
+          // console.log(res.data);
           if(res.data === true) {
-              console.log("비밀번호 체크중");
+              // console.log("비밀번호 체크중");
               if(inputPwd2 === inputPwd3){
                 onClickPwdUpdate2();
               }
@@ -220,7 +220,7 @@ const ChangeMemberInfo = (props) =>{
             setConPwMessage("현재 비밀번호가 일치하지 않습니다.");
           }         
       } catch (e) {
-          console.log("현재 비밀번호 체크 에러..");
+          // console.log("현재 비밀번호 체크 에러..");
       }
   }
 
@@ -228,7 +228,7 @@ const ChangeMemberInfo = (props) =>{
   const onClickPwdUpdate2 = async() => {
       try {
           const memberResetPwd = await api.infoResetPwd(memberNum, inputPwd2);
-          console.log(memberResetPwd.data);
+          // console.log(memberResetPwd.data);
           if(memberResetPwd.data === true) {
             setIsConPw(true);
             setConPwMessage2('비밀번호가 변경되었습니다.')           
@@ -238,7 +238,7 @@ const ChangeMemberInfo = (props) =>{
           }
       } catch (e) {
           console.log(e);
-          console.log("비밀번호 변경 에러...!");
+          // console.log("비밀번호 변경 에러...!");
       }
   }
 
@@ -303,7 +303,7 @@ const ChangeMemberInfo = (props) =>{
   const onClickEmailUpdate = async() => {
         try {
             const memberResetEmail = await api.infoResetEmail(memberNum, inputEmail);
-            console.log(memberResetEmail.data);
+            // console.log(memberResetEmail.data);
             
             if(memberResetEmail.data === true) {
               setIsEmail(true);
@@ -313,7 +313,7 @@ const ChangeMemberInfo = (props) =>{
             }
         } catch (e) {
             console.log(e);
-            console.log("이메일 변경 에러...!");
+            // console.log("이메일 변경 에러...!");
         }
     }
 
@@ -333,21 +333,21 @@ const ChangeMemberInfo = (props) =>{
   //광고 수신 여부 
   const onClickAdRadio = (e) => {
     setInfoAd(e.target.value);
-    console.log(infoAd);
+    // console.log(infoAd);
   }
   
   //광고수신여부 변경 버튼
   const onClickIsAdOkBtn = async () => {
     try {
       const infoAdFetchData = await api.infoIsAd(memberNum, infoAd)
-      console.log(infoAdFetchData.data);
+      // console.log(infoAdFetchData.data);
       if(infoAdFetchData.data === true) {
         setIsInfoAd(true);
         setInfoAdOkMsg('광고 수신 여부가 변경되었습니다.')
       }
     }catch(e) {
       console.log(e)
-      console.log("광고수신여부 변경 에러...!");
+      // console.log("광고수신여부 변경 에러...!");
     }
   }
 
@@ -366,14 +366,14 @@ const ChangeMemberInfo = (props) =>{
   const onClickNewIntroduceBtn = async () => {
     try {
       const infoIntroduceFetchData = await api.infoIntroduce(memberNum, inputIntroduce)
-      console.log(infoIntroduceFetchData.data);
+      // console.log(infoIntroduceFetchData.data);
       if(infoIntroduceFetchData.data === true) {
         setIsInfoIntroduce(true);
         setInfoIntroduceOkMsg("주최자 소개 내용이 변경되었습니다.");
       }
     }catch(e){
       console.log(e)
-      console.log("주최자 소개 내용 변경 오류")
+      // console.log("주최자 소개 내용 변경 오류")
     }
   }
 

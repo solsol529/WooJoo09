@@ -78,7 +78,7 @@ const FindPwdPage = () =>{
           const emailfetchData = async () => {
             try {
               const emailRes = await api.verifyCodeEmailSend(findPwdEmail);
-              console.log(emailRes.data);
+              // console.log(emailRes.data);
               setFindPwdServerCode(emailRes.data);              
               if(emailRes.data){
                 findPwdCodeInput.style.display = 'block';

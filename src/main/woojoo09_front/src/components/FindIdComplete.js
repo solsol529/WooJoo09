@@ -11,7 +11,7 @@ const FindIdComplete = ({findIdEmail}) => {
         navigate('/login');
     }
 
-    console.log(findIdEmail);
+    // console.log(findIdEmail);
     // const findIdEmail = localStorage.getItem(props.findIdEmail);
 
     const [findIdMember, setFindIdMember] = useState('');
@@ -22,7 +22,7 @@ const FindIdComplete = ({findIdEmail}) => {
         try {
           const response = await api.memberinfoFindId(findIdEmail);
           setFindIdMember(response.data);
-          console.log(response.data)
+          // console.log(response.data)
         } catch (e) {
           console.log(e)
         }
