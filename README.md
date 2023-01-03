@@ -3,7 +3,7 @@
 
 > 우리 주변의 공동 구매, 공동 구매 중개 플랫폼  
 > http://woojoo09.site/  
-> (구글 플레이스토어 링크)  
+> https://play.google.com/store/apps/details?id=com.woojoo09  
 
 
 
@@ -60,6 +60,12 @@
 ### :stars: 정보
 - 사용 이미지 출처(https://www.flaticon.com/)
 
+### :stars: 빌드 전 사전 작업
+- application.properties 의 mysql 계정 정보 입력, java mail api용 메일 계정 정보 입력
+- service/sens_sms sendSms 의 네이버 클라우드 플랫폼 api 인증 정보 입력
+- woojoo09_front index.html 의 카카오 api 인증 정보 입력
+- woojoo09_front api/firebase firebaseconfig 의 firebase api 인증 정보 입력
+
 ### :stars: 빌드
 
 ```sh
@@ -68,6 +74,10 @@
 ```sh
 java -jar build/libs/WooJoo09-0.0.1-SNAPSHOT.jar
 ```
-터미널에서 테스트 제외하고 gradle 빌드 실행한 후 아래의 명령어로 파일 실행
+터미널에서 테스트 제외하고 gradle 빌드 실행한 후 위의 명령어로 파일 실행
+
+
+
+
 
 
