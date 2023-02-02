@@ -48,7 +48,7 @@
 - Language : Java, Javascript
 - FrontEnd : HTML/CSS
 - Library : ReactJS
-- 
+- Framework : Spring Boot
 - DB : mySql, Oracle
 - Server : Tomcat
 
